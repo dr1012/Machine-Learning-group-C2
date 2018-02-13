@@ -71,88 +71,54 @@ def getNeighbors(trainingSet, testInstance, k):
         neighbors.append(distances[x][0])
     return neighbors
 
-def getResponse(neighbors,k):
+def getResponse(neighbors):
     #a dictionary containing the different claasses and the number of neighbors that belong to that class
-    total_sum = 0
-    for x in range(len(neighbors)):
-        response = neighbors[x][-1]
-        total_sum += response
-    return total_sum/k    
+	classVotes = {}
+	for x in range(len(neighbors)):
+		response = neighbors[x][-1]
+		if response in classVotes:
+			classVotes[response] += 1
+		else:
+			classVotes[response] = 1
+	sortedVotes = sorted(classVotes.items(), key=operator.itemgetter(1), reverse=True)
+	return sortedVotes[0][0]
 # In case of a  draw this selects one response, ideally we would select an ubiased random response.
 
 
 #  Simple function that evaluates accuracy of predictions
-def rmsError(testSet, predictions):
-    errors = []
-    for x in range(len(testSet)):
-        error = (testSet[x][-1]-predictions[x])
-        errors.append(error**2) 
-    rms_error =  math.sqrt(np.mean(errors))
-    return rms_error
+def getAccuracy(testSet, predictions):
+	correct = 0
+	for x in range(len(testSet)):
+		if testSet[x][-1] == predictions[x]:
+			correct += 1
+	return (correct/float(len(testSet))) * 100.0
 
-def mean_absolute_percentage_error(testSet, predictions):
-    errors = []
-    for x in range(len(testSet)):
-        individual__percentage_error= ((abs((testSet[x][-1]-predictions[x])))/testSet[x][-1])*100
-        errors.append(individual__percentage_error)
-    return np.mean(errors)    
 
-        
 
 max_neighbours = 200
 accuracies = []
-
-
-# this code is for plotting rms errors
-'''
 for y in range(1,max_neighbours):
 
     predictions = []
     for x in range(len(validation_data)):
         neighbors = getNeighbors(training_data, validation_data[x], y)
-        result = getResponse(neighbors,y)
+        result = getResponse(neighbors)
         predictions.append(result)
         #print('> predicted=' + repr(result) + ', actual=' + repr(validation_data[x][-1]))
         
-    accuracy = rmsError(validation_data, predictions)
+    accuracy = getAccuracy(validation_data, predictions)
     #print('Accuracy: ' + repr(accuracy) + '%')
 
     accuracies.append([y,accuracy])
 
 npAcurracies = np.array(accuracies)
-
-'''
-
-# this code is for plotting mean absolute percentage errors
-
-for y in range(1,max_neighbours):
-
-    predictions = []
-    for x in range(len(validation_data)):
-        neighbors = getNeighbors(training_data, validation_data[x], y)
-        result = getResponse(neighbors,y)
-        predictions.append(result)
-        #print('> predicted=' + repr(result) + ', actual=' + repr(validation_data[x][-1]))
-        
-    accuracy = mean_absolute_percentage_error(validation_data, predictions)
-    #print('Accuracy: ' + repr(accuracy) + '%')
-
-    accuracies.append([y,accuracy])
-
-npAcurracies = np.array(accuracies)
-
-
+plt.plot(npAcurracies[:,0:1],npAcurracies[:,1:2])
 
 fig = plt.figure()
 ax = fig.add_subplot(1,1,1)
 ax.plot(npAcurracies[:,0:1],npAcurracies[:,1:2])
 ax.set_xlabel("Number of nearest neighbors chosen")
-ax.set_ylabel("Mean Absolute Percentage Error of predictions")
-ax.set_title("Mean Absolute Percentage Error of KNN REGRESSION method versus number of nearest neighbors chosen",fontsize = 8)
-fig.savefig("KNN regression accuracy Percentage.pdf", fmt="pdf")
+ax.set_ylabel(" % Accuracy of predictions")
+ax.set_title("Accuracy of KNN CLASSIFICATION method versus number of nearest neighbors chosen",fontsize = 10)
+fig.savefig("KNN classification accuracy.pdf", fmt="pdf")
 plt.show()	
-
-
-
-
-
