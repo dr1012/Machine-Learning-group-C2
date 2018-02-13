@@ -8,7 +8,7 @@ with open('winequality-red.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=';')
         header = next(datareader)
         data = []
-        count = 0
+       
 
         for row in datareader:
             row_of_floats = list(map(float, row))
