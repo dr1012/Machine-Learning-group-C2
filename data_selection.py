@@ -18,6 +18,7 @@ with open('winequality-red.csv', 'r') as csvfile:
 data_as_array = np.array(data)
 
 
+
 training_data_list = []
 validation_data_list = []
 test_data_list = []
