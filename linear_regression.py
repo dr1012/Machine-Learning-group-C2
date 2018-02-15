@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 #import panda as pd
 
 
@@ -68,24 +69,28 @@ def main():
     #TRAINING: mean squared error
     mse = np.square(np.subtract(targets, ys)).mean()
     mse_regw = np.square(np.subtract(targets, ys_reg)).mean()
-    print(mse)
-    print(mse_regw)
+
+    #root mean squared error (to make comparison valid across differently sized data sets)
+    Rmse = np.sqrt(2*mse/len(data_as_array))
+    print(Rmse)
     
-    
-    
-    # sample data
-    x = data_as_array[:,1]
+
+    #plot a feature's inputs and targets and interlay the prediction line
+    x = data_as_array[:,9]
     y = ys
     
     # fit with np.polyfit
-    m, b = np.polyfit(x, y, 1)
-    
-    plt.plot(x, y, '.')
+    m, b = np.polyfit(x, y,1)
+    fig = plt.figure()
+    plt.plot(x, targets, '.', label='hello')
     plt.plot(x, m*x + b, '-')
-    
+    red_patch = mpatches.Patch(color='red', label='Prediction function')
+    blue_dots = mpatches.Patch(color='blue', label='feature data')
+    plt.legend(handles=[red_patch, blue_dots], title='testtest')
+
+    fig.savefig("linear_regression.pdf", fmt="pdf")    
+
     plt.show()
-    
-    
     
     
     #______________________________  TEST _____________________________________
@@ -101,23 +106,14 @@ def main():
     #test: mean squared error
     test_mse = np.square(np.subtract(test_targets, test_ys)).mean()
     test_mse_regw = np.square(np.subtract(test_targets, test_ys_reg)).mean()    
+    
+    #Root mean square error
+    test_Rmse = np.sqrt(2*test_mse/len(test_data_as_array))
 
     print('test scores')
     print(test_mse)
-    print(test_mse_regw)
+    print(test_Rmse)
 
-
-#    fig, ax, hs = plot_function_data_and_approximation(linear_approx, inputs, targets)
-    #4 true_func
-    
-
-    #plot the graph and data
-   # ax.set_xticks([])
-    #ax.set_yticks([])
-    #fig.tight_layout()
-    #fig.savefig("regression_linear.pdf", fmt="pdf")
-
-    #plt.show()
 
 
 def ml_weights(inputmtx, targets):
