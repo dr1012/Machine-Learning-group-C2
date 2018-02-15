@@ -4,13 +4,13 @@ import numpy.linalg as linalg
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import pandas as pd
-
+import statsmodels.formula.api as sm
 
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb 14 16:30:49 2018
+Created on Thu Feb 15 17:18:49 2018
 
 @author: kai
 """
@@ -33,7 +33,7 @@ with open('test_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
-       
+        
         for row in datareader:
             row_of_floats = list(map(float, row))
             data.append(row_of_floats)
@@ -47,13 +47,24 @@ def main():
     This function contains example code that demonstrates how to use the 
     functions defined in poly_fit_base for fitting polynomial curves to data.
     """
+
+    #selected features: volatile acidity, citric acid, chlorides, density, pH, 
+    # sulphates, alcohol
+
+    #statsmodels method to fit a regression model to selected features
+    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,10], "B": data_as_array[:,1] , "C": data_as_array[:,2]
+    , "D": data_as_array[:,4], "E": data_as_array[:,7], "F": data_as_array[:,8], "G": data_as_array[:,9]})
+    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G", data=df).fit()
+    print(result.params)
+    print(result.summary())
+
     
+    #manual version of calculating RMSE
     degree = 1
 
     #retrieve train targets and inputs from data array
-    targets = data_as_array[:,11]
-    inputs = data_as_array[:,0:10]
-#    test = data_as_array[:, [1,2,3]]
+    targets = data_as_array[:,11]    
+    inputs = data_as_array[:, [1,2,4,7,8,9,10]]
     
     # find the weights that fit the data in a least squares way
     ml_model_weights = ml_weights(inputs, targets)
@@ -74,28 +85,12 @@ def main():
     Rmse = np.sqrt(2*mse/len(data_as_array))
     print(Rmse)
     
-
-    #plot a feature's inputs and targets and interlay the prediction line
-    x = data_as_array[:,9]
-    y = ys
-    # fit with np.polyfit
-    m, b = np.polyfit(x, y,1)
-    fig = plt.figure()
-    plt.plot(x, targets, '.', label='hello')
-    plt.plot(x, m*x + b, '-')
-    red_patch = mpatches.Patch(color='red', label='Prediction function')
-    blue_dots = mpatches.Patch(color='blue', label='feature data')
-    plt.legend(handles=[red_patch, blue_dots], title='testtest')
-
-    fig.savefig("linear_regression.pdf", fmt="pdf")    
-    plt.show()
-    
     
     #______________________________  TEST _____________________________________
 
     #retrieve targets and inputs from data array
     test_targets = test_data_as_array[:,11]
-    test_inputs = test_data_as_array[:,0:10]
+    test_inputs = test_data_as_array[:, [1,2,4,7,8,9,10]]
 
     #test: get prediction (y-value) for the given weights (beta / coefficients)
     test_ys = linear_model_predict(test_inputs, ml_model_weights)
@@ -110,6 +105,29 @@ def main():
 
     print(test_mse)
     print(test_Rmse)
+    
+
+
+# Polynomial Regression
+def polyfit(x, y, degree):
+    results = {}
+
+    coeffs = np.polyfit(x, y, degree)
+
+     # Polynomial Coefficients
+    results['polynomial'] = coeffs.tolist()
+
+    # r-squared
+    p = np.poly1d(coeffs)
+    # fit values, and mean
+    yhat = p(x)                         # or [p(z) for z in x]
+    ybar = np.sum(y)/len(y)          # or sum(y)/len(y)
+    ssreg = np.sum((yhat-ybar)**2)   # or sum([ (yihat - ybar)**2 for yihat in yhat])
+    sstot = np.sum((y - ybar)**2)    # or sum([ (yi - ybar)**2 for yi in y])
+    results['determination'] = ssreg / sstot
+    
+    print('hello, world')
+    return results
 
 
 
@@ -142,108 +160,8 @@ def linear_model_predict(designmtx, weights):
     return np.array(ys).flatten()
 
 
-def construct_polynomial_approx(degree, weights):
-    """
-    This function creates and returns a prediction function based on a
-    feature mapping and some weights.
-
-    The returned prediction function takes a set of input values and returns
-    the predicted output for each.
-    """
-    # here is a function that is created on the fly from the input feature
-    # mapping and weights
-    def prediction_function(xs):
-#        expanded_xs = np.matrix(expand_to_monomials(xs, degree))
-        ys = xs*np.matrix(weights).reshape((len(weights),1))
-        return np.array(ys).flatten()
-    # we return the function reference (handle) itself. This can be used like
-    # any other function
-    return prediction_function
-
-def expand_to_monomials(inputs, degree):
-    """
-    Create a design matrix from a 1d array of input values, where columns
-    of the output are powers of the inputs from 0 to degree (inclusive)
-
-    So if input is: inputs=np.array([x1, x2, x3])  and degree = 4 then
-    output will be design matrix:
-        np.array( [[  1.    x1**1   x1**2   x1**3   x1**4   ]
-                   [  1.    x2**1   x2**2   x2**3   x2**4   ]
-                   [  1.    x3**1   x3**2   x3**3   x3**4   ]])
-    """
-    expanded_inputs = []
-    for i in range(degree+1):
-        expanded_inputs.append(inputs**i)
-    return np.array(expanded_inputs).transpose()
-
-
-def plot_function_and_data(inputs, targets, markersize=5, **kwargs):
-
-#true_func
-    """
-    Plot a function and some associated regression data in a given range
-
-    parameters
-    ----------
-    inputs - the input data
-    targets - the targets
-    true_func - the function to plot
-    markersize (optional) - the size of the markers in the plotted data
-    <for other optional arguments see plot_function>
-
-    returns
-    -------
-    fig - the figure object for the plot
-    ax - the axes object for the plot
-    lines - a list of the line objects on the plot
-    """
-#    fig, ax, lines = plot_function(true_func)
-#    line, = ax.plot(inputs, targets, 'bo', markersize=markersize)
-    line = ax.plot(inputs,targets)
-#    lines.append(line)
-    return fig, ax, line
-
-def plot_function_data_and_approximation(
-        predict_func, inputs, targets, linewidth=3, xlim=None,
-        **kwargs):
-    
-    #4
-    """
-    Plot a function, some associated regression data and an approximation
-    in a given range
-
-    parameters
-    ----------
-    predict_func - the approximating function
-    inputs - the input data
-    targets - the targets
-    true_func - the true function
-    <for optional arguments see plot_function_and_data>
-
-    returns
-    -------
-    fig - the figure object for the plot
-    ax - the axes object for the plot
-    lines - a list of the line objects on the plot
-    """
-    if xlim is None:
-        xlim = (0,1)
-    fig, ax, lines = plot_function_and_data(
-        inputs, targets, linewidth=linewidth, xlim=xlim, **kwargs)
-    #3 ,lines
-    #3true_func
-    xs = np.linspace(0, 1, 101)
-    ys = predict_func(xs)
-    line, = ax.plot(xs, ys, 'r-', linewidth=linewidth)
-    lines.append(line)
-    return fig, ax, lines
-
-
-
-
-
 
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line
     main()
- 
+

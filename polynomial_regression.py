@@ -40,6 +40,28 @@ with open('validation_data.csv', 'r') as csvfile1:
 # data is  of type list
 validation_data_as_array = np.array(validation_data)
 
+
+
+def main():
+    """
+    This function contains example code that demonstrates how to use the 
+    functions defined in poly_fit_base for fitting polynomial curves to data.
+    """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def expand_to_monomials(inputs, degree):
     # create a list of the all inputs raise to each possible power
     expanded_inputs = []
@@ -169,7 +191,7 @@ def evaluate_degree(reg_param, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
     train_inputs =  training_data_as_array[:,0:11]
     train_targets = training_data_as_array[:,11:12]
     test_inputs = validation_data_as_array[:,0:11]
-    test_targets = validation_data_as_array[:11:12]
+    test_targets = validation_data_as_array[:,11:12]
     # 
     train_errors = []
     test_errors = []
@@ -184,7 +206,14 @@ def evaluate_degree(reg_param, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
     plot_train_test_errors("degree", degree_sequence, train_errors, test_errors)
     plt.show()
 
-
-
-
 evaluate_degree(None)
+
+
+
+
+
+if __name__ == '__main__':
+    # this bit only runs when this script is called from the command line
+    main()
+
+
