@@ -27,7 +27,7 @@ training_data_as_array = np.array(training_data)
 
 
 
-with open('validation_data.csv', 'r') as csvfile1:
+with open('test_data.csv', 'r') as csvfile1:
         datareader = csv.reader(csvfile1, delimiter=',')
         header = next(datareader)
         validation_data = []
@@ -38,7 +38,7 @@ with open('validation_data.csv', 'r') as csvfile1:
             validation_data.append(row_of_floats)
 
 # data is  of type list
-validation_data_as_array = np.array(validation_data)
+test_data_as_array = np.array(validation_data)
 
 
 
@@ -47,13 +47,6 @@ def main():
     This function contains example code that demonstrates how to use the 
     functions defined in poly_fit_base for fitting polynomial curves to data.
     """
-
-
-
-
-
-
-
 
 
 
