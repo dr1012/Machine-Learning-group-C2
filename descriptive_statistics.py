@@ -3,6 +3,8 @@ import numpy as np
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
+from matplotlib import cm as cm
+import pandas as pd
 
 #used only for visual representation of distribution 
 from scipy.stats import norm
@@ -72,27 +74,13 @@ def main():
                     color='dimgrey', rotation=90)
     
     plt.title('Measure of Central Tendency: variable means')
-    fig.savefig('Measure of Central Tendency - variable means.pdf', bbox_inches = 'tight')
-
-    plt.show()
+#    fig.savefig('Measure of Central Tendency - variable means.pdf', bbox_inches = 'tight')
+#
+#    plt.show()
         
 
 #__________________determining the variables' dispersion_______________________
     
-    
-    
-   
-
-## read data from a text file. One number per line
-#arch = "test/Log(2)_ACRatio.txt"
-#datos = []
-#for item in open(arch,'r'):
-#    item = item.strip()
-#    if item != '':
-#        try:
-#            datos.append(float(item))
-#        except ValueError:
-#            pass
 
     fig2, ax = plt.subplots() 
 
@@ -113,24 +101,53 @@ def main():
         plt.xlabel(varname)
         plt.ylabel('values of observations')
         plt.title(r'$\mathrm{Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
-        fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
-        plt.grid(True)
-        
-        plt.show()
-        
+#        fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
+#        plt.grid(True)
+#        
+#        plt.show()
+            
     
     
-    
+#__________________determining the variables' association______________________
 
     
+    df = pd.read_csv('winequality-red-commas.csv')
+
+#    correlation_matrix(df)
     
-
-
+    fig, ax = plt.subplots()
+    
+    plt.matshow(df.corr(),interpolation="none")
+    plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
+    plt.yticks(range(len(df.columns)), df.columns,fontsize=10)
+    plt.colorbar() 
+    
+    plt.suptitle('Variable Correlation Matrix', y= 0.1)
+    
+    fig.savefig("Variable Correlation Matrix.pdf")
+    plt.show()
     
     
-
-
-
+    
+#    
+#def correlation_matrix(df):
+#
+#    fig = plt.figure()
+#    ax1 = fig.add_subplot(111)
+#    cmap = cm.get_cmap('jet', 100)
+#    cax = ax1.imshow(df.corr(), extent=[0,1,0,1],origin='lower',interpolation="bilinear", cmap=cmap)
+#
+#    ax1.grid(True)
+#    plt.title('Feature Correlation')
+#
+#    ax1.set_xticklabels(header,fontsize=10, rotation=90)
+#    ax1.set_yticklabels(header,fontsize=10)
+#    # Add colorbar, make sure to specify tick locations to match desired ticklabels
+#    fig.colorbar(cax)
+#    fig.savefig("test.pdf")
+#    
+#    plt.show()
+#
 
 
 if __name__ == '__main__':
