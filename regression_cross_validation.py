@@ -136,6 +136,7 @@ def evaluate_scale(inputs, targets, folds, centres, reg_param, scales=None):
     ax.fill_between(scales, lower, upper, alpha=0.2, color='r')
     ax.set_xscale('log')
 
+
 def evaluate_num_centres(
         inputs, targets, folds, scale, reg_param, num_centres_sequence=None):
     """
@@ -226,10 +227,12 @@ def main():
 
     # evaluate then plot the performance of different reg params 
     evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
+
     # evaluate then plot the performance of different scales
     evaluate_scale(inputs, targets, folds, default_centres, default_reg_param)
     # evaluate then plot the performance of different numbers of basis
     # function centres.
+
     evaluate_num_centres(inputs, targets, folds, default_scale, default_reg_param)
 
     plt.show()

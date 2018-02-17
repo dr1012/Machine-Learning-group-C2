@@ -72,8 +72,11 @@ def main():
 
     #root mean squared error (to make comparison valid across differently sized data sets)
     Rmse = np.sqrt(2*mse/len(data_as_array))
-    print(Rmse)
     
+#    print(inputs.shape)
+    
+    results = polyfit(inputs, targets, degree)
+    print(results)
 
     #plot a feature's inputs and targets and interlay the prediction line
     x = data_as_array[:,9]
@@ -89,6 +92,9 @@ def main():
 
     fig.savefig("linear_regression.pdf", fmt="pdf")    
     plt.show()
+    
+    
+    
     
     
     #______________________________  TEST _____________________________________
@@ -110,7 +116,6 @@ def main():
 
     print(test_mse)
     print(test_Rmse)
-
 
 
 def ml_weights(inputmtx, targets):
@@ -140,6 +145,36 @@ def regularised_ml_weights(
 def linear_model_predict(designmtx, weights):
     ys = np.matrix(designmtx)*np.matrix(weights).reshape((len(weights),1))
     return np.array(ys).flatten()
+
+
+# Polynomial Regression
+def polyfit(inputs, y, degree):
+    results = {}
+    r2Results = []
+
+
+    for i in range(10):
+
+        x = inputs[:,i]
+        coeffs = np.polyfit(x, y, degree)
+        
+        print(coeffs)
+        
+         # Polynomial Coefficients
+        results['polynomial'] = coeffs.tolist()
+    
+        # r-squared
+        p = np.poly1d(coeffs)
+        # fit values, and mean
+        yhat = p(x)                         # or [p(z) for z in x]
+        ybar = np.sum(y)/len(y)          # or sum(y)/len(y)
+        ssreg = np.sum((yhat-ybar)**2)   # or sum([ (yihat - ybar)**2 for yihat in yhat])
+        sstot = np.sum((y - ybar)**2)    # or sum([ (yi - ybar)**2 for yi in y])
+        results['determination'] = ssreg / sstot
+        r2Results.append(ssreg/sstot)
+        
+    print(r2Results)
+    return results
 
 
 def construct_polynomial_approx(degree, weights):

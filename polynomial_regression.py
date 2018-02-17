@@ -37,7 +37,9 @@ with open('training_data.csv', 'r') as csvfile:
 # data is  of type list
 training_data_as_array = np.array(training_data)
 
+
 with open('validation_data.csv', 'r') as csvfile1:
+
         datareader = csv.reader(csvfile1, delimiter=',')
         header = next(datareader)
         validation_data = []
@@ -47,7 +49,7 @@ with open('validation_data.csv', 'r') as csvfile1:
             validation_data.append(row_of_floats)
 
 # data is  of type list
-validation_data_as_array = np.array(validation_data)
+test_data_as_array = np.array(validation_data)
 
 
 with open('winequality-red-commas.csv', 'r') as csvfile1:
@@ -97,6 +99,7 @@ def main():
     #retrieve train targets and inputs from data array
     targets = valid_data[:,11]    
     inputs = valid_data[:, [1,2,4,7,8,9,10]]
+
 
 
     # get the cross-validation folds
@@ -161,7 +164,6 @@ def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
     ax.fill_between(reg_params, lower, upper, alpha=0.2, color='r')
     ax.set_xscale('log')
-
 
 
 def expand_to_monomials(inputs, degree):
