@@ -79,41 +79,36 @@ def main():
     N = len(valid_data)
     print(N)
     
+    # specify the centres and scale of some rbf basis functions
+    default_centres = np.linspace(0,1,21)        
+    default_scale = 0.03
+    default_reg_param = 0.08
     
     #non-cross validation version
-    training_inputs = training_data_as_array[:,[]]
-    training_targets = 
-    test_inputs = 
-    test_targets = 
-    
+    train_inputs = training_data_as_array[:, [2,6,7,8,9]]    
+    train_targets = training_data_as_array[:, 11]    
+    test_inputs = validation_data_as_array[:, [2,6,7,8,9]] 
+    test_targets = validation_data_as_array[:, 11]    
+
+    evaluate_degree(default_reg_param, train_inputs, train_targets, test_inputs, test_targets)    
+
+
     
     #retrieve train targets and inputs from data array
     targets = valid_data[:,11]    
     inputs = valid_data[:, [1,2,4,7,8,9,10]]
-    
-    
 
-    # specify the centres and scale of some rbf basis functions
-    default_centres = np.linspace(0,1,21)
-    
-#    print(default_centres)
-    
-    default_scale = 0.03
-    default_reg_param = 0.08
 
     # get the cross-validation folds
     num_folds = 5
     folds = create_cv_folds(N, num_folds)
 
-
     #evaluate then plot the performance of different coefficient estimates
 #    evaluate_linReg_weights(inputs, targets, folds, default_centres, default_scale)
     
-    evaluate_degree(default_reg_param,inputs, targets)
-    evaluate_degree()
 
     # evaluate then plot the performance of different reg params 
-    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
+#    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
 
 
 def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
@@ -166,11 +161,6 @@ def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
     ax.fill_between(reg_params, lower, upper, alpha=0.2, color='r')
     ax.set_xscale('log')
-
-
-
-
-
 
 
 
@@ -319,7 +309,7 @@ def evaluate_degree(reg_param,train_inputs,train_targets,test_inputs,test_target
     plot_train_test_errors("degree", degree_sequence, train_errors, test_errors)
     plt.show()
 
-evaluate_degree(None)
+#evaluate_degree(None)
 
 
 
