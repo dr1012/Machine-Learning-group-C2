@@ -42,12 +42,13 @@ validation_data_as_array = np.array(validation_data)
 
 
 
+
+
+
 def main():
     """
-    This function contains example code that demonstrates how to use the 
-    functions defined in poly_fit_base for fitting polynomial curves to data.
-    """
 
+    """
 
 
 
