@@ -136,14 +136,13 @@ def explore_var_association():
     df = pd.read_csv('winequality-red-commas.csv')
     
     fig3, ax = plt.subplots()    
-    plt.matshow(df.corr(),interpolation="none")
+    plt.matshow(df.corr(),interpolation="nearest")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
     plt.yticks(range(len(df.columns)), df.columns,fontsize=10)
     plt.colorbar() 
-    plt.suptitle('Variable Correlation Matrix', y= 0.1)
-    plt.tight_layout(pad=2, w_pad=20, h_pad=20)
-    
-    plt.savefig("Variable Correlation Matrix.pdf")
+    plt.suptitle('Variable Correlation Matrix', y= 0.1, x = .375)
+
+    plt.savefig("Variable Correlation Matrix.pdf", bbox_inches='tight')
 
     
     
