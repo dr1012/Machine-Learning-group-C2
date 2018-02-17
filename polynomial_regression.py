@@ -3,8 +3,6 @@ import numpy as np
 import numpy.random as random
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
-import operator
-import math
 
 # for performing regression
 from regression_models import construct_rbf_feature_mapping
@@ -52,18 +50,122 @@ with open('validation_data.csv', 'r') as csvfile1:
 validation_data_as_array = np.array(validation_data)
 
 
+with open('winequality-red-commas.csv', 'r') as csvfile1:
+        datareader = csv.reader(csvfile1, delimiter=',')
+        header = next(datareader)
+        validation_data = []
+    
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            validation_data.append(row_of_floats)
+
+# data is  of type list
+valid_data = np.array(validation_data)
+
+
+
 
 
 def main():
     """
-
+    Fits k-fold polynomial regression models to data
+    Evaluates the predictive performance of models via Root of Mean Square Error
     """
 
 
 
+    # choose number of data-points and sample a pair of vectors: the input
+    # values and the corresponding target values
+    N = len(valid_data)
+    print(N)
+    
+    
+    #non-cross validation version
+    training_inputs = training_data_as_array[:,[]]
+    training_targets = 
+    test_inputs = 
+    test_targets = 
+    
+    
+    #retrieve train targets and inputs from data array
+    targets = valid_data[:,11]    
+    inputs = valid_data[:, [1,2,4,7,8,9,10]]
+    
+    
+
+    # specify the centres and scale of some rbf basis functions
+    default_centres = np.linspace(0,1,21)
+    
+#    print(default_centres)
+    
+    default_scale = 0.03
+    default_reg_param = 0.08
+
+    # get the cross-validation folds
+    num_folds = 5
+    folds = create_cv_folds(N, num_folds)
 
 
+    #evaluate then plot the performance of different coefficient estimates
+#    evaluate_linReg_weights(inputs, targets, folds, default_centres, default_scale)
+    
+    evaluate_degree(default_reg_param,inputs, targets)
+    evaluate_degree()
 
+    # evaluate then plot the performance of different reg params 
+    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
+
+
+def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
+    """
+      Evaluate then plot the performance of different regularisation parameters
+    """
+    # create the feature mappoing and then the design matrix 
+    feature_mapping = construct_rbf_feature_mapping(centres,scale) 
+    designmtx = feature_mapping(inputs) 
+    # choose a range of regularisation parameters
+    if reg_params is None:
+        reg_params = np.logspace(-2,0)
+    num_values = reg_params.size
+    num_folds = len(folds)
+    # create some arrays to store results
+    train_mean_errors = np.zeros(num_values)
+    test_mean_errors = np.zeros(num_values)
+    train_stdev_errors = np.zeros(num_values)
+    test_stdev_errors = np.zeros(num_values)
+
+    for r, reg_param in enumerate(reg_params):
+        # r is the index of reg_param, reg_param is the regularisation parameter
+        # cross validate with this regularisation parameter
+        train_errors, test_errors = cv_evaluation_linear_model(
+            designmtx, targets, folds, reg_param=reg_param)
+        # we're interested in the average (mean) training and testing errors
+        train_mean_error = np.mean(train_errors)
+        test_mean_error = np.mean(test_errors)
+        train_stdev_error = np.std(train_errors)
+        test_stdev_error = np.std(test_errors)
+        # store the results
+        train_mean_errors[r] = train_mean_error
+        test_mean_errors[r] = test_mean_error
+        train_stdev_errors[r] = train_stdev_error
+        test_stdev_errors[r] = test_stdev_error
+
+    # Now plot the results
+    fig, ax = plot_train_test_errors(
+        "$\lambda$", reg_params, train_mean_errors, test_mean_errors)
+    # Here we plot the error ranges too: mean plus/minus 1 standard error.
+    # 1 standard error is the standard deviation divided by sqrt(n) where
+    # n is the number of samples. 
+    # (There are other choices for error bars.)
+    # train error bars
+    lower = train_mean_errors - train_stdev_errors/np.sqrt(num_folds)
+    upper = train_mean_errors + train_stdev_errors/np.sqrt(num_folds)
+    ax.fill_between(reg_params, lower, upper, alpha=0.2, color='b')
+    # test error bars
+    lower = test_mean_errors - test_stdev_errors/np.sqrt(num_folds)
+    upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
+    ax.fill_between(reg_params, lower, upper, alpha=0.2, color='r')
+    ax.set_xscale('log')
 
 
 
@@ -184,7 +286,7 @@ def train_and_test(
 
 
 
-def evaluate_degree(reg_param, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
+def evaluate_degree(reg_param,train_inputs,train_targets,test_inputs,test_targets, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
     """
     Evaluates and plots test & train error (RMSE) for different degrees of
     polynomial fit to synthetic data.
@@ -198,11 +300,12 @@ def evaluate_degree(reg_param, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
     degree_sequence - specifies which degrees of polynomial to fit to the data
     """
     # sample  train and test data
-    train_inputs =  training_data_as_array[:,0:11]
-    train_targets = training_data_as_array[:,11:12]
-    test_inputs = validation_data_as_array[:,0:11]
-    test_targets = validation_data_as_array[:,11:12]
+#    train_inputs =  training_data_as_array[:,0:11]
+#    train_targets = training_data_as_array[:,11:12]
+#    test_inputs = validation_data_as_array[:,0:11]
+#    test_targets = validation_data_as_array[:,11:12]
     # 
+    
     train_errors = []
     test_errors = []
     for degree in degree_sequence:
