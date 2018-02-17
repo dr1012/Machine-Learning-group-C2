@@ -39,10 +39,10 @@ def main():
     """
 
     #determining the variables' mean
-#    explore_var_means()
+    explore_var_means()
     
     #determining the variables' dispersion
-#    explore_var_dispersion()    
+    explore_var_dispersion()    
 
     #determining the variables' association
     explore_var_association()
@@ -134,7 +134,6 @@ def explore_var_association():
     """
         
     df = pd.read_csv('winequality-red-commas.csv')
-    
     fig3, ax = plt.subplots()    
     plt.matshow(df.corr(),interpolation="nearest")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
@@ -145,27 +144,6 @@ def explore_var_association():
     plt.savefig("Variable Correlation Matrix.pdf", bbox_inches='tight')
 
     
-    
-#    
-#def correlation_matrix(df):
-#
-#    fig = plt.figure()
-#    ax1 = fig.add_subplot(111)
-#    cmap = cm.get_cmap('jet', 100)
-#    cax = ax1.imshow(df.corr(), extent=[0,1,0,1],origin='lower',interpolation="bilinear", cmap=cmap)
-#
-#    ax1.grid(True)
-#    plt.title('Feature Correlation')
-#
-#    ax1.set_xticklabels(header,fontsize=10, rotation=90)
-#    ax1.set_yticklabels(header,fontsize=10)
-#    # Add colorbar, make sure to specify tick locations to match desired ticklabels
-#    fig.colorbar(cax)
-#    fig.savefig("test.pdf")
-#    
-#    plt.show()
-#
-
 
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line
