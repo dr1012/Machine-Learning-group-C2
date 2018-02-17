@@ -18,6 +18,10 @@ from regression_train_test import train_and_test
 from regression_train_test import create_cv_folds
 from regression_train_test import cv_evaluation_linear_model
 
+#importing methods for linear regression model coefficient estimations
+
+
+
 
 def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     """
@@ -36,7 +40,7 @@ def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     test_mean_errors = np.zeros(num_values)
     train_stdev_errors = np.zeros(num_values)
     test_stdev_errors = np.zeros(num_values)
-    #    
+
     for r, reg_param in enumerate(reg_params):
         # r is the index of reg_param, reg_param is the regularisation parameter
         # cross validate with this regularisation parameter
@@ -78,18 +82,28 @@ def evaluate_scale(inputs, targets, folds, centres, reg_param, scales=None):
     # choose a range of scales
     if scales is None:
         scales = np.logspace(-2.5,-0.5)
-    #
     num_values = scales.size
+    print(num_values)
     num_folds = len(folds)
+
     # create some arrays to store results
     train_mean_errors = np.zeros(num_values)
+
+    #testing
+    print(train_mean_errors)
+    
     test_mean_errors = np.zeros(num_values)
     train_stdev_errors = np.zeros(num_values)
     test_stdev_errors = np.zeros(num_values)
     #    
     for s, scale in enumerate(scales):
         feature_mapping = construct_rbf_feature_mapping(centres,scale)
+        
+        print(feature_mapping)
+        
         designmtx = feature_mapping(inputs) 
+        
+        print(designmtx)
         # r is the index of reg_param, reg_param is the regularisation parameter
         # cross validate with this regularisation parameter
         train_errors, test_errors = cv_evaluation_linear_model(
@@ -178,22 +192,13 @@ def evaluate_num_centres(
     # train error bars
     lower = train_mean_errors - train_stdev_errors/np.sqrt(num_folds)
     upper = train_mean_errors + train_stdev_errors/np.sqrt(num_folds)
-    ax.fill_between(num_centres_sequence, lower, upper, alpha=0.9, color='b')
+    ax.fill_between(num_centres_sequence, lower, upper, alpha=0.2, color='b')
     # test error bars
     lower = test_mean_errors - test_stdev_errors/np.sqrt(num_folds)
     upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
-    ax.fill_between(num_centres_sequence, lower, upper, alpha=0.9, color='r')
-
-
-def evaluate_linReg_weights(inputs, targets, folds, default_linReg_weights=None):
-
+    ax.fill_between(num_centres_sequence, lower, upper, alpha=0.2, color='r')
     
     
-    
-
-
-
-
 
 def main():
     """
@@ -208,6 +213,9 @@ def main():
 
     # specify the centres and scale of some rbf basis functions
     default_centres = np.linspace(0,1,21)
+    
+#    print(default_centres)
+    
     default_scale = 0.03
     default_reg_param = 0.08
 
@@ -217,17 +225,17 @@ def main():
 
 
     #evaluate then plot the performance of different coefficient estimates
-    evaluate_linReg_weights(inputs, targets, folds, default_centres, default_scale)
+#    evaluate_linReg_weights(inputs, targets, folds, default_centres, default_scale)
     
 
     # evaluate then plot the performance of different reg params
-    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
+#    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
     # evaluate then plot the performance of different scales
     evaluate_scale(inputs, targets, folds, default_centres, default_reg_param)
     # evaluate then plot the performance of different numbers of basis
     # function centres.
-    evaluate_num_centres(
-        inputs, targets, folds, default_scale, default_reg_param)
+#    evaluate_num_centres(
+#        inputs, targets, folds, default_scale, default_reg_param)
 
     plt.show()
 
