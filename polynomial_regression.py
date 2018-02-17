@@ -6,17 +6,31 @@ import matplotlib.pyplot as plt
 import operator
 import math
 
+# for performing regression
+from regression_models import construct_rbf_feature_mapping
+from regression_models import construct_feature_mapping_approx
+# for plotting results
+from regression_plot import plot_train_test_errors
+# for evaluating fit
+from regression_train_test import train_and_test
+# two new functions for cross validation
+from regression_train_test import create_cv_folds
+from regression_train_test import cv_evaluation_linear_model
 
 from poly_fit_plot import plot_train_test_errors
 from poly_fit_plot import plot_function
 from poly_fit_plot import plot_function_and_data
 from poly_fit_plot import plot_function_data_and_approximation
 
+#______________________________________________________________________________
+
+
+
+
 with open('training_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         training_data = []
-     
 
         for row in datareader:
             row_of_floats = list(map(float, row))
@@ -25,22 +39,17 @@ with open('training_data.csv', 'r') as csvfile:
 # data is  of type list
 training_data_as_array = np.array(training_data)
 
-
-
 with open('validation_data.csv', 'r') as csvfile1:
         datareader = csv.reader(csvfile1, delimiter=',')
         header = next(datareader)
         validation_data = []
-     
-
+    
         for row in datareader:
             row_of_floats = list(map(float, row))
             validation_data.append(row_of_floats)
 
 # data is  of type list
 validation_data_as_array = np.array(validation_data)
-
-
 
 
 

@@ -40,6 +40,20 @@ with open('test_data.csv', 'r') as csvfile:
 
         # data is  of type list
         test_data_as_array = np.array(data)
+        
+
+#to test how well the cross validation works with the entire data set
+with open('winequality-red-commas.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+        
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
+
+        # data is  of type list
+        cross_val_dataset = np.array(data)   
 
 
 def main():
@@ -51,13 +65,14 @@ def main():
     #selected features: volatile acidity, citric acid, chlorides, density, pH, 
     # sulphates, alcohol
 
-    #statsmodels method to fit a regression model to selected features
-    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,10], "B": data_as_array[:,1] , "C": data_as_array[:,2]
-    , "D": data_as_array[:,4], "E": data_as_array[:,7], "F": data_as_array[:,8], "G": data_as_array[:,9]})
-    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G", data=df).fit()
-    print(result.params)
-    print(result.summary())
+#    #statsmodels method to fit a regression model to selected features
+#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,10], "B": data_as_array[:,1] , "C": data_as_array[:,2]
+#    , "D": data_as_array[:,4], "E": data_as_array[:,7], "F": data_as_array[:,8], "G": data_as_array[:,9]})
+#    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G", data=df).fit()
+#    print(result.params)
+#    print(result.summary())
 
+    
     
     #manual version of calculating RMSE
     degree = 1
