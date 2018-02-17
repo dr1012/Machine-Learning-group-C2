@@ -38,9 +38,27 @@ def main():
     It investigates measures for central tendency, dispersion and association
     """
 
+    #determining the variables' mean
+#    explore_var_means()
+    
+    #determining the variables' dispersion
+#    explore_var_dispersion()    
+
+    #determining the variables' association
+    explore_var_association()
+
+
+
 
 #______________________determining the variables' mean_________________________
 
+
+
+
+def explore_var_means():
+    """
+    Explores the mean of the variables
+    """
     
     fig, ax = plt.subplots() 
     
@@ -50,10 +68,13 @@ def main():
         mean = data_array[:,i].mean()
         mean_array.append(mean)
 
-    
-    objects = (header[0],header[1],header[2],header[3],header[4],header[5],header[6],header[7],header[8],header[9],header[10],header[11])
+    #store the variable names in the objects array
+    objects = []
+    for i in range(len(header)):
+        objects.append(header[i])
+
+    print(objects)
     y_pos = np.arange(len(objects))
-    
     plt.bar(y_pos, mean_array, align='center', alpha=0.5)
     plt.xticks(y_pos, objects, rotation=90)
 
@@ -74,14 +95,15 @@ def main():
                     color='dimgrey', rotation=90)
     
     plt.title('Measure of Central Tendency: variable means')
-#    fig.savefig('Measure of Central Tendency - variable means.pdf', bbox_inches = 'tight')
-#
-#    plt.show()
+    fig.savefig('Measure of Central Tendency - variable means.pdf', bbox_inches = 'tight')
+    plt.show()
         
-
-#__________________determining the variables' dispersion_______________________
     
-
+def explore_var_dispersion():
+    """
+    Explores the dispersion of the variables
+    """
+    
     fig2, ax = plt.subplots() 
 
     for i in range(11):
@@ -101,32 +123,28 @@ def main():
         plt.xlabel(varname)
         plt.ylabel('values of observations')
         plt.title(r'$\mathrm{Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
-#        fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
+        fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
 #        plt.grid(True)
-#        
-#        plt.show()
-            
+        plt.show()        
     
-    
-#__________________determining the variables' association______________________
 
-    
+def explore_var_association():
+    """
+    Explores the association of the variables
+    """
+        
     df = pd.read_csv('winequality-red-commas.csv')
-
-#    correlation_matrix(df)
     
-    fig, ax = plt.subplots()
-    
+    fig3, ax = plt.subplots()    
     plt.matshow(df.corr(),interpolation="none")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
     plt.yticks(range(len(df.columns)), df.columns,fontsize=10)
     plt.colorbar() 
-    
     plt.suptitle('Variable Correlation Matrix', y= 0.1)
+    plt.tight_layout(pad=2, w_pad=20, h_pad=20)
     
-    fig.savefig("Variable Correlation Matrix.pdf")
-    plt.show()
-    
+    plt.savefig("Variable Correlation Matrix.pdf")
+
     
     
 #    
