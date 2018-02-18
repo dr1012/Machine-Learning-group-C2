@@ -7,21 +7,27 @@ import matplotlib.pyplot as plt
 # for performing regression
 from regression_models import construct_rbf_feature_mapping
 from regression_models import construct_feature_mapping_approx
+from regression_models import construct_polynomial_approx
+from regression_models import ml_weights
+from regression_models import regularised_ml_weights
+
 # for plotting results
 from regression_plot import plot_train_test_errors
+
 # for evaluating fit
 from regression_train_test import train_and_test
+
 # two new functions for cross validation
 from regression_train_test import create_cv_folds
 from regression_train_test import cv_evaluation_linear_model
 
+# for plotting models
 from poly_fit_plot import plot_train_test_errors
 from poly_fit_plot import plot_function
 from poly_fit_plot import plot_function_and_data
 from poly_fit_plot import plot_function_data_and_approximation
 
 #______________________________________________________________________________
-
 
 
 
@@ -34,7 +40,7 @@ with open('training_data.csv', 'r') as csvfile:
             row_of_floats = list(map(float, row))
             training_data.append(row_of_floats)
 
-# data is  of type list
+    # data is  of type list
 training_data_as_array = np.array(training_data)
 
 
@@ -48,7 +54,7 @@ with open('validation_data.csv', 'r') as csvfile1:
             row_of_floats = list(map(float, row))
             validation_data.append(row_of_floats)
 
-# data is  of type list
+    # data is  of type list
 test_data_as_array = np.array(validation_data)
 
 
@@ -61,10 +67,8 @@ with open('winequality-red-commas.csv', 'r') as csvfile1:
             row_of_floats = list(map(float, row))
             validation_data.append(row_of_floats)
 
-# data is  of type list
+    # data is  of type list
 valid_data = np.array(validation_data)
-
-
 
 
 
@@ -74,12 +78,11 @@ def main():
     Evaluates the predictive performance of models via Root of Mean Square Error
     """
 
-
-
     # choose number of data-points and sample a pair of vectors: the input
     # values and the corresponding target values
     N = len(valid_data)
-    print(N)
+    
+    degree = 9
     
     # specify the centres and scale of some rbf basis functions
     default_centres = np.linspace(0,1,21)        
@@ -92,26 +95,41 @@ def main():
     test_inputs = validation_data_as_array[:, [2,6,7,8,9]] 
     test_targets = validation_data_as_array[:, 11]    
 
-    evaluate_degree(default_reg_param, train_inputs, train_targets, test_inputs, test_targets)    
-
-
+#    evaluate_degree(default_reg_param, train_inputs, train_targets, test_inputs, test_targets)    
     
     #retrieve train targets and inputs from data array
     targets = valid_data[:,11]    
-    inputs = valid_data[:, [1,2,4,7,8,9,10]]
-
-
+    inputs = valid_data[:, [2,6,7,8,9]]
 
     # get the cross-validation folds
     num_folds = 5
     folds = create_cv_folds(N, num_folds)
 
-    #evaluate then plot the performance of different coefficient estimates
-#    evaluate_linReg_weights(inputs, targets, folds, default_centres, default_scale)
-    
-
     # evaluate then plot the performance of different reg params 
 #    evaluate_reg_param(inputs, targets, folds, default_centres, default_scale)
+
+    # convert our inputs (we just sampled) into a matrix where each row
+    # is a vector of monomials of the corresponding input
+    processed_inputs = expand_to_monomials(inputs, degree)
+  
+    
+    # find the weights that fit the data in a least squares way
+    weights = ml_weights(inputs, targets)
+
+    # use weights to create a function that takes inputs and returns predictions
+    # in python, functions can be passed just like any other object
+    # those who know MATLAB might call this a function handle
+
+    approx_func = construct_polynomial_approx(degree, weights)
+    fig, ax, hs = plot_function_data_and_approximation(
+        approx_func, inputs, targets)
+
+    ax.set_xticks([])
+    ax.set_yticks([])
+    fig.tight_layout()
+    fig.savefig("regression_polynomial_degree%d.pdf" % degree, fmt="pdf")
+
+    plt.show()
 
 
 def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
@@ -276,7 +294,31 @@ def train_and_test(
     test_error = root_mean_squared_error(test_targets, trained_func(test_inputs))
     return train_error, test_error
 
+#def plot_function(true_func):
+#    fig = plt.figure()
+#    ax = fig.add_subplot(1,1,1)
+#    xs = np.linspace(0, 1, 101)
+#    true_ys = true_func(xs)
+#    ax.plot(xs, true_ys, 'g-', linewidth=3)
+#    ax.set_xlim(-0.05, 1.05)
+#    ax.set_ylim(-1.5, 1.5)
+#    return fig, ax
 
+def plot_function_and_data(inputs, targets):
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+#    fig, ax = plot_function(true_func)
+    ax.plot(inputs, targets, 'bo', markersize=3)
+    return fig, ax
+
+def plot_function_data_and_approximation(
+        predict_func, inputs, targets):
+    fig, ax = plot_function_and_data(inputs, targets)
+    xs = inputs
+    ys = predict_func
+    ax.plot(xs, ys, 'r-', linewidth=3)
+    return fig, ax
 
 def evaluate_degree(reg_param,train_inputs,train_targets,test_inputs,test_targets, degree_sequence=[0,1,2,3,4,5,6,7,8,9,10,11]):
     """
@@ -312,8 +354,6 @@ def evaluate_degree(reg_param,train_inputs,train_targets,test_inputs,test_target
     plt.show()
 
 #evaluate_degree(None)
-
-
 
 
 
