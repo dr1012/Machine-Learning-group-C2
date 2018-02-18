@@ -6,7 +6,6 @@ import matplotlib.patches as mpatches
 import pandas as pd
 
 
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
