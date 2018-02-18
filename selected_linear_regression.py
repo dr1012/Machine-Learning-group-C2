@@ -92,7 +92,8 @@ def main():
 
     #retrieve train targets and inputs from data array
     targets = cross_val_dataset[:,11]    
-    inputs = cross_val_dataset[:, [2,6,7,8,9]]
+#    inputs = cross_val_dataset[:, [2,6,7,8,9]]
+    inputs = cross_val_dataset[:, [1,2,4,8,9,10]]
     
     # get the cross-validation folds
     N = len(cross_val_dataset)
@@ -202,10 +203,10 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
         train_errors, test_errors = cv_evaluation_linear_model(
             designmtx, targets, folds)
         
-        print('________________________________________________')
-        print(train_errors)        
-        print(test_errors)
-        print('________________________________________________')
+#        print('________________________________________________')
+#        print(train_errors)        
+#        print(test_errors)
+#        print('________________________________________________')
         # we're interested in the average (mean) training and testing errors
         train_mean_error = np.mean(train_errors)
         test_mean_error = np.mean(test_errors)
@@ -223,10 +224,10 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
 #        print(coefficientindices)
 #    print(len(coefficientindices))
         
-    print(train_mean_errors)
-    print(test_mean_errors)
-    print(train_stdev_errors)
-    print(test_stdev_errors)
+#    print(train_mean_errors)
+#    print(test_mean_errors)
+#    print(train_stdev_errors)
+#    print(test_stdev_errors)
     
         
 
@@ -241,13 +242,15 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     # using the train_errors instead of train_mean_errors because the values are all the same
     #Hypothesis: the underlying coefficients don't change between the fitting runs in the for loop and therefore all 5 runs produce the same result
 
+    ax.xaxis.set_ticks([0,1,2,3,4,5,6,7,8,9])
+
     # TRAIN error bars
 #    lower = train_mean_errors - train_stdev_errors/np.sqrt(num_folds)
     lower = train_errors - train_stdev_errors/np.sqrt(num_folds)
 #    upper = train_mean_errors + train_stdev_errors/np.sqrt(num_folds)
     upper = train_errors + train_stdev_errors/np.sqrt(num_folds)
-    ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='b')
-    ax.set_ylim([.7,.8])
+    ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='b', linewidth=1)
+#    ax.set_ylim(lower - .05, upper +.05)
 
 #    ax.set_xticklabels([1,2,3,4,5])
     
@@ -256,10 +259,8 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     lower = test_errors - test_stdev_errors/np.sqrt(num_folds)
 #    upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
     upper = test_errors + test_stdev_errors/np.sqrt(num_folds)
-    ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='r')
-    
-    
- 
+    ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='r', linewidth=1)
+
 
 def ml_weights(inputmtx, targets):
     """
