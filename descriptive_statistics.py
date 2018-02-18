@@ -30,8 +30,6 @@ with open('winequality-red-commas.csv', 'r') as csvfile:
         # data is  of type list
         data_array = np.array(data)
         
-        
-        
 def main():
     """
     This file contains code that seeks to explore descriptive statistics about the data set at hand. 
@@ -48,12 +46,7 @@ def main():
     explore_var_association()
 
 
-
-
 #______________________determining the variables' mean_________________________
-
-
-
 
 def explore_var_means():
     """
@@ -104,29 +97,32 @@ def explore_var_dispersion():
     Explores the dispersion of the variables
     """
     
-    fig2, ax = plt.subplots() 
-
-    for i in range(11):
+    for i in range(len(data_array[0])):
+       
+        fig2, ax = plt.subplots()  
         # best fit of data
         (mu, sigma) = norm.fit(data_array[:,i])
         
-        # the histogram of the data
-        n, bins, patches = plt.hist(data_array[:,i], 60, normed=1, facecolor='darkblue', alpha=0.75)
+        # the normalized histogram of the data
+#        n, bins, patches = plt.hist(data_array[:,i], 60, normed=1,  facecolor='darkblue', alpha=0.75)
+#        the non-normalized histogram of the data
+        n, bins, patches = plt.hist(data_array[:,i], 60, facecolor='darkblue', alpha=0.75)
         
         # add a 'best fit' line
         y = mlab.normpdf( bins, mu, sigma)
-        l = plt.plot(bins, y, 'r--', linewidth=2)
+        plt.plot(bins,y, 'r--', linewidth=1)
         
         varname = header[i]
         
-        #plot
+        #plotting the histogram
         plt.xlabel(varname)
-        plt.ylabel('values of observations')
+#        plt.ylabel('Normalized Frequency')
+        plt.ylabel('Frequency')
+#        plt.title(r'$\mathrm{Normalized Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
         plt.title(r'$\mathrm{Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
+#        fig2.savefig('Measure of Dispersion Normalized - %s .pdf' %(varname), bbox_inches = 'tight')
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
-#        plt.grid(True)
         plt.show()        
-    
 
 def explore_var_association():
     """
@@ -135,15 +131,13 @@ def explore_var_association():
         
     df = pd.read_csv('winequality-red-commas.csv')
     fig3, ax = plt.subplots()    
-    plt.matshow(df.corr(),interpolation="nearest")
+    plt.matshow(df.corr(method='spearman'), interpolation="nearest")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
     plt.yticks(range(len(df.columns)), df.columns,fontsize=10)
     plt.colorbar() 
     plt.suptitle('Variable Correlation Matrix', y= 0.1, x = .375)
+    plt.savefig("Variable Correlation Matrix4.pdf", bbox_inches='tight')
 
-    plt.savefig("Variable Correlation Matrix.pdf", bbox_inches='tight')
-
-    
 
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line

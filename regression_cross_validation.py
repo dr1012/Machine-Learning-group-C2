@@ -21,8 +21,6 @@ from regression_train_test import cv_evaluation_linear_model
 #importing methods for linear regression model coefficient estimations
 
 
-
-
 def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     """
       Evaluate then plot the performance of different regularisation parameters
