@@ -80,9 +80,32 @@ def main():
     # sulphates, alcohol
 
     #statsmodels method to fit a regression model to selected features
-#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,10], "B": data_as_array[:,1] , "C": data_as_array[:,2]
-#    , "D": data_as_array[:,4], "E": data_as_array[:,7], "F": data_as_array[:,8], "G": data_as_array[:,9]})
-#    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G", data=df).fit()
+#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,10], 
+#                       "B": data_as_array[:,1] , "C": data_as_array[:,2], 
+#                       "D": data_as_array[:,4], "E": data_as_array[:,7], 
+#                       "F": data_as_array[:,8], "G": data_as_array[:,9]})
+#    
+#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,1], 
+#                           "B": data_as_array[:,2] , "C": data_as_array[:,4], 
+#                           "D": data_as_array[:,8], "E": data_as_array[:,9], 
+#                           "F": data_as_array[:,10]})
+
+#    #model with all features included
+#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,1], 
+#                           "B": data_as_array[:,2] , "C": data_as_array[:,3], 
+#                           "D": data_as_array[:,4], "E": data_as_array[:,5], 
+#                           "F": data_as_array[:,6], "G": data_as_array[:,7], 
+#                           "H": data_as_array[:,8], "I": data_as_array[:,9], 
+#                           "F": data_as_array[:,10]})
+    
+#    #model only with alcohol and volatile acidity included
+#    df = pd.DataFrame({"Y": data_as_array[:,11], "A": data_as_array[:,1],"B": data_as_array[:,10]})
+#    
+##    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G", data=df).fit()
+##    result = sm.ols(formula="Y ~ A + B + C + D + E + F", data=df).fit()
+##    result = sm.ols(formula="Y ~ A + B + C + D + E + F + G + H + I", data=df).fit()
+#    result = sm.ols(formula="Y ~ A + B", data=df).fit()
+#
 #    print(result.params)
 #    print(result.summary())
 
@@ -99,50 +122,50 @@ def main():
     N = len(cross_val_dataset)
     num_folds = 5
     folds = create_cv_folds(N, num_folds)
-    
-    print(folds)
 
     #evaluate then plot the performance of different coefficient estimates    
     evaluate_linReg_weights(inputs, targets,folds)
+#    
     
     
     
-    # find the weights that fit the data in a least squares way
-    ml_model_weights = ml_weights(inputs, targets)
-
-    # find the regularised weights that fit the data in a least squares way
-    reg_param = 1
-    ml_model_regularised_weights = regularised_ml_weights(inputs, targets, reg_param)
-                
-    #get prediction (y-value) for the given weights (beta / coefficients)
-    ys = linear_model_predict(inputs, ml_model_weights)
-    ys_reg = linear_model_predict(inputs, ml_model_regularised_weights)
-
-    #TRAINING: sum of squared error
-    mse = np.square(np.subtract(targets, ys)).sum()
-    mse_reg = np.square(np.subtract(targets, ys_reg)).sum()
-
-    #root mean squared error (to make comparison valid across differently sized data sets)
-    Rmse = np.sqrt(2*mse/len(data_as_array))
-
     
-    
-    #______________________________  TEST _____________________________________
-
-    #retrieve targets and inputs from data array
-    test_targets = test_data_as_array[:,11]
-    test_inputs = test_data_as_array[:, [1,2,4,7,8,9,10]]
-
-    #test: get prediction (y-value) for the given weights (beta / coefficients)
-    test_ys = linear_model_predict(test_inputs, ml_model_weights)
-    test_ys_reg = linear_model_predict(test_inputs, ml_model_regularised_weights)
-
-    #test: sum of squared error
-    test_mse = np.square(np.subtract(test_targets, test_ys)).sum()
-    test_mse_regw = np.square(np.subtract(test_targets, test_ys_reg)).sum()    
-    
-    #Root mean square error
-    test_Rmse = np.sqrt(2*test_mse/len(test_data_as_array))
+#    # find the weights that fit the data in a least squares way
+#    ml_model_weights = ml_weights(inputs, targets)
+#
+#    # find the regularised weights that fit the data in a least squares way
+#    reg_param = 1
+#    ml_model_regularised_weights = regularised_ml_weights(inputs, targets, reg_param)
+#                
+#    #get prediction (y-value) for the given weights (beta / coefficients)
+#    ys = linear_model_predict(inputs, ml_model_weights)
+#    ys_reg = linear_model_predict(inputs, ml_model_regularised_weights)
+#
+#    #TRAINING: sum of squared error
+#    mse = np.square(np.subtract(targets, ys)).sum()
+#    mse_reg = np.square(np.subtract(targets, ys_reg)).sum()
+#
+#    #root mean squared error (to make comparison valid across differently sized data sets)
+#    Rmse = np.sqrt(2*mse/len(data_as_array))
+#
+#    
+#    
+#    #______________________________  TEST _____________________________________
+#
+#    #retrieve targets and inputs from data array
+#    test_targets = test_data_as_array[:,11]
+#    test_inputs = test_data_as_array[:, [1,2,4,7,8,9,10]]
+#
+#    #test: get prediction (y-value) for the given weights (beta / coefficients)
+#    test_ys = linear_model_predict(test_inputs, ml_model_weights)
+#    test_ys_reg = linear_model_predict(test_inputs, ml_model_regularised_weights)
+#
+#    #test: sum of squared error
+#    test_mse = np.square(np.subtract(test_targets, test_ys)).sum()
+#    test_mse_regw = np.square(np.subtract(test_targets, test_ys_reg)).sum()    
+#    
+#    #Root mean square error
+#    test_Rmse = np.sqrt(2*test_mse/len(test_data_as_array))
     
 
 

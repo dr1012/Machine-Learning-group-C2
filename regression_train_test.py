@@ -260,4 +260,3 @@ def cv_evaluation_linear_model(
         train_errors[f] = train_error
         test_errors[f] = test_error
     return train_errors, test_errors
-
