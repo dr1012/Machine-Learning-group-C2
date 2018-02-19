@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import operator
 import math
 
-
 from poly_fit_plot import plot_train_test_errors
 from poly_fit_plot import plot_function
 from poly_fit_plot import plot_function_and_data
@@ -47,11 +46,6 @@ def main():
     This function contains example code that demonstrates how to use the 
     functions defined in poly_fit_base for fitting polynomial curves to data.
     """
-
-
-
-
-
 
 
 

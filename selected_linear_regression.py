@@ -110,6 +110,11 @@ def main():
 #    print(result.summary())
 
     
+    
+    #_______________________TRAINING THE MODEL_________________________________
+    
+    
+
     #manual version of calculating RMSE
     degree = 1
 
@@ -124,9 +129,10 @@ def main():
     folds = create_cv_folds(N, num_folds)
 
     #evaluate then plot the performance of different coefficient estimates    
-    evaluate_linReg_weights(inputs, targets,folds)
+    ml_weights = evaluate_linReg_weights(inputs, targets,folds)
 #    
-    
+
+    #evaluate the predictive power of the two subsets of feature combos
     
     
     
@@ -142,8 +148,8 @@ def main():
 #    ys_reg = linear_model_predict(inputs, ml_model_regularised_weights)
 #
 #    #TRAINING: sum of squared error
-#    mse = np.square(np.subtract(targets, ys)).sum()
-#    mse_reg = np.square(np.subtract(targets, ys_reg)).sum()
+#    sse = np.square(np.subtract(targets, ys)).sum()
+#    sse_reg = np.square(np.subtract(targets, ys_reg)).sum()
 #
 #    #root mean squared error (to make comparison valid across differently sized data sets)
 #    Rmse = np.sqrt(2*mse/len(data_as_array))
@@ -196,15 +202,7 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     evaluate then plot the performance of different weight coefficients
     """
     
-     # fix the reg_param
-#    reg_param = 0.08
-#    # fix the scale
-#    scale = 0.03
-
-    # choose a range of numbers of centres
-#    if default_linReg_weights is None:
-#        default_linReg_weights = np.arange(-1000,1000)
-#    num_values = folds.size
+    
     num_folds = len(folds)
     coefficientindices = []
     
@@ -213,23 +211,22 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     test_mean_errors = np.zeros(num_folds)
     train_stdev_errors = np.zeros(num_folds)
     test_stdev_errors = np.zeros(num_folds)
+    #array to store the trained coefficients of every fold
+    weights = []
+    sse = []
+    ssto = []
+    R2 = []
+
 
     # run the experiments
     for w in range(num_folds):
         
-#        weights = np.linspace(0,1,lin_weights)
-
-#        feature_mapping = construct_rbf_feature_mapping(weights,scale)
         designmtx = inputs
         # r is the index of reg_param, reg_param is the regularisation parameter
         # cross validate with this regularisation parameter
-        train_errors, test_errors = cv_evaluation_linear_model(
+        train_errors, test_errors, weight = cv_evaluation_linear_model(
             designmtx, targets, folds)
         
-#        print('________________________________________________')
-#        print(train_errors)        
-#        print(test_errors)
-#        print('________________________________________________')
         # we're interested in the average (mean) training and testing errors
         train_mean_error = np.mean(train_errors)
         test_mean_error = np.mean(test_errors)
@@ -240,23 +237,31 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
         test_mean_errors[w] = test_mean_error
         train_stdev_errors[w] = train_stdev_error
         test_stdev_errors[w] = test_stdev_error
-        
-#        print('testNUUUUUUM__________________________________________')
-#        
-        coefficientindices.append(w)
-#        print(coefficientindices)
-#    print(len(coefficientindices))
-        
-#    print(train_mean_errors)
-#    print(test_mean_errors)
-#    print(train_stdev_errors)
-#    print(test_stdev_errors)
-    
-        
 
-    # Now plot the results
-    fig, ax = plot_train_test_errors(
-        "regression weight index", coefficientindices, train_errors, test_errors)
+        #retrieves fitted coefficients from the cv_evaluation method
+        weights = weight
+        coefficientindices.append(w)
+    
+    #calculate r2 for each set of coefficients (from every cross-validation fold)
+    
+        #get prediction (y-value) for the given weights (beta / coefficients)
+        Ys = linear_model_predict(inputs, weights[w])
+        #sum of squared error
+        sse.append(np.square(np.subtract(targets,              Ys)).sum())
+        ssto.append(np.square(np.subtract(targets, targets.mean())).sum())
+        R2.append(1-(sse[w]/ssto[w]))
+
+
+    print(sse)
+    print(ssto)
+    print(R2)
+    print(weights)
+    
+    
+    #___________________________plot the resuts________________________________
+    
+    fig, ax = plot_train_test_errors("regression weight index", coefficientindices, train_errors, test_errors)
+
     # Here we plot the error ranges too: mean plus/minus 1 standard error.
     # 1 standard error is the standard deviation divided by sqrt(n) where
     # n is the number of samples. 
@@ -265,9 +270,9 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     # using the train_errors instead of train_mean_errors because the values are all the same
     #Hypothesis: the underlying coefficients don't change between the fitting runs in the for loop and therefore all 5 runs produce the same result
 
-    ax.xaxis.set_ticks([0,1,2,3,4,5,6,7,8,9])
+    ax.xaxis.set_ticks([0,1,2,3,4,5,6,7,8,9])   
 
-    # TRAIN error bars
+    # TRAIN error bars_________________________________________________________
 #    lower = train_mean_errors - train_stdev_errors/np.sqrt(num_folds)
     lower = train_errors - train_stdev_errors/np.sqrt(num_folds)
 #    upper = train_mean_errors + train_stdev_errors/np.sqrt(num_folds)
@@ -275,14 +280,15 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
     ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='b', linewidth=1)
 #    ax.set_ylim(lower - .05, upper +.05)
 
-#    ax.set_xticklabels([1,2,3,4,5])
     
-    # TEST error bars
+    # TEST error bars__________________________________________________________
 #    lower = test_mean_errors - test_stdev_errors/np.sqrt(num_folds)
     lower = test_errors - test_stdev_errors/np.sqrt(num_folds)
 #    upper = test_mean_errors + test_stdev_errors/np.sqrt(num_folds)
     upper = test_errors + test_stdev_errors/np.sqrt(num_folds)
     ax.fill_between(coefficientindices, lower, upper, alpha=0.2, color='r', linewidth=1)
+
+    return weights
 
 
 def ml_weights(inputmtx, targets):

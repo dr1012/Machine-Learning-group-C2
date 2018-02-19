@@ -62,6 +62,7 @@ def train_and_test(
     -------
     train_error - the training error for the approximation
     test_error - the test error for the approximation
+    weights - the coefficient / weights of the model
     """
     # Find the optimal weights (depends on regularisation)
     if reg_param is None:
@@ -80,7 +81,7 @@ def train_and_test(
     test_error = root_mean_squared_error(test_targets, test_predicts)
     if np.isnan(test_error):
         print("test_predicts = %r" % (test_predicts,))
-    return train_error, test_error
+    return train_error, test_error, weights
 
 def train_and_test_split(N, test_fraction=None):
     """
@@ -245,6 +246,8 @@ def cv_evaluation_linear_model(
     num_folds = len(folds)
     train_errors = np.empty(num_folds)
     test_errors = np.empty(num_folds)
+    weights = []
+    
     for f,fold in enumerate(folds):
         # f is the fold id, fold is the train-test split
         train_part, test_part = fold
@@ -252,11 +255,12 @@ def cv_evaluation_linear_model(
         train_inputs, train_targets, test_inputs, test_targets = \
             train_and_test_partition(inputs, targets, train_part, test_part)
         # now train and evaluate the error on both sets
-        train_error, test_error = train_and_test(
+        train_error, test_error, weight = train_and_test(
             train_inputs, train_targets, test_inputs, test_targets,
             reg_param=reg_param)
         #print("train_error = %r" % (train_error,))
         #print("test_error = %r" % (test_error,))
         train_errors[f] = train_error
         test_errors[f] = test_error
-    return train_errors, test_errors
+        weights.append(weight)
+    return train_errors, test_errors, weights
