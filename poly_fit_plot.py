@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plot_train_test_errors(
-        control_var, experiment_sequence, train_errors, test_errors):
+        control_var, experiment_sequence, train_errors, test_errors, title):
     """
     inputs
     ------
@@ -16,10 +16,11 @@ def plot_train_test_errors(
     test_line, = ax.plot(experiment_sequence, test_errors, 'r-')
     ax.set_xlabel(control_var)
     ax.set_ylabel("$E_{RMS}$")
+    ax.set_title(title)
     ax.legend([train_line, test_line], ["train", "test"])
     # errors won't strictly lie below 1 but very large errors can make the plot
     # difficult to read. So we restrict the limits of the y-axis.
-    ax.set_ylim((0,1))
+    ax.set_ylim((0,3))
     return fig, ax
 
 def plot_function(true_func):

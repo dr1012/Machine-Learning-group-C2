@@ -26,6 +26,9 @@ with open('training_data.csv', 'r') as csvfile:
 # data is  of type list
 trianing_data_as_array = np.array(training_data)
 
+trainingSubset = trianing_data_as_array[:][:,[3,5,6,7,11]]
+trainingSubsetList = trainingSubset.tolist()
+
 
 
 with open('validation_data.csv', 'r') as csvfile1:
@@ -40,6 +43,9 @@ with open('validation_data.csv', 'r') as csvfile1:
 
 # data is  of type list
 validation_data_as_array = np.array(validation_data)
+
+validationSubset  = validation_data_as_array[:][:,[3,5,6,7,11]]
+ValidationSubsetList =  validationSubset.tolist()
 
 #instance 1 and 2 are two points in n-dimensional space. They represent two separate rows in the table with n  being the number of parameter columns.
 def euclideanDistance(instance1, instance2, length):
@@ -93,7 +99,7 @@ def rmsError(testSet, predictions):
 def mean_absolute_percentage_error(testSet, predictions):
     errors = []
     for x in range(len(testSet)):
-        individual__percentage_error= ((abs((testSet[x][-1]-predictions[x])))/testSet[x][-1])*100
+        individual__percentage_error = ((abs((testSet[x][-1]-predictions[x])))/testSet[x][-1])*100
         errors.append(individual__percentage_error)
     return np.mean(errors)    
 
@@ -129,7 +135,7 @@ for y in range(1,max_neighbours):
 
     predictions = []
     for x in range(len(validation_data)):
-        neighbors = getNeighbors(training_data, validation_data[x], y)
+        neighbors = getNeighbors(trainingSubsetList, ValidationSubsetList[x], y)
         result = getResponse(neighbors,y)
         predictions.append(result)
         #print('> predicted=' + repr(result) + ', actual=' + repr(validation_data[x][-1]))

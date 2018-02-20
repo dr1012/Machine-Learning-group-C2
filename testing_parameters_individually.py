@@ -73,6 +73,7 @@ categorised_data = [one,two,three,four,five,six,seven,eight,nine,ten]
 
 #for each attribute (PH, Alcohol, residual sugar, etc.) find the mean attribute value for each discrete wine quality and
 # plot the quality against the mean attribute
+'''
 for x in range(0,11):
     means = []
     count = 1.0
@@ -94,7 +95,7 @@ for x in range(0,11):
     fig.savefig("mean of " + header[x]+".pdf", fmt="pdf")
     plt.show()	
 
-  
+  '''
 
 
 
@@ -103,11 +104,18 @@ for x in range(0,11):
 #plot all the raw data for each attribute without going through all of the above
 #this doesn't show much 
 for x in range(0,11):
+    
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
     ax.scatter(all_data_as_array[:,x:x+1],all_data_as_array[:,11:12])
     ax.set_xlabel(header[x])
     ax.set_ylabel("Wine Quality")
+    ax.set_title("Wine Quality vs " + header[x] ,fontsize = 10)
     fig.savefig(header[x]+".pdf", fmt="pdf")
-    plt.show()	
+    plt.show()
+    
+
+    
+
+
 
