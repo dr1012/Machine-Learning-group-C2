@@ -273,9 +273,6 @@ def plot_function_data_and_approximation(
 
 
 
-
-
-
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line
     main()

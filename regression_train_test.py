@@ -37,9 +37,7 @@ def simple_evaluation_linear_model(
     train_inputs, train_targets, test_inputs, test_targets = \
         train_and_test_partition(inputs, targets, train_part, test_part)
     # now train and evaluate the error on both sets
-    train_error, test_error = train_and_test(
-        train_inputs, train_targets, test_inputs, test_targets,
-        reg_param=reg_param)
+    train_error, test_error = train_and_test(train_inputs, train_targets, test_inputs, test_targets,reg_param=None)
     return train_error, test_error
 
 def train_and_test(
