@@ -91,9 +91,7 @@ def main():
     plt.legend(handles=[red_patch, blue_dots], title='testtest')
 
     fig.savefig("linear_regression.pdf", fmt="pdf")    
-    plt.show()
-    
-    
+    plt.show() 
     
     
     
@@ -112,7 +110,7 @@ def main():
     test_mse_regw = np.square(np.subtract(test_targets, test_ys_reg)).sum()    
     
     #Root mean square error
-    test_Rmse = np.sqrt(2*test_mse/len(test_data_as_array))
+    test_Rmse = np.sqrt(test_mse/len(test_data_as_array))
 
     print(test_mse)
     print(test_Rmse)

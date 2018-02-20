@@ -49,11 +49,7 @@ def main():
 
 
 
-
 #______________________determining the variables' mean_________________________
-
-
-
 
 def explore_var_means():
     """

@@ -114,14 +114,13 @@ def main():
     #_______________________TRAINING THE MODEL_________________________________
     
     
-
     #manual version of calculating RMSE
     degree = 1
-
     #retrieve train targets and inputs from data array
     targets = cross_val_dataset[:,11]    
 #    inputs = cross_val_dataset[:, [2,6,7,8,9]]
-    inputs = cross_val_dataset[:, [1,2,4,8,9,10]]
+#    inputs = cross_val_dataset[:, [1,2,4,8,9,10]]
+    inputs = cross_val_dataset[:, [0,3,5,6,7]]
     
     # get the cross-validation folds
     N = len(cross_val_dataset)
@@ -130,7 +129,8 @@ def main():
 
     #evaluate then plot the performance of different coefficient estimates    
     ml_weights = evaluate_linReg_weights(inputs, targets,folds)
-#    
+
+
 
     #evaluate the predictive power of the two subsets of feature combos
     
@@ -251,12 +251,10 @@ def evaluate_linReg_weights(inputs, targets, folds, reg_param=None):
         ssto.append(np.square(np.subtract(targets, targets.mean())).sum())
         R2.append(1-(sse[w]/ssto[w]))
 
-
     print(sse)
     print(ssto)
     print(R2)
     print(weights)
-    
     
     #___________________________plot the resuts________________________________
     
