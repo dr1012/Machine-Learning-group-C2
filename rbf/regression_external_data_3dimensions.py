@@ -187,7 +187,7 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     
 #    # create empty 2d arrays to store the train and test errors
 #    train_errors = np.empty((scales.size,reg_params.size))
-#    test_errors = np.empty((scales.size,reg_params.size, ))
+#    test_errors = np.empty((scales.size,reg_params.size, 
     
 
     # create empty 3d arrays to store the train and test errors
