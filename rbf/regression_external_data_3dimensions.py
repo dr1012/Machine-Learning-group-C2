@@ -3,15 +3,18 @@ import csv
 import matplotlib.pyplot as plt
 
 from regression_models import construct_rbf_feature_mapping
+
 from regression_train_test import train_and_test_split
 from regression_train_test import train_and_test_partition
 from regression_train_test import train_and_test
 from regression_train_test import simple_evaluation_linear_model
+from regression_train_test import cv_evaluation_linear_model
+from regression_train_test import create_cv_folds
+
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
 
-#
 #with open('winequality-red-commas.csv', 'r') as csvfile:
 #        datareader = csv.reader(csvfile, delimiter=',')
 #        header = next(datareader)
@@ -47,161 +50,135 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
     exploratory_plots(data, field_names)
     N = data.shape[0]    
     inputs = data[:,0:11]
-    targets = data[:,3]
+    targets = data[:,-1]
 
-
-    # let's inspect the data a little more
-    tv_spend = inputs[:,0]
-    radio_spend = inputs[:,1]
-    newspaper_spend = inputs[:,2]
-
-    print("np.mean(tv_spend) = %r" % (np.mean(tv_spend),))
-    print("np.std(tv_spend) = %r" % (np.std(tv_spend),))
-    print("np.mean(radio_spend) = %r" % (np.mean(radio_spend),))
-    print("np.std(radio_spend) = %r" % (np.std(radio_spend),))
-    print("np.mean(newspaper_spend) = %r" % (np.mean(newspaper_spend),))
-    print("np.std(newspaper_spend) = %r" % (np.std(newspaper_spend),))
-
-    # normalise inputs (meaning radial basis functions are more helpful)
-    inputs[:,0] = (tv_spend - np.mean(tv_spend))/np.std(tv_spend)
-    inputs[:,1] = (radio_spend - np.mean(radio_spend))/np.std(radio_spend)
-    inputs[:,2] = (newspaper_spend - np.mean(newspaper_spend))/np.std(newspaper_spend)
-    inputs[:,3] = (data[:,3] - np.mean(data[:,3]))/np.std(data[:,3])
-    inputs[:,4] = (data[:,4] - np.mean(data[:,4]))/np.std(data[:,4])
-    inputs[:,5] = (data[:,5] - np.mean(data[:,5]))/np.std(data[:,5])
-    inputs[:,6] = (data[:,6] - np.mean(data[:,6]))/np.std(data[:,6])
-    inputs[:,7] = (data[:,7] - np.mean(data[:,7]))/np.std(data[:,7])
-    inputs[:,8] = (data[:,8] - np.mean(data[:,8]))/np.std(data[:,8])
-    inputs[:,9] = (data[:,9] - np.mean(data[:,9]))/np.std(data[:,9])
-    inputs[:,10] = (data[:,10] - np.mean(data[:,10]))/np.std(data[:,10])
-
-
-    #evaluate 
+    
+    
 #    train_error_linear, test_error_linear = evaluate_linear_approx(inputs, targets, test_fraction)
-    
-#    print(train_error_linear, test_error_linear)
-    
 #    evaluate_rbf_for_various_reg_params(inputs, targets, test_fraction, test_error_linear)
+    
+    
     parameter_search_rbf(inputs, targets, test_fraction)
-
     plt.show()
 
-
-def evaluate_linear_approx(inputs, targets, test_fraction):
-    # the linear performance
-    train_error, test_error = simple_evaluation_linear_model(
-        inputs, targets, test_fraction=test_fraction)
-    print("Linear Regression:")
-    print("\t(train_error, test_error) = %r" % ((train_error, test_error),))
-    return train_error, test_error
-
-def evaluate_rbf_for_various_reg_params(
-        inputs, targets, test_fraction, test_error_linear):
-    """
-    """
-
-    # for rbf feature mappings
-    # for the centres of the basis functions choose 10% of the data
-    N = inputs.shape[0]
-
-    #centres
-    centres = inputs[np.random.choice([False,True], size=N, p=[0.9,0.1]),:]
-    print(centres)
-    print("centres.shape = %r" % (centres.shape,))
-    
-    #scale
-    scale = 10. # of the basis functions
-
-    feature_mapping = construct_rbf_feature_mapping(centres,scale)
-    designmtx = feature_mapping(inputs)
-    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
-    train_designmtx, train_targets, test_designmtx, test_targets = \
-        train_and_test_partition(
-            designmtx, targets, train_part, test_part)
-
-    # output the shapes of the train and test parts for debugging
-    print("train_designmtx.shape = %r" % (train_designmtx.shape,))
-    print("test_designmtx.shape = %r" % (test_designmtx.shape,))
-    print("train_targets.shape = %r" % (train_targets.shape,))
-    print("test_targets.shape = %r" % (test_targets.shape,))
-
-    # the rbf feature mapping performance
-    reg_params = np.logspace(-15,-1, 11)
-    train_errors = []
-    test_errors = []
-    
-    for reg_param in reg_params:
-        print("Evaluating reg_para " + str(reg_param))
-        train_error, test_error = simple_evaluation_linear_model(
-            designmtx, targets, test_fraction=test_fraction, reg_param=reg_param)
-        train_errors.append(train_error)
-        test_errors.append(test_error)
-
-    #plot the results
-    fig , ax = plot_train_test_errors(
-        "$\lambda$", reg_params, train_errors, test_errors)
-    # we also want to plot a straight line showing the linear performance
-    xlim = ax.get_xlim()
-    ax.plot(xlim, test_error_linear*np.ones(2), 'g:')
-    ax.set_title("test test")
-    ax.set_xscale('log')
+#
+#def evaluate_linear_approx(inputs, targets, test_fraction):
+#    # the linear performance
+#    train_error, test_error = simple_evaluation_linear_model(
+#        inputs, targets, test_fraction=test_fraction)
+#    print("Linear Regression:")
+#    print("\t(train_error, test_error) = %r" % ((train_error, test_error),))
+#    return train_error, test_error
+#
+#def evaluate_rbf_for_various_reg_params(
+#        inputs, targets, test_fraction, test_error_linear):
+#    """
+#    """
+#
+#    # for rbf feature mappings
+#    # for the centres of the basis functions choose 10% of the data
+#    N = inputs.shape[0]
+#
+#    #centres
+#    centres = inputs[np.random.choice([False,True], size=N, p=[0.9,0.1]),:]
+#    print(centres)
+#    print("centres.shape = %r" % (centres.shape,))
+#    
+#    #scale
+#    scale = 10. # of the basis functions
+#
+#    feature_mapping = construct_rbf_feature_mapping(centres,scale)
+#    designmtx = feature_mapping(inputs)
+#    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
+#    train_designmtx, train_targets, test_designmtx, test_targets = \
+#        train_and_test_partition(
+#            designmtx, targets, train_part, test_part)
+#
+#    # output the shapes of the train and test parts for debugging
+#    print("train_designmtx.shape = %r" % (train_designmtx.shape,))
+#    print("test_designmtx.shape = %r" % (test_designmtx.shape,))
+#    print("train_targets.shape = %r" % (train_targets.shape,))
+#    print("test_targets.shape = %r" % (test_targets.shape,))
+#
+#    # the rbf feature mapping performance
+#    reg_params = np.logspace(-15,-1, 11)
+#    train_errors = []
+#    test_errors = []
+#    
+#    for reg_param in reg_params:
+#        print("Evaluating reg_para " + str(reg_param))
+#        train_error, test_error = simple_evaluation_linear_model(
+#            designmtx, targets, test_fraction=test_fraction, reg_param=reg_param)
+#        train_errors.append(train_error)
+#        test_errors.append(test_error)
+#
+#    #plot the results
+#    fig , ax = plot_train_test_errors(
+#        "$\lambda$", reg_params, train_errors, test_errors)
+#    # we also want to plot a straight line showing the linear performance
+#    xlim = ax.get_xlim()
+#    ax.plot(xlim, test_error_linear*np.ones(2), 'g:')
+#    ax.set_title("test test")
+#    ax.set_xscale('log')
 
 
 def parameter_search_rbf(inputs, targets, test_fraction):
     """
     """
     N = inputs.shape[0]
+    folds_num = 5
+    center_nums = 5
+    
     
     # run all experiments on the same train-test split of the data 
-    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
+#    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
     
-    # for the centres of the basis functions sample 10% of the data
-    sample_fraction = 0.15
+    #selection of centre_proportions to be varied     
+    sample_fractions = np.array([0.01,0.05,0.1,0.15,0.2])    
+    
+#    centre_proportions = []
+#    for i in range(center_nums):
+#        centre_proportions[i] = [(1 - i*.05), i*.05] 
 
-#     p = (1-sample_fraction,sample_fraction)   
-#    centres = inputs[np.random.choice([False,True], size=N, p=p),:]
 
-    centre_proportions = [[0.99,0.01], [0.95,0.05], [0.9,0.1], [0.85,0.15], [0.8,0.2]]
-    
-#    num_centres = []
-#    for index,centre_proportion in centre_proportions:
-#
-#        centres = inputs[np.random.choice([False,True], size=N, p=centre_proportions[index]),:]
-#        num_centres.append(centres)
-#
-#    print(num_centres)
+     #normalise input values
+    for i in range(inputs.shape[1]):
+        inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
     
     
-#    print(centre_proportions)
-#    print("centres.shape = %r" % (centres.shape,))
-    
-    scales = np.logspace(0,2, 17) # of the basis functions
+    #parameters to be optimised
+    scales = np.logspace(0,4, 20) # of the basis functions
     print('scales: %r' % scales)
     
-    
     reg_params = np.logspace(-15,-1, 11) # choices of regularisation strength
-    print(reg_params)
-    print(reg_params.size)
-
-
+    print('reg_params: %r' % reg_params)
+    
+    #create folds to run cross-validation on the parameters to be optimised
+    folds = create_cv_folds(N,folds_num)
     
 #    # create empty 2d arrays to store the train and test errors
 #    train_errors = np.empty((scales.size,reg_params.size))
 #    test_errors = np.empty((scales.size,reg_params.size, 
-    
 
     # create empty 3d arrays to store the train and test errors
-    train_errors = np.empty((100, scales.size,reg_params.size))
-    test_errors = np.empty((100, scales.size,reg_params.size, ))
+    train_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
+    test_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
+          
     
+    optimal_h = 0    
+    optimal_i = 0
+    optimal_j = 0
+    
+    min_test_error = 10*10
     
     #iterate over different number of centres
-    for h, centre_proportion in enumerate(centre_proportions):
+    for h, sample_fraction in enumerate(sample_fractions):
 #        print(centre_proportion)
         
         #determine a different number of centres and thereby their locations
-        centres = inputs[np.random.choice([False,True], size=N, p=centre_proportion),:]
-        print(centres.shape)
+        p = (1-sample_fraction,sample_fraction)
+        centres = inputs[np.random.choice([False,True], size=N, p=p),:]
+#        print(centres.shape)
     
         # iterate over the scales
         for i,scale in enumerate(scales):
@@ -209,72 +186,103 @@ def parameter_search_rbf(inputs, targets, test_fraction):
             # we must recreate the feature mapping each time for different scales
             feature_mapping = construct_rbf_feature_mapping(centres,scale)
             designmtx = feature_mapping(inputs)
-            # partition the design matrix and targets into train and test
-            train_designmtx, train_targets, test_designmtx, test_targets = \
-                train_and_test_partition(designmtx, targets, train_part, test_part)
+#            print(designmtx.shape)
+
             # iteratre over the regularisation parameters
-            
-    #            print("________printing__________%r" %i)
-    #            print(train_designmtx.shape)
-    #            print(test_designmtx.shape)
-            
             for j, reg_param in enumerate(reg_params):
                 # j is the index, reg_param is the corresponding regularisation
                 # parameter
                 # train and test the data
-                train_error, test_error = train_and_test(
-                    train_designmtx, train_targets, test_designmtx, test_targets,
-                    reg_param=reg_param)
+            
+                #array of k-error values 
+                train_error, test_error, weight = cv_evaluation_linear_model(designmtx, targets, folds,reg_param = reg_param )
                 
                 # store the train and test errors in our 3d arrays
-                train_errors[h,i,j] = train_error
-                test_errors[h,i,j] = test_error
+                train_errors[h,i,j] = np.mean(train_error)
+                test_errors[h,i,j] = np.mean(test_error)
                 
+                if(np.mean(test_error) < min_test_error):
+                    min_test_error = np.mean(test_error)
+                    optimal_h = h
+                    optimal_i = i
+                    optimal_j = j
                 
 #                # store the train and test errors in our 2d arrays
 #                train_errors[i,j] = train_error
 #                test_errors[i,j] = test_error
+         
+    
+#    
+#    #find indices of optimal error location in error matrix        
+#    for h, sample_fraction in enumerate(sample_fractions):
+#
+#        # iterate over the scales
+#        for i,scale in enumerate(scales):
+#
+#            # iteratre over the regularisation parameters
+#            for j, reg_param in enumerate(reg_params):
+#                
+#                # store the train and test errors in our 3d arrays
+#                if train_errors[h,i,j] < min
+#                
+#                train_errors[h,i,j] = np.mean(train_error)
+#                test_errors[h,i,j] = np.mean(test_error)
+#                                         
+#            
+    
+    
                 
     # we have a 2d array of train and test errors, we want to know the (i,j)
     # index of the best value
-    best_h = np.argmin(np.argmin(np.argmin(test_errors, axis =1)))
-    print(best_h)
 
-    print("___________specific test error___________")
-    print(test_errors[:,1,1])    
-    print("______________________")
+    print("__________________")
+    
+    print(test_errors)
+    print("__________________")
+    
+    print("optimal test_error: %r" %min_test_error)
+    print("optimal scale: %r" %scales[i])
+    print("optimal reg_params: %r" % reg_params[j])
+    print("optimal centres: %r" % sample_fractions[h])
 
-    best_i = np.argmin(np.argmin(test_errors,axis=1))
-#    print('argmin')
-#    print(np.argmin(test_errors, axis= 1))
-    best_j = np.argmin(test_errors[i,:])
 
-#    best_j = np.argmin(test_errors[h,:])
+#    best_h = np.argmin(np.argmin(np.argmin(test_errors, axis =1)))
+#    print(best_h)
+#    best_i = np.argmin(np.argmin(test_errors,axis=1))
+##    print('argmin')
+##    print(np.argmin(test_errors, axis= 1))
+#    best_j = np.argmin(test_errors[i,:])
+#
+##    best_j = np.argmin(test_errors[h,:])
 
-    print("______________________")
-    print(best_h, best_i, best_j)    
-    print("______________________")
-    
-    print("Best joint choice of parameters:")
-#    print("\tscale %.2g and lambda = %.2g" % (centre_proportions[best_h],scales[best_i],reg_params[best_j]))
-    # now we can plot the error for different scales using the best
-    # regulariation choice
     
     
-    print(scales)
-    print("____________________")
-    print(scales[best_i])
     
     
-    fig , ax = plot_train_test_errors(
-        "scale", scales, train_errors[:,best_j], test_errors[:,best_j])
-    ax.set_xscale('log')
-    # ...and the error for  different regularisation choices given the best
-    # scale choice 
-    fig , ax = plot_train_test_errors(
-        "$\lambda$", reg_params, train_errors[best_i,:], test_errors[best_i,:])
-    ax.set_xscale('log')
-    ax.set_ylim([0,20])
+#    print("______________________")
+#    print(best_h, best_i, best_j)    
+#    print("______________________")
+#    
+#    print("Best joint choice of parameters:")
+##    print("\tscale %.2g and lambda = %.2g" % (centre_proportions[best_h],scales[best_i],reg_params[best_j]))
+#    # now we can plot the error for different scales using the best
+#    # regulariation choice
+#    
+#    
+#    print(scales)
+#    print("____________________")
+#    print(scales[best_i])
+#    
+#    
+#    fig , ax = plot_train_test_errors(
+#        "scale", scales, train_errors[:,best_j], test_errors[:,best_j])
+#    ax.set_xscale('log')
+#    # ...and the error for  different regularisation choices given the best
+#    # scale choice 
+#    fig , ax = plot_train_test_errors(
+#        "$\lambda$", reg_params, train_errors[best_i,:], test_errors[best_i,:])
+#    ax.set_xscale('log')
+#    ax.set_ylim([0,20])
 
 def import_data(ifname, delimiter=None, has_header=False, columns=None):
     """

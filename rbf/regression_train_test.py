@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -36,9 +37,7 @@ def simple_evaluation_linear_model(
     train_inputs, train_targets, test_inputs, test_targets = \
         train_and_test_partition(inputs, targets, train_part, test_part)
     # now train and evaluate the error on both sets
-    train_error, test_error = train_and_test(
-        train_inputs, train_targets, test_inputs, test_targets,
-        reg_param=reg_param)
+    train_error, test_error = train_and_test(train_inputs, train_targets, test_inputs, test_targets,reg_param=None)
     return train_error, test_error
 
 def train_and_test(
@@ -61,6 +60,7 @@ def train_and_test(
     -------
     train_error - the training error for the approximation
     test_error - the test error for the approximation
+    weights - the coefficient / weights of the model
     """
     # Find the optimal weights (depends on regularisation)
     if reg_param is None:
@@ -77,7 +77,9 @@ def train_and_test(
     # evaluate the error between the predictions and true targets on both sets
     train_error = root_mean_squared_error(train_targets, train_predicts)
     test_error = root_mean_squared_error(test_targets, test_predicts)
-    return train_error, test_error
+    if np.isnan(test_error):
+        print("test_predicts = %r" % (test_predicts,))
+    return train_error, test_error, weights
 
 def train_and_test_split(N, test_fraction=None):
     """
@@ -88,6 +90,15 @@ def train_and_test_split(N, test_fraction=None):
     N - the dataset size
     test_fraction - a fraction (between 0 and 1) specifying the proportion of
         the data to use as test data.
+
+    returns
+    -------
+    train_part - a boolean vector of length N, where if ith element is
+        True if the ith data-point belongs to the training set, and False if
+        otherwise
+    test_part - a boolean vector of length N, where if ith element is
+        True if the ith data-point belongs to the testing set, and False if
+        otherwise
     """
     if test_fraction is None:
         test_fraction = 0.5
@@ -119,6 +130,9 @@ def train_and_test_partition(inputs, targets, train_part, test_part):
     test_targets - the test targtets
     """
     # get the indices of the train and test portion
+    if len(inputs.shape) == 1:
+        # if inputs is a sequence of scalars we should reshape into a matrix
+        inputs = inputs.reshape((inputs.size,1))
     train_inputs = inputs[train_part,:]
     test_inputs = inputs[test_part,:]
     train_targets = targets[train_part]
@@ -145,3 +159,106 @@ def root_mean_squared_error(y_true, y_pred):
     mse = np.sum((np.array(y_true).flatten() - np.array(y_pred).flatten())**2)/N
     return np.sqrt(mse)
 
+def create_cv_folds(N, num_folds):
+    """
+    Defines the cross-validation splits for N data-points into num_folds folds.
+    Returns a list of folds, where each fold is a train-test split of the data.
+    Achieves this by partitioning the data into num_folds (almost) equal
+    subsets, where in the ith fold, the ith subset will be assigned to testing,
+    with the remaining subsets assigned to training.
+
+    parameters
+    ----------
+    N - the number of datapoints
+    num_folds - the number of folds
+
+    returns
+    -------
+    folds - a sequence of num_folds folds, each fold is a train and test array
+        indicating (with a boolean array) whether a datapoint belongs to the
+        training or testing part of the fold.
+        Each fold is a (train_part, test_part) pair where:
+
+        train_part - a boolean vector of length N, where if ith element is
+            True if the ith data-point belongs to the training set, and False if
+            otherwise.
+        test_part - a boolean vector of length N, where if ith element is
+            True if the ith data-point belongs to the testing set, and False if
+            otherwise.
+    """
+    # if the number of datapoints is not divisible by folds then some parts
+    # will be larger than others (by 1 data-point). min_part is the smallest
+    # size of a part (uses integer division operator //)
+    min_part = N//num_folds
+    # rem is the number of parts that will be 1 larger
+    rem = N % num_folds
+    # create an empty array which will specify which part a datapoint belongs to 
+    parts = np.empty(N, dtype=int)
+    start = 0
+    for part_id in range(num_folds):
+        # calculate size of the part
+        n_part = min_part
+        if part_id < rem:
+            n_part += 1
+        # now assign the part id to a block of the parts array
+        parts[start:start+n_part] = part_id*np.ones(n_part)
+        start += n_part
+    # now randomly reorder the parts array (so that each datapoint is assigned
+    # a random part.
+    np.random.shuffle(parts)
+    # we now want to turn the parts array, into a sequence of train-test folds
+    folds = []
+    for f in range(num_folds):
+        train = (parts != f)
+        test = (parts == f)
+        folds.append((train,test))
+    return folds
+
+def cv_evaluation_linear_model(
+        inputs, targets, folds, reg_param=None):
+    """
+    Will split inputs and targets into train and test parts, then fit a linear
+    model to the training part, and test on the both parts.
+
+    Inputs can be a data matrix (or design matrix), targets should
+    be real valued.
+
+    parameters
+    ----------
+    inputs - the input design matrix (any feature mapping should already be
+        applied)
+    targets - the targets as a vector
+    num_folds - the number of folds
+    reg_param (optional) - the regularisation strength. If provided, then
+        regularised least squares fitting is uses with this regularisation
+        strength. Otherwise, (non-regularised) least squares is used.
+
+    returns
+    -------
+    train_errors - the training errors for the approximation
+    test_errors - the test errors for the approximation
+    """
+    # get the number of datapoints
+    N = inputs.shape[0]
+    # get th number of folds
+    num_folds = len(folds)
+    train_errors = np.empty(num_folds)
+    test_errors = np.empty(num_folds)
+    weights = []
+    
+    for f,fold in enumerate(folds):
+        # f is the fold id, fold is the train-test split
+        train_part, test_part = fold
+        # break the data into train and test sets
+        train_inputs, train_targets, test_inputs, test_targets = \
+            train_and_test_partition(inputs, targets, train_part, test_part)
+        # now train and evaluate the error on both sets
+        train_error, test_error, weight = train_and_test(
+            train_inputs, train_targets, test_inputs, test_targets,
+            reg_param=reg_param)
+        #print("train_error = %r" % (train_error,))
+        #print("test_error = %r" % (test_error,))
+        train_errors[f] = train_error
+        test_errors[f] = test_error
+        weights.append(weight)
+    return train_errors, test_errors, weights

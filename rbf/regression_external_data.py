@@ -10,6 +10,21 @@ from regression_train_test import simple_evaluation_linear_model
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
+
+with open('winequality-red-commas.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+       
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
+
+        # data is  of type list
+        data_as_array = np.array(data)
+
+
+
 def main(
         ifname, delimiter=None, columns=None, has_header=True,
         test_fraction=0.25):
@@ -149,7 +164,14 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     # we have a 2d array of train and test errors, we want to know the (i,j)
     # index of the best value
     best_i = np.argmin(np.argmin(test_errors,axis=1))
+        
+
     best_j = np.argmin(test_errors[i,:])
+    print("___________________")
+    print(test_errors.min())
+    print(test_errors[best_i][best_j])
+    print("___________________")
+
     print("Best joint choice of parameters:")
     print(
         "\tscale %.2g and lambda = %.2g" % (scales[best_i],reg_params[best_j]))
