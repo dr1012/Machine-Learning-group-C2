@@ -304,6 +304,7 @@ def main():
 
     # specify the centres of the rbf basis functions
     centres = inputs[np.random.choice([False, True], size=N, p=[0.9, 0.1]), :]
+
     # the width (analogous to standard deviation) of the basis functions
     scale = 0.15
 
