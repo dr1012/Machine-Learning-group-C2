@@ -41,7 +41,7 @@ def evaluate_reg_param(inputs, targets, folds, centres, scale, reg_params=None):
     designmtx = feature_mapping(inputs)
     # choose a range of regularisation parameters
     if reg_params is None:
-        reg_params = np.logspace(-15,-4, 11)
+        reg_params = np.logspace(-9,-4, 5)
     num_values = reg_params.size
     num_folds = len(folds)
     # create some arrays to store results
@@ -97,7 +97,7 @@ def evaluate_scale(inputs, targets, folds, centres, reg_param, scales=None):
     """
     # choose a range of scales
     if scales is None:
-        scales = np.logspace(-2.5,-0.5)
+        scales = np.logspace(2,4,10)
     #
     num_values = scales.size
     num_folds = len(folds)
@@ -161,7 +161,7 @@ def evaluate_num_centres(
     # scale = 0.03
     # choose a range of numbers of centres
     if num_centres_sequence is None:
-        num_centres_sequence = np.arange(5,31)
+        num_centres_sequence = np.arange(5,100)
     num_values = num_centres_sequence.size
     num_folds = len(folds)
     #
@@ -219,8 +219,8 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     centres = inputs[np.random.choice([False,True], size=N, p=p),:]
     # print(centres)
     print("centres.shape = %r" % (centres.shape,))
-    scales = np.logspace(0,2, 17) # of the basis functions
-    reg_params = np.logspace(-15,-4, 11) # choices of regularisation strength
+    scales = np.logspace(2,4, 10) # of the basis functions
+    reg_params = np.logspace(-9,-4, 5) # choices of regularisation strength
     # create empty 2d arrays to store the train and test errors
     train_errors = np.empty((scales.size,reg_params.size))
     test_errors = np.empty((scales.size,reg_params.size))
@@ -285,20 +285,19 @@ def main():
     #retrieve train targets and inputs from data array
     N = data_as_array.shape[0]
     targets = data_as_array[:,-1]
-    inputs = data_as_array[:,[0,1,2,3]]
-                                 # 1,2,3,4,5,6,7,8,9,10]]
+    inputs = data_as_array[:,[0,1,2,3,4,5,6,7,8,9,10]]
 
     # normalise inputs (meaning radial basis functions are more helpful)
     inputs[:, 0] = (inputs[:, 0] - np.mean(inputs[:, 0])) / np.std(inputs[:, 0])
     inputs[:, 1] = (inputs[:, 1] - np.mean(inputs[:, 1])) / np.std(inputs[:, 1])
     inputs[:, 2] = (inputs[:, 2] - np.mean(inputs[:, 2])) / np.std(inputs[:, 2])
     inputs[:, 3] = (inputs[:, 3] - np.mean(inputs[:, 3])) / np.std(inputs[:, 3])
-    # inputs[:, 4] = (inputs[:, 4] - np.mean(inputs[:, 4])) / np.std(inputs[:, 4])
-    # inputs[:, 5] = (inputs[:, 5] - np.mean(inputs[:, 5])) / np.std(inputs[:, 5])
-    # inputs[:, 6] = (inputs[:, 6] - np.mean(inputs[:, 6])) / np.std(inputs[:, 6])
-    # inputs[:, 7] = (inputs[:, 7] - np.mean(inputs[:, 7])) / np.std(inputs[:, 7])
-    # inputs[:, 8] = (inputs[:, 8] - np.mean(inputs[:, 8])) / np.std(inputs[:, 8])
-    # inputs[:, 9] = (inputs[:, 9] - np.mean(inputs[:, 9])) / np.std(inputs[:, 9])
+    inputs[:, 4] = (inputs[:, 4] - np.mean(inputs[:, 4])) / np.std(inputs[:, 4])
+    inputs[:, 5] = (inputs[:, 5] - np.mean(inputs[:, 5])) / np.std(inputs[:, 5])
+    inputs[:, 6] = (inputs[:, 6] - np.mean(inputs[:, 6])) / np.std(inputs[:, 6])
+    inputs[:, 7] = (inputs[:, 7] - np.mean(inputs[:, 7])) / np.std(inputs[:, 7])
+    inputs[:, 8] = (inputs[:, 8] - np.mean(inputs[:, 8])) / np.std(inputs[:, 8])
+    inputs[:, 9] = (inputs[:, 9] - np.mean(inputs[:, 9])) / np.std(inputs[:, 9])
     # inputs[:, 10] = (inputs[:, 10] - np.mean(inputs[:, 10])) / np.std(inputs[:, 10])
 
     test_fraction = 0.25
@@ -316,7 +315,7 @@ def main():
 
     evaluate_scale(inputs, targets, folds, centres, best_param)
     evaluate_reg_param(inputs, targets, folds, centres, best_scale)
-    evaluate_num_centres(inputs, targets, folds, best_scale, best_param)
+    # evaluate_num_centres(inputs, targets, folds, best_scale, best_param)
 
     plt.show()
 
