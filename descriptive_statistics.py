@@ -1,4 +1,5 @@
 import csv
+import math
 import numpy as np
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
@@ -30,6 +31,8 @@ with open('winequality-red-commas.csv', 'r') as csvfile:
         # data is  of type list
         data_array = np.array(data)
         
+        
+        
 def main():
     """
     This file contains code that seeks to explore descriptive statistics about the data set at hand. 
@@ -44,6 +47,10 @@ def main():
 
     #determining the variables' association
     explore_var_association()
+    
+    #explore possible outliers
+    explore_data_outliers()
+    
 
 
 #______________________determining the variables' mean_________________________
@@ -123,6 +130,7 @@ def explore_var_dispersion():
 #        fig2.savefig('Measure of Dispersion Normalized - %s .pdf' %(varname), bbox_inches = 'tight')
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
         plt.show()        
+        
 
 def explore_var_association():
     """
@@ -138,6 +146,29 @@ def explore_var_association():
     plt.suptitle('Variable Correlation Matrix', y= 0.1, x = .375)
     plt.savefig("Variable Correlation Matrix4.pdf", bbox_inches='tight')
 
+
+def explore_data_outliers():
+    """
+    Explores if there are any outliers in the data
+    """
+    
+    fig, ax = plt.subplots()    
+    
+    #log rescale data to fit into one boxplot figure
+    data = []
+    for i in range(12):
+        data.append(np.log(data_array[:,i]))
+        
+    #plot the boxplots
+    plt.ylim((-5,6.5))
+    ax.boxplot(data)
+    plt.xlabel('dataset variables')
+    plt.ylabel('log(values)')
+    plt.title('outlier analysis - boxplots of all variables')
+    plt.xticks(range(len(header)+1), (' ','fixed acidity', 'volatile acidity', 'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality'), rotation=90)        
+    fig.savefig('Boxplots.pdf' %(varname), bbox_inches = 'tight')
+    plt.show()
+    
 
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line
