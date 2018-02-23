@@ -130,21 +130,12 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     center_nums = 5
     
     
-    # run all experiments on the same train-test split of the data 
-#    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
-    
     #selection of centre_proportions to be varied     
     sample_fractions = np.array([0.01,0.05,0.1,0.15,0.2])    
-    
-#    centre_proportions = []
-#    for i in range(center_nums):
-#        centre_proportions[i] = [(1 - i*.05), i*.05] 
-
 
      #normalise input values
     for i in range(inputs.shape[1]):
         inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
-    
     
     #parameters to be optimised
     scales = np.logspace(0,4, 20) # of the basis functions
@@ -155,16 +146,12 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     
     #create folds to run cross-validation on the parameters to be optimised
     folds = create_cv_folds(N,folds_num)
-    
-#    # create empty 2d arrays to store the train and test errors
-#    train_errors = np.empty((scales.size,reg_params.size))
-#    test_errors = np.empty((scales.size,reg_params.size, 
-
+ 
     # create empty 3d arrays to store the train and test errors
     train_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
     test_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
           
-    
+    #store the location of the optimal value in the error matrix
     optimal_h = 0    
     optimal_i = 0
     optimal_j = 0
@@ -173,12 +160,10 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     
     #iterate over different number of centres
     for h, sample_fraction in enumerate(sample_fractions):
-#        print(centre_proportion)
         
         #determine a different number of centres and thereby their locations
         p = (1-sample_fraction,sample_fraction)
         centres = inputs[np.random.choice([False,True], size=N, p=p),:]
-#        print(centres.shape)
     
         # iterate over the scales
         for i,scale in enumerate(scales):
@@ -186,7 +171,6 @@ def parameter_search_rbf(inputs, targets, test_fraction):
             # we must recreate the feature mapping each time for different scales
             feature_mapping = construct_rbf_feature_mapping(centres,scale)
             designmtx = feature_mapping(inputs)
-#            print(designmtx.shape)
 
             # iteratre over the regularisation parameters
             for j, reg_param in enumerate(reg_params):
@@ -206,63 +190,10 @@ def parameter_search_rbf(inputs, targets, test_fraction):
                     optimal_h = h
                     optimal_i = i
                     optimal_j = j
-                
-#                # store the train and test errors in our 2d arrays
-#                train_errors[i,j] = train_error
-#                test_errors[i,j] = test_error
-         
-    
-#    
-#    #find indices of optimal error location in error matrix        
-#    for h, sample_fraction in enumerate(sample_fractions):
-#
-#        # iterate over the scales
-#        for i,scale in enumerate(scales):
-#
-#            # iteratre over the regularisation parameters
-#            for j, reg_param in enumerate(reg_params):
-#                
-#                # store the train and test errors in our 3d arrays
-#                if train_errors[h,i,j] < min
-#                
-#                train_errors[h,i,j] = np.mean(train_error)
-#                test_errors[h,i,j] = np.mean(test_error)
-#                                         
-#            
-    
-    
-                
-    # we have a 2d array of train and test errors, we want to know the (i,j)
-    # index of the best value
-
-    print("__________________")
-    
-    print(test_errors)
-    print("__________________")
-    
-    print("optimal test_error: %r" %min_test_error)
-    print("optimal scale: %r" %scales[i])
-    print("optimal reg_params: %r" % reg_params[j])
-    print("optimal centres: %r" % sample_fractions[h])
+                    
+    print("optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], "optimal centres: %r" % sample_fractions[optimal_h] )
 
 
-#    best_h = np.argmin(np.argmin(np.argmin(test_errors, axis =1)))
-#    print(best_h)
-#    best_i = np.argmin(np.argmin(test_errors,axis=1))
-##    print('argmin')
-##    print(np.argmin(test_errors, axis= 1))
-#    best_j = np.argmin(test_errors[i,:])
-#
-##    best_j = np.argmin(test_errors[h,:])
-
-    
-    
-    
-    
-#    print("______________________")
-#    print(best_h, best_i, best_j)    
-#    print("______________________")
-#    
 #    print("Best joint choice of parameters:")
 ##    print("\tscale %.2g and lambda = %.2g" % (centre_proportions[best_h],scales[best_i],reg_params[best_j]))
 #    # now we can plot the error for different scales using the best
