@@ -3,6 +3,72 @@ import numpy as np
 import numpy.linalg as linalg
 import matplotlib.pyplot as plt
 
+def calculate_weights_posterior(designmtx, targets, beta, m0, S0):
+    """
+    Calculates the posterior distribution (multivariate gaussian) for weights
+    in a linear model.
+
+    parameters
+    ----------
+    designmtx - 2d (N x K) array of inputs (data-matrix or design-matrix) where
+        N is the number of data-points and each row is that point's
+        representation
+    targets - 1d (N)-array of target values
+    beta - the known noise precision
+    m0 - prior mean (vector) 1d-array (or array-like) of length K
+    S0 - the prior covariance matrix 2d-array
+
+    returns
+    -------
+    mN - the posterior mean (vector)
+    SN - the posterior covariance matrix 
+    """
+    N, K = designmtx.shape
+    Phi = np.matrix(designmtx)
+    t = np.matrix(targets).reshape((N,1))
+    m0 = np.matrix(m0).reshape((K,1))
+    S0_inv = np.matrix(np.linalg.inv(S0))
+    SN = np.linalg.inv(S0_inv + beta*Phi.transpose()*Phi)
+    mN = SN*(S0_inv*m0 + beta*Phi.transpose()*t)
+    return np.array(mN).flatten(), np.array(SN)
+
+def predictive_distribution(designmtx, beta, mN, SN):
+    """
+    Calculates the predictive distribution a linear model. This amounts to a
+    mean and variance for each input point.
+
+    parameters
+    ----------
+    designmtx - 2d (N x K) array of inputs (data-matrix or design-matrix) where
+        N is the number of data-points and each row is that point's
+        representation
+    beta - the known noise precision
+    mN - posterior mean of the weights (vector) 1d-array (or array-like)
+        of length K
+    SN - the posterior covariance matrix for the weights 2d (K x K)-array 
+
+    returns
+    -------
+    ys - a vector of mean predictions, one for each input datapoint
+    sigma2Ns - a vector of variances, one for each input data-point 
+    """
+    N, K = designmtx.shape
+    Phi = np.matrix(designmtx)
+    mN = np.matrix(mN).reshape((K,1))
+    SN = np.matrix(SN)
+    ys = Phi*mN
+    # create an array of the right size with the uniform term
+    sigma2Ns = np.ones(N)/beta
+    for n in range(N):
+        # now calculate and add in the data dependent term
+        # NOTE: I couldn't work out a neat way of doing this without a for-loop
+        # NOTE: but if anyone can please share the answer.
+        phi_n = Phi[n,:].transpose()
+        sigma2Ns[n] += phi_n.transpose()*SN*phi_n
+    return np.array(ys).flatten(), np.array(sigma2Ns)
+    
+
+
 def ml_weights(inputmtx, targets):
     """
     This method returns the weights that give the best linear fit between

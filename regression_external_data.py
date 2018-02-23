@@ -7,16 +7,10 @@ from regression_train_test import train_and_test_split
 from regression_train_test import train_and_test_partition
 from regression_train_test import train_and_test
 from regression_train_test import simple_evaluation_linear_model
-
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
-from regression_cross_validation import create_cv_folds
-from regression_cross_validation import evaluate_reg_param
-from regression_cross_validation import evaluate_scale
-from regression_cross_validation import evaluate_num_centres
 
-#load training data into matrix to be used
 with open('winequality-red-commas.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
@@ -30,12 +24,16 @@ with open('winequality-red-commas.csv', 'r') as csvfile:
         data_as_array = np.array(data)
 
 
-def main():
+
+def main(
+        ifname, delimiter=None, columns=None, has_header=True,
+        test_fraction=0.25):
     """
     To be called when the script is run. This function creates, fits and plots
     synthetic data, and then fits and plots imported data (if a filename is
     provided). In both cases, data is 2 dimensional real valued data and is fit
     with maximum likelihood 2d gaussian.
+
     parameters
     ----------
     ifname -- filename/path of data file. 
@@ -44,57 +42,39 @@ def main():
     columns -- a list of integers specifying which columns of the file to import
         (counting from 0)    
     """
-    
-    
-    test_fraction=0.25
-    
-    inputs = data_as_array[:,0:11]
-    targets = data_as_array[:,-1]
-    
-    print(inputs)
-
+    # if no file name is provided then use synthetic data
+    data, field_names = import_data(
+            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
+    exploratory_plots(data, field_names)
+    N = data.shape[0]
+    inputs = data[:,[0,1,2]]
+    targets = data[:,3]
 
     # let's inspect the data a little more
-    fixed_acidity = inputs[:, 0]
-    volatile_acidity = inputs[:, 1]
-    citric_acid = inputs[:, 2]
-    # residual_sugar
-    # chlorides
-    # free_sulfur_dioxide
-    # total
-    # sulfur
-    # dioxide
-    #
-    print("np.mean(fixed_acidity) = %r" % (np.mean(fixed_acidity),))
-    print("np.std(fixed_acidity) = %r" % (np.std(fixed_acidity),))
-    print("np.mean(volatile_acidity) = %r" % (np.mean(volatile_acidity),))
-    print("np.std(volatile_acidity) = %r" % (np.std(volatile_acidity),))
-    print("np.mean(citric_acid) = %r" % (np.mean(citric_acid),))
-    print("np.std(citric_acid) = %r" % (np.std(citric_acid),))
+    tv_spend = inputs[:,0]
+    radio_spend = inputs[:,1]
+    newspaper_spend = inputs[:,2]
+
+    print("np.mean(tv_spend) = %r" % (np.mean(tv_spend),))
+    print("np.std(tv_spend) = %r" % (np.std(tv_spend),))
+    print("np.mean(radio_spend) = %r" % (np.mean(radio_spend),))
+    print("np.std(radio_spend) = %r" % (np.std(radio_spend),))
+    print("np.mean(newspaper_spend) = %r" % (np.mean(newspaper_spend),))
+    print("np.std(newspaper_spend) = %r" % (np.std(newspaper_spend),))
+
     # normalise inputs (meaning radial basis functions are more helpful)
-    inputs[:, 0] = (fixed_acidity - np.mean(fixed_acidity)) / np.std(fixed_acidity)
-    inputs[:, 1] = (volatile_acidity - np.mean(volatile_acidity)) / np.std(volatile_acidity)
-    inputs[:, 2] = (citric_acid - np.mean(citric_acid)) / np.std(citric_acid)
-    inputs[:, 3] = (inputs[:, 3] - np.mean(inputs[:, 3])) / np.std(inputs[:, 3])
-    inputs[:, 4] = (inputs[:, 4] - np.mean(inputs[:, 4])) / np.std(inputs[:, 4])
-    inputs[:, 5] = (inputs[:, 5] - np.mean(inputs[:, 5])) / np.std(inputs[:, 5])
-    inputs[:, 6] = (inputs[:, 6] - np.mean(inputs[:, 6])) / np.std(inputs[:, 6])
-    inputs[:, 7] = (inputs[:, 7] - np.mean(inputs[:, 7])) / np.std(inputs[:, 7])
-    inputs[:, 8] = (inputs[:, 8] - np.mean(inputs[:, 8])) / np.std(inputs[:, 8])
-    inputs[:, 9] = (inputs[:, 9] - np.mean(inputs[:, 9])) / np.std(inputs[:, 9])
-    inputs[:, 10] = (inputs[:, 10] - np.mean(inputs[:, 10])) / np.std(inputs[:, 10])
-    np.savetxt("inputs.csv", inputs, delimiter=",")
+    inputs[:,0] = (tv_spend - np.mean(tv_spend))/np.std(tv_spend)
+    inputs[:,1] = (radio_spend - np.mean(radio_spend))/np.std(radio_spend)
+    inputs[:,2] = (newspaper_spend - np.mean(newspaper_spend))/np.std(newspaper_spend)
 
-#    train_error_linear, test_error_linear = evaluate_linear_approx(
-#        inputs, targets, test_fraction)
-#
-#    evaluate_rbf_for_various_reg_params(
-#        inputs, targets, test_fraction, test_error_linear)
-
-
+    train_error_linear, test_error_linear = evaluate_linear_approx(
+        inputs, targets, test_fraction)
+    evaluate_rbf_for_various_reg_params(
+        inputs, targets, test_fraction, test_error_linear)
     parameter_search_rbf(inputs, targets, test_fraction)
     plt.show()
-    
+
+
 def evaluate_linear_approx(inputs, targets, test_fraction):
     # the linear performance
     train_error, test_error = simple_evaluation_linear_model(
@@ -107,11 +87,11 @@ def evaluate_rbf_for_various_reg_params(
         inputs, targets, test_fraction, test_error_linear):
     """
     """
+
     # for rbf feature mappings
     # for the centres of the basis functions choose 10% of the data
     N = inputs.shape[0]
     centres = inputs[np.random.choice([False,True], size=N, p=[0.9,0.1]),:]
-    
     print("centres.shape = %r" % (centres.shape,))
     scale = 10. # of the basis functions
     feature_mapping = construct_rbf_feature_mapping(centres,scale)
@@ -135,13 +115,14 @@ def evaluate_rbf_for_various_reg_params(
             designmtx, targets, test_fraction=test_fraction, reg_param=reg_param)
         train_errors.append(train_error)
         test_errors.append(test_error)
+
     fig , ax = plot_train_test_errors(
         "$\lambda$", reg_params, train_errors, test_errors)
     # we also want to plot a straight line showing the linear performance
     xlim = ax.get_xlim()
-    ax.set_ylim([0, 1])
     ax.plot(xlim, test_error_linear*np.ones(2), 'g:')
     ax.set_xscale('log')
+
 
 def parameter_search_rbf(inputs, targets, test_fraction):
     """
@@ -156,8 +137,6 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     print("centres.shape = %r" % (centres.shape,))
     scales = np.logspace(0,2, 17) # of the basis functions
     reg_params = np.logspace(-15,-4, 11) # choices of regularisation strength
-    
-    
     # create empty 2d arrays to store the train and test errors
     train_errors = np.empty((scales.size,reg_params.size))
     test_errors = np.empty((scales.size,reg_params.size))
@@ -171,7 +150,7 @@ def parameter_search_rbf(inputs, targets, test_fraction):
         train_designmtx, train_targets, test_designmtx, test_targets = \
             train_and_test_partition(
                 designmtx, targets, train_part, test_part)
-        # iterate over the regularisation parameters
+        # iteratre over the regularisation parameters
         for j, reg_param in enumerate(reg_params):
             # j is the index, reg_param is the corresponding regularisation
             # parameter
@@ -185,7 +164,14 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     # we have a 2d array of train and test errors, we want to know the (i,j)
     # index of the best value
     best_i = np.argmin(np.argmin(test_errors,axis=1))
+        
+
     best_j = np.argmin(test_errors[i,:])
+    print("___________________")
+    print(test_errors.min())
+    print(test_errors[best_i][best_j])
+    print("___________________")
+
     print("Best joint choice of parameters:")
     print(
         "\tscale %.2g and lambda = %.2g" % (scales[best_i],reg_params[best_j]))
@@ -200,12 +186,13 @@ def parameter_search_rbf(inputs, targets, test_fraction):
         "$\lambda$", reg_params, train_errors[best_i,:], test_errors[best_i,:])
     ax.set_xscale('log')
 #    ax.set_ylim([0,20])
-    
+
 def import_data(ifname, delimiter=None, has_header=False, columns=None):
     """
     Imports a tab/comma/semi-colon/... separated data file as an array of 
     floating point numbers. If the import file has a header then this should
     be specified, and the field names will be returned as the second argument.
+
     parameters
     ----------
     ifname -- filename/path of data file.
@@ -213,6 +200,7 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
     has_header -- does the data-file have a header line
     columns -- a list of integers specifying which columns of the file to import
         (counting from 0)
+
     returns
     -------
     data_as_array -- the data as a numpy.array object  
@@ -250,36 +238,45 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
     # return this array to caller (and field_names if provided)
     return data_as_array, field_names
 
+
 if __name__ == '__main__':
     """
     To run this script on just synthetic data use:
+
         python regression_external_data.py
+
     You can pass the data-file name as the first argument when you call
     your script from the command line. E.g. use:
+
         python regression_external_data.py datafile.tsv
+
     If you pass a second argument it will be taken as the delimiter, e.g.
     for comma separated values:
+
         python regression_external_data.py comma_separated_data.csv ","
+
     for semi-colon separated values:
+
         python regression_external_data.py comma_separated_data.csv ";"
+
     If your data has more than 2 columns you must specify which columns
     you wish to plot as a comma separated pair of values, e.g.
+
         python regression_external_data.py comma_separated_data.csv ";" 8,9
+
     For the wine quality data you will need to specify which columns to pass.
     """
-    
-    main()
-    
-#    import sys
-#    if len(sys.argv) == 1:
-#        main() # calls the main function with no arguments
-#    elif len(sys.argv) == 2:
-#        # assumes that the first argument is the input filename/path
-#        main(ifname=sys.argv[1])
-#    elif len(sys.argv) == 3:
-#        # assumes that the second argument is the data delimiter
-#        main(ifname=sys.argv[1], delimiter=sys.argv[2])
-#    elif len(sys.argv) == 4:
-#        # assumes that the third argument is the list of columns to import
-#        columns = list(map(int, sys.argv[3].split(","))) 
-#        main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)
+    import sys
+    if len(sys.argv) == 1:
+        main() # calls the main function with no arguments
+    elif len(sys.argv) == 2:
+        # assumes that the first argument is the input filename/path
+        main(ifname=sys.argv[1])
+    elif len(sys.argv) == 3:
+        # assumes that the second argument is the data delimiter
+        main(ifname=sys.argv[1], delimiter=sys.argv[2])
+    elif len(sys.argv) == 4:
+        # assumes that the third argument is the list of columns to import
+        columns = list(map(int, sys.argv[3].split(","))) 
+        main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)
+
