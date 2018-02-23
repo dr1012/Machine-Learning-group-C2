@@ -18,8 +18,8 @@ Created on Fri Feb 16 14:29:04 2018
 @author: kai
 """
 
-#load training data into matrix to be used
-with open('winequality-red-commas.csv', 'r') as csvfile:
+#load data into matrix to be used
+with open('winequality-red.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
@@ -27,10 +27,9 @@ with open('winequality-red-commas.csv', 'r') as csvfile:
         for row in datareader:
             row_of_floats = list(map(float, row))
             data.append(row_of_floats)
-
-        # data is  of type list
-        data_array = np.array(data)
         
+        # data is  of type list
+        data_array = np.array(data)   
         
         
 def main():
@@ -51,9 +50,6 @@ def main():
     #explore possible outliers
     explore_data_outliers()
     
-
-
-#______________________determining the variables' mean_________________________
 
 def explore_var_means():
     """
@@ -137,7 +133,8 @@ def explore_var_association():
     Explores the association of the variables
     """
         
-    df = pd.read_csv('winequality-red-commas.csv')
+#    df = pd.read_csv('winequality-red.csv')
+    df = pd.DataFrame.as_matrix(data_array)
     fig3, ax = plt.subplots()    
     plt.matshow(df.corr(method='spearman'), interpolation="nearest")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
