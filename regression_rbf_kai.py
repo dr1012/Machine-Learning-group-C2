@@ -6,28 +6,31 @@ from regression_models import construct_rbf_feature_mapping
 
 from regression_train_test import train_and_test_split
 from regression_train_test import train_and_test_partition
-from regression_train_test import train_and_test
+#from regression_train_test import train_and_test
 from regression_train_test import simple_evaluation_linear_model
-from regression_train_test import cv_evaluation_linear_model
+#from regression_train_test import cv_evaluation_linear_model
 from regression_train_test import create_cv_folds
 
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
 
-#with open('winequality-red-commas.csv', 'r') as csvfile:
-#        datareader = csv.reader(csvfile, delimiter=',')
-#        header = next(datareader)
-#        data = []
-#       
-#        for row in datareader:
-#            row_of_floats = list(map(float, row))
-#            data.append(row_of_floats)
-#
-#        # data is  of type list
-#        data_as_array = np.array(data)
+#______________________________________________________________________________
 
+with open('winequality-red.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+       
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
 
+        # data is  of type list
+        data_as_array = np.array(data)
+        
+        
+        
 def main(ifname, delimiter=",", columns=None, has_header=True,
         test_fraction=0.25):
     """
@@ -48,78 +51,72 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
     data, field_names = import_data(
             ifname, delimiter=delimiter, has_header=has_header, columns=columns)
     exploratory_plots(data, field_names)
-    N = data.shape[0]    
+    
+    print('data shape')
+    N = data.shape[0]
+
     inputs = data[:,0:11]
     targets = data[:,-1]
 
+    #trains the rbf regression and identifies the optimal parameters
+    run_rbf_model()
+    
+    
+    
+    
+    
+    
+def run_rbf_model():
+    
+    
+    N = data_as_array.shape[0]    
+    print("___________________________________")
+    print(N)
+    print("___________________________________")    
+    inputs = data_as_array[:,0:11]
+    targets = data_as_array[:,-1]
+    
+    test_fraction = .15
+    normalise_data_bool = 0
+    
+    
+    #runs the training once on the non-normalised and then normalised feature data
+    for j in range(2):
+        if(normalise_data_bool == 0):
+            
+            print('______________________________non-normalised inputs_________________________________')
+            print(inputs)
+            print('______________________________non-normalised inputs_________________________________')
+
+           n_norm_scale = parameter_search_rbf(inputs, targets, test_fraction)
+            normalise_data_bool = 1
+            
+        else:
+            
+            #normalise input values
+            for i in range(inputs.shape[1]):
+                inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
+                
+            print('______________________________normalised inputs_________________________________')
+            print(inputs)
+            print('______________________________normalised inputs_________________________________')
+                
+                
+            parameter_search_rbf(inputs, targets, test_fraction)
+    
+    
+    #compare the normalised vs non-normalised models on the final test set
+    
+    
     
     
 #    train_error_linear, test_error_linear = evaluate_linear_approx(inputs, targets, test_fraction)
 #    evaluate_rbf_for_various_reg_params(inputs, targets, test_fraction, test_error_linear)
     
-    
-    parameter_search_rbf(inputs, targets, test_fraction)
-    plt.show()
+#    parameter_search_rbf(inputs, targets, test_fraction)
 
-#
-#def evaluate_linear_approx(inputs, targets, test_fraction):
-#    # the linear performance
-#    train_error, test_error = simple_evaluation_linear_model(
-#        inputs, targets, test_fraction=test_fraction)
-#    print("Linear Regression:")
-#    print("\t(train_error, test_error) = %r" % ((train_error, test_error),))
-#    return train_error, test_error
-#
-#def evaluate_rbf_for_various_reg_params(
-#        inputs, targets, test_fraction, test_error_linear):
-#    """
-#    """
-#
-#    # for rbf feature mappings
-#    # for the centres of the basis functions choose 10% of the data
-#    N = inputs.shape[0]
-#
-#    #centres
-#    centres = inputs[np.random.choice([False,True], size=N, p=[0.9,0.1]),:]
-#    print(centres)
-#    print("centres.shape = %r" % (centres.shape,))
-#    
-#    #scale
-#    scale = 10. # of the basis functions
-#
-#    feature_mapping = construct_rbf_feature_mapping(centres,scale)
-#    designmtx = feature_mapping(inputs)
-#    train_part, test_part = train_and_test_split(N, test_fraction=test_fraction)
-#    train_designmtx, train_targets, test_designmtx, test_targets = \
-#        train_and_test_partition(
-#            designmtx, targets, train_part, test_part)
-#
-#    # output the shapes of the train and test parts for debugging
-#    print("train_designmtx.shape = %r" % (train_designmtx.shape,))
-#    print("test_designmtx.shape = %r" % (test_designmtx.shape,))
-#    print("train_targets.shape = %r" % (train_targets.shape,))
-#    print("test_targets.shape = %r" % (test_targets.shape,))
-#
-#    # the rbf feature mapping performance
-#    reg_params = np.logspace(-15,-1, 11)
-#    train_errors = []
-#    test_errors = []
-#    
-#    for reg_param in reg_params:
-#        print("Evaluating reg_para " + str(reg_param))
-#        train_error, test_error = simple_evaluation_linear_model(
-#            designmtx, targets, test_fraction=test_fraction, reg_param=reg_param)
-#        train_errors.append(train_error)
-#        test_errors.append(test_error)
-#
-#    #plot the results
-#    fig , ax = plot_train_test_errors(
-#        "$\lambda$", reg_params, train_errors, test_errors)
-#    # we also want to plot a straight line showing the linear performance
-#    xlim = ax.get_xlim()
-#    ax.plot(xlim, test_error_linear*np.ones(2), 'g:')
-#    ax.set_title("test test")
-#    ax.set_xscale('log')
+
+    plt.show()
 
 
 def parameter_search_rbf(inputs, targets, test_fraction):
@@ -131,18 +128,16 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     
     
     #selection of centre_proportions to be varied     
-    sample_fractions = np.array([0.01,0.05,0.1,0.15,0.2])    
+    sample_fractions = np.array([0.05,0.1,0.15,0.2])    
 
-     #normalise input values
-    for i in range(inputs.shape[1]):
-        inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
-    
     #parameters to be optimised
     scales = np.logspace(0,4, 20) # of the basis functions
     print('scales: %r' % scales)
     
     reg_params = np.logspace(-15,-1, 11) # choices of regularisation strength
     print('reg_params: %r' % reg_params)
+    
+    print('fitting the rbf model...')
     
     #create folds to run cross-validation on the parameters to be optimised
     folds = create_cv_folds(N,folds_num)
@@ -191,7 +186,13 @@ def parameter_search_rbf(inputs, targets, test_fraction):
                     optimal_i = i
                     optimal_j = j
                     
-    print("optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], "optimal centres: %r" % sample_fractions[optimal_h] )
+    print("optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], 
+          "optimal centres: %r" % sample_fractions[optimal_h],
+          "optimal lambda = %r" %reg_params[optimal_j] )
+
+
+
+    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j]
 
 
 #    print("Best joint choice of parameters:")
@@ -214,6 +215,102 @@ def parameter_search_rbf(inputs, targets, test_fraction):
 #        "$\lambda$", reg_params, train_errors[best_i,:], test_errors[best_i,:])
 #    ax.set_xscale('log')
 #    ax.set_ylim([0,20])
+    
+    
+
+def train_and_test(
+        train_inputs, train_targets, test_inputs, test_targets, reg_param=None):
+    """
+    Will fit a linear model with either least squares, or regularised least 
+    squares to the training data, then evaluate on both test and training data
+
+    parameters
+    ----------
+    train_inputs - the input design matrix for training
+    train_targets - the training targets as a vector
+    test_inputs - the input design matrix for testing
+    test_targets - the test targets as a vector
+    reg_param (optional) - the regularisation strength. If provided, then
+        regularised maximum likelihood fitting is uses with this regularisation
+        strength. Otherwise, (non-regularised) least squares is used.
+
+    returns
+    -------
+    train_error - the training error for the approximation
+    test_error - the test error for the approximation
+    weights - the coefficient / weights of the model
+    """
+    # Find the optimal weights (depends on regularisation)
+    if reg_param is None:
+        # use simple least squares approach
+        weights = ml_weights(
+            train_inputs, train_targets)
+    else:
+        # use regularised least squares approach
+        weights = regularised_ml_weights(
+          train_inputs, train_targets,  reg_param)
+    # predictions are linear functions of the inputs, we evaluate those here
+    train_predicts = linear_model_predict(train_inputs, weights)
+    test_predicts = linear_model_predict(test_inputs, weights)
+    # evaluate the error between the predictions and true targets on both sets
+    train_error = root_mean_squared_error(train_targets, train_predicts)
+    test_error = root_mean_squared_error(test_targets, test_predicts)
+    if np.isnan(test_error):
+        print("test_predicts = %r" % (test_predicts,))
+    return train_error, test_error, weights
+    
+
+
+def cv_evaluation_linear_model(
+        inputs, targets, folds, reg_param=None):
+    """
+    Will split inputs and targets into train and test parts, then fit a linear
+    model to the training part, and test on the both parts.
+
+    Inputs can be a data matrix (or design matrix), targets should
+    be real valued.
+
+    parameters
+    ----------
+    inputs - the input design matrix (any feature mapping should already be
+        applied)
+    targets - the targets as a vector
+    num_folds - the number of folds
+    reg_param (optional) - the regularisation strength. If provided, then
+        regularised least squares fitting is uses with this regularisation
+        strength. Otherwise, (non-regularised) least squares is used.
+
+    returns
+    -------
+    train_errors - the training errors for the approximation
+    test_errors - the test errors for the approximation
+    """
+    # get the number of datapoints
+    N = inputs.shape[0]
+    # get th number of folds
+    num_folds = len(folds)
+    train_errors = np.empty(num_folds)
+    test_errors = np.empty(num_folds)
+    weights = []
+    
+    for f,fold in enumerate(folds):
+        # f is the fold id, fold is the train-test split
+        train_part, test_part = fold
+        # break the data into train and test sets
+        train_inputs, train_targets, test_inputs, test_targets = \
+            train_and_test_partition(inputs, targets, train_part, test_part)
+        # now train and evaluate the error on both sets
+        train_error, test_error, weight = train_and_test(
+            train_inputs, train_targets, test_inputs, test_targets,
+            reg_param=reg_param)
+        #print("train_error = %r" % (train_error,))
+        #print("test_error = %r" % (test_error,))
+        train_errors[f] = train_error
+        test_errors[f] = test_error
+        weights.append(weight)
+    return train_errors, test_errors, weights
+    
+    
 
 def import_data(ifname, delimiter=None, has_header=False, columns=None):
     """
@@ -250,7 +347,7 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
         # create an empty list to store each row of data
         data = []
         for row in datareader:
-            print("row = %r" % (row,))
+#            print("row = %r" % (row,))
             # for each row of data only take the columns we are interested in
             if not columns is None:
                 row = [row[c] for c in columns]
