@@ -1,6 +1,7 @@
 import numpy as np 
 
 from data_import import import_data
+
 #from polynomial_global import main_polynomial_function
 from regression_rbf_kai import run_rbf_model
 
@@ -23,8 +24,7 @@ def main(ifname, delimiter=None, columns=None, has_header=True):
 #    best_rbf_function = 
 
     #runs the polynomial optimisation model
-    run_rbf_model()
-
+#    run_rbf_model()
 
 
 if __name__ == '__main__':
