@@ -125,7 +125,10 @@ def explore_var_dispersion():
         plt.title(r'$\mathrm{Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
 #        fig2.savefig('Measure of Dispersion Normalized - %s .pdf' %(varname), bbox_inches = 'tight')
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
-        plt.show()        
+        plt.show()   
+        
+        
+        pd.plotting.scatter_matrix(data_array, alpha = 0.3, figsize = (40,40), diagonal = 'kde')
         
 
 def explore_var_association():
@@ -133,15 +136,15 @@ def explore_var_association():
     Explores the association of the variables
     """
         
-#    df = pd.read_csv('winequality-red.csv')
-    df = pd.DataFrame.as_matrix(data_array)
+    df = pd.read_csv('winequality-red.csv')
+#    df = pd.DataFrame.as_matrix(data_array)
     fig3, ax = plt.subplots()    
-    plt.matshow(df.corr(method='spearman'), interpolation="nearest")
+    plt.matshow(df.corr(method='pearson'), interpolation="nearest")
     plt.xticks(range(len(df.columns)), df.columns,fontsize=10, rotation=90)
     plt.yticks(range(len(df.columns)), df.columns,fontsize=10)
     plt.colorbar() 
     plt.suptitle('Variable Correlation Matrix', y= 0.1, x = .375)
-    plt.savefig("Variable Correlation Matrix4.pdf", bbox_inches='tight')
+    plt.savefig("Variable Correlation Matrix.pdf", bbox_inches='tight')
 
 
 def explore_data_outliers():
@@ -158,12 +161,12 @@ def explore_data_outliers():
         
     #plot the boxplots
     plt.ylim((-5,6.5))
-    ax.boxplot(data)
+    ax.boxplot(data, sym='.')
     plt.xlabel('dataset variables')
     plt.ylabel('log(values)')
     plt.title('outlier analysis - boxplots of all variables')
     plt.xticks(range(len(header)+1), (' ','fixed acidity', 'volatile acidity', 'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality'), rotation=90)        
-    fig.savefig('Boxplots.pdf' %(varname), bbox_inches = 'tight')
+    fig.savefig('Boxplots.pdf', bbox_inches = 'tight')
     plt.show()
     
 
