@@ -2,8 +2,13 @@ import numpy as np
 import csv
 import matplotlib.pyplot as plt
 
+from regression_models import ml_weights
+from regression_models import regularised_ml_weights
+from regression_models import linear_model_predict
 from regression_models import construct_rbf_feature_mapping
+from regression_models import construct_feature_mapping_approx
 
+from regression_train_test import root_mean_squared_error
 from regression_train_test import train_and_test_split
 from regression_train_test import train_and_test_partition
 #from regression_train_test import train_and_test
@@ -17,7 +22,7 @@ from regression_plot import plot_train_test_errors
 
 #______________________________________________________________________________
 
-with open('winequality-red.csv', 'r') as csvfile:
+with open('final_training_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
@@ -28,6 +33,19 @@ with open('winequality-red.csv', 'r') as csvfile:
 
         # data is  of type list
         data_as_array = np.array(data)
+        
+        
+with open('final_test_data.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+       
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
+
+        # data is  of type list
+        test_data_as_array = np.array(data)
         
         
         
@@ -47,82 +65,89 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
     columns -- a list of integers specifying which columns of the file to import
         (counting from 0)    
     """
-    # if no file name is provided then use synthetic data
-    data, field_names = import_data(
-            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
-    exploratory_plots(data, field_names)
-    
-    print('data shape')
-    N = data.shape[0]
+#    # if no file name is provided then use synthetic data
+#    data, field_names = import_data(
+#            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
+#    exploratory_plots(data, field_names)
+#    
+#    print('data shape')
+#    N = data.shape[0]
+#
+#    inputs = data[:,0:11]
+#    targets = data[:,-1]
 
-    inputs = data[:,0:11]
-    targets = data[:,-1]
+
+
+    
 
     #trains the rbf regression and identifies the optimal parameters
     run_rbf_model()
     
     
-    
-    
-    
-    
 def run_rbf_model():
+    """
+    To be called when the script is run. This function trains and evaluates the 
+    linear regression model with Radial Basis Functions.
+    """
     
     
-    N = data_as_array.shape[0]    
-    print("___________________________________")
-    print(N)
-    print("___________________________________")    
+    #ensures re-producability of our results
+    np.random.seed(5)
+    
+    #training data
     inputs = data_as_array[:,0:11]
     targets = data_as_array[:,-1]
     
+    #testing data
+    test_inputs = test_data_as_array[:,0:11]
+    test_targets = test_data_as_array[:,-1]
+
     test_fraction = .15
     normalise_data_bool = 0
     
-    
     #runs the training once on the non-normalised and then normalised feature data
     for j in range(2):
+
+        #training the model with non-normalised data                            
         if(normalise_data_bool == 0):
             
-            print('______________________________non-normalised inputs_________________________________')
-            print(inputs)
-            print('______________________________non-normalised inputs_________________________________')
+            #training the model
+            parameter_search_rbf(inputs, targets, test_fraction)
 
-           n_norm_scale = parameter_search_rbf(inputs, targets, test_fraction)
-            normalise_data_bool = 1
-            
+            #testing the model's performance
+            scale, centers, reg_param, optimal_weights, optimal_feature_mapping = parameter_search_rbf(inputs, targets, test_fraction)    
+            predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
+            min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+            print("non-normalised-data: final model testing prediction error: ")
+            print(min_prediction)
+
+
+            normalise_data_bool = 1            
+
+        #training the model with normalised data
         else:
-            
-            #normalise input values
+            #normalise the input data
             for i in range(inputs.shape[1]):
                 inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
                 
-            print('______________________________normalised inputs_________________________________')
-            print(inputs)
-            print('______________________________normalised inputs_________________________________')
+                #training the model
+#                parameter_search_rbf(inputs, targets, test_fraction)
                 
-                
-            parameter_search_rbf(inputs, targets, test_fraction)
-    
-    
-    #compare the normalised vs non-normalised models on the final test set
-    
-    
-    
-    
-#    train_error_linear, test_error_linear = evaluate_linear_approx(inputs, targets, test_fraction)
-#    evaluate_rbf_for_various_reg_params(inputs, targets, test_fraction, test_error_linear)
-    
-#    parameter_search_rbf(inputs, targets, test_fraction)
+                #testing the model's performance
+                scale, centers, reg_param, optimal_weights, optimal_feature_mapping = parameter_search_rbf(inputs, targets, test_fraction)    
+                predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
+                min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+                print("normalised-data: final model testing prediction error: ")
+                print(min_prediction)
 
 
-    plt.show()
 
 
 def parameter_search_rbf(inputs, targets, test_fraction):
     """
     """
     N = inputs.shape[0]
+    print(N)
     folds_num = 5
     center_nums = 5
     
@@ -132,10 +157,7 @@ def parameter_search_rbf(inputs, targets, test_fraction):
 
     #parameters to be optimised
     scales = np.logspace(0,4, 20) # of the basis functions
-    print('scales: %r' % scales)
-    
     reg_params = np.logspace(-15,-1, 11) # choices of regularisation strength
-    print('reg_params: %r' % reg_params)
     
     print('fitting the rbf model...')
     
@@ -145,17 +167,24 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     # create empty 3d arrays to store the train and test errors
     train_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
     test_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
-          
-    #store the location of the optimal value in the error matrix
+
+    #create container variables to store the optimal solution from the loops
+    optimised_ml_weights = np.empty(inputs[0].shape)
+    optimal_feature_mapping = 0
+    #store the location of the optimal error value in the error matrix
     optimal_h = 0    
     optimal_i = 0
     optimal_j = 0
     
     min_test_error = 10*10
     
+    #tripple for loop iterates over the number of centers, scales and regularization
+    #parameter, re-trains the model for every instance in the loop, cross-validates the error
+    #and returns the 'optimal' error of each iteration
+    
     #iterate over different number of centres
     for h, sample_fraction in enumerate(sample_fractions):
-        
+        # h is the index, sample_fraction is gives the number of centers to be chosen
         #determine a different number of centres and thereby their locations
         p = (1-sample_fraction,sample_fraction)
         centres = inputs[np.random.choice([False,True], size=N, p=p),:]
@@ -170,8 +199,6 @@ def parameter_search_rbf(inputs, targets, test_fraction):
             # iteratre over the regularisation parameters
             for j, reg_param in enumerate(reg_params):
                 # j is the index, reg_param is the corresponding regularisation
-                # parameter
-                # train and test the data
             
                 #array of k-error values 
                 train_error, test_error, weight = cv_evaluation_linear_model(designmtx, targets, folds,reg_param = reg_param )
@@ -185,38 +212,37 @@ def parameter_search_rbf(inputs, targets, test_fraction):
                     optimal_h = h
                     optimal_i = i
                     optimal_j = j
+                    optimised_ml_weights = weight
+                    optimal_feature_mapping = feature_mapping
                     
-    print("optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], 
+
+    print("crossvalidation optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], 
           "optimal centres: %r" % sample_fractions[optimal_h],
-          "optimal lambda = %r" %reg_params[optimal_j] )
+          "optimal lambda = %r" %reg_params[optimal_j])
 
 
+    #plot train and test error vs sample fractions
+    fig , ax = plot_train_test_errors(
+        "sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
+    ax.set_xlim([0,0.25])
 
-    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j]
-
-
-#    print("Best joint choice of parameters:")
-##    print("\tscale %.2g and lambda = %.2g" % (centre_proportions[best_h],scales[best_i],reg_params[best_j]))
-#    # now we can plot the error for different scales using the best
-#    # regulariation choice
-#    
-#    
-#    print(scales)
-#    print("____________________")
-#    print(scales[best_i])
-#    
-#    
-#    fig , ax = plot_train_test_errors(
-#        "scale", scales, train_errors[:,best_j], test_errors[:,best_j])
-#    ax.set_xscale('log')
-#    # ...and the error for  different regularisation choices given the best
-#    # scale choice 
-#    fig , ax = plot_train_test_errors(
-#        "$\lambda$", reg_params, train_errors[best_i,:], test_errors[best_i,:])
-#    ax.set_xscale('log')
-#    ax.set_ylim([0,20])
+    #plot train and test error vs scale    
+    fig , ax = plot_train_test_errors(
+        "scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j])
+    ax.set_xscale('log')
+    # ...and the error for  different regularisation choices given the best
+    # scale choice 
     
+    #plot train and test error vs scale
+    fig , ax = plot_train_test_errors("$\lambda$", 
+          reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:])
+    ax.set_xscale('log')
+    ax.set_ylim([0,20])
     
+    plt.show()
+
+    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j], optimised_ml_weights, optimal_feature_mapping
+
 
 def train_and_test(
         train_inputs, train_targets, test_inputs, test_targets, reg_param=None):
@@ -307,7 +333,7 @@ def cv_evaluation_linear_model(
         #print("test_error = %r" % (test_error,))
         train_errors[f] = train_error
         test_errors[f] = test_error
-        weights.append(weight)
+        weights = weight 
     return train_errors, test_errors, weights
     
     
@@ -404,4 +430,3 @@ if __name__ == '__main__':
         # assumes that the third argument is the list of columns to import
         columns = list(map(int, sys.argv[3].split(","))) 
         main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)
-

@@ -5,63 +5,62 @@ import random
 #from regression_rbf_kai import run_rbf_model
 
 
-def main(ifname, delimiter=None, columns=None, has_header=True):
+def main():
 
-    # if no file name is provided then use synthetic data
-    data, headers = import_data(
-            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
-    n = len(data)
-
-    data_list = data[:]
-    training_data_list = []
-    test_data_list = []
-    count = 0
-
-    while (count < (0.9 * n)):
-        x = random.choice(data)
-        training_data_list.append(x)
-        data.remove(x)
-        count = count + 1
-    while (count >= 0.9 * n and count < n):
-        z = random.choice(data)
-        test_data_list.append(z)
-        data.remove(z)
-        count = count + 1
-
-    #store separated data in numpy arrays
-    training_data = np.array(training_data_list)
-    test_data = np.array(test_data_list)
-
-    # writing the enture dataset to CSV
-    with open('winequality-red-new.csv', 'w') as csvfile1:
-        writer = csv.writer(csvfile1, delimiter=',')
-        writer.writerow(headers)
-        for num in range(0, len(data_list)):
-            writer.writerow(data_list[num])
-
-    # writing the training data to CSV
-    with open('final_training_data.csv', 'wb') as csvfile2:
-        writer = csv.writer(csvfile2, delimiter=',')
-        writer.writerow(headers)
-        for num in range(0, len(training_data)):
-            writer.writerow(training_data[num])
-
-    # writing the validation data to CSV
-    with open('final_test_data.csv', 'wb') as csvfile3:
-        writer = csv.writer(csvfile3, delimiter=',')
-        writer.writerow(headers)
-        for num in range(0, len(test_data)):
-            writer.writerow(test_data[num])
-            
-            
-        
-            
-#    run_rbf_model()
-            
+    import_data()
     
     
     
-        
+    
+#    # if no file name is provided then use synthetic data
+#    data, headers = import_data(
+#            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
+#    n = len(data)
+#
+#
+#    data_list = data[:]
+#    training_data_list = []
+#    test_data_list = []
+#    count = 0
+#
+#    while (count < (0.9 * n)):
+#        x = random.choice(data)
+#        training_data_list.append(x)
+#        data.remove(x)
+#        count = count + 1
+#    while (count >= 0.9 * n and count < n):
+#        z = random.choice(data)
+#        test_data_list.append(z)
+#        data.remove(z)
+#        count = count + 1
+#
+#    training_data = np.array(training_data_list)
+#    test_data = np.array(test_data_list)
+#
+#    # writing the validation data to CSV
+#    with open('entire_data.csv', 'w') as csvfile1:
+#        writer = csv.writer(csvfile1, delimiter=',')
+#        writer.writerow(headers)
+#        for num in range(0, len(data_list)):
+#            writer.writerow(data_list[num])
+#
+#    # writing the training data to CSV
+#    with open('final_training_data.csv', 'w') as csvfile2:
+#        writer = csv.writer(csvfile2, delimiter=',')
+#        writer.writerow(headers)
+#        for num in range(0, len(training_data)):
+#            writer.writerow(training_data[num])
+#
+#    # writing the validation data to CSV
+#    with open('final_test_data.csv', 'w') as csvfile3:
+#        writer = csv.writer(csvfile3, delimiter=',')
+#        writer.writerow(headers)
+#        for num in range(0, len(test_data)):
+#            writer.writerow(test_data[num])
+#
+
+
+
 
 
 def import_data(ifname, delimiter=None, has_header=False, columns=None):
@@ -84,8 +83,7 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
     field_names -- if file has header, then this is a list of strings of the
       the field names imported. Otherwise, it is a None object.
     """
-    if delimiter is None:
-        delimiter = ','
+    delimiter = ','
     with open(ifname, 'r') as ifile:
         datareader = csv.reader(ifile, delimiter=delimiter)
         # if the data has a header line we want to avoid trying to import it.
@@ -111,8 +109,58 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
     if not columns is None and not field_names is None:
         # thin the associated field names if needed
         field_names = [field_names[c] for c in columns]
-    # return this array to caller (and field_names if provided)
-    return data_as_array, field_names
+
+    print("___________________I was here :D  ______________________________________")
+
+    n = len(data)
+
+    #writes the imported data to the separate csv files
+    data_list = data[:]
+    training_data_list = []
+    test_data_list = []
+    count = 0
+    
+    while (count < (0.9 * n)):
+        x = random.choice(data)
+        training_data_list.append(x)
+        data.remove(x)
+        count = count + 1
+    while (count >= 0.9 * n and count < n):
+        z = random.choice(data)
+        test_data_list.append(z)
+        data.remove(z)
+        count = count + 1
+
+    training_data = np.array(training_data_list)
+    test_data = np.array(test_data_list)
+
+    # writing the validation data to CSV
+    with open('entire_data.csv', 'w') as csvfile1:
+        writer = csv.writer(csvfile1, delimiter=',')
+        writer.writerow(headers)
+        for num in range(0, len(data_list)):
+            writer.writerow(data_list[num])
+
+    # writing the training data to CSV
+    with open('final_training_data.csv', 'w') as csvfile2:
+        writer = csv.writer(csvfile2, delimiter=',')
+        writer.writerow(headers)
+        for num in range(0, len(training_data)):
+            writer.writerow(training_data[num])
+
+    # writing the validation data to CSV
+    with open('final_test_data.csv', 'w') as csvfile3:
+        writer = csv.writer(csvfile3, delimiter=',')
+        writer.writerow(headers)
+        for num in range(0, len(test_data)):
+            writer.writerow(test_data[num])
+
+
+
+
+#
+#    # return this array to caller (and field_names if provided)
+#    return data, field_names
 
 if __name__ == '__main__':
     """
@@ -141,17 +189,20 @@ if __name__ == '__main__':
 
     For the wine quality data you will need to specify which columns to pass.
     """
-    import sys
-    if len(sys.argv) == 1:
-        main()  # calls the main function with no arguments
-    elif len(sys.argv) == 2:
-        # assumes that the first argument is the input filename/path
-        main(ifname=sys.argv[1])
-    elif len(sys.argv) == 3:
-        # assumes that the second argument is the data delimiter
-        main(ifname=sys.argv[1], delimiter=sys.argv[2])
-    elif len(sys.argv) == 4:
-        # assumes that the third argument is the list of columns to import
-        columns = list(map(int, sys.argv[3].split(",")))
-        main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)
-
+    
+    main()
+    
+#    import sys
+#    if len(sys.argv) == 1:
+#        main()  # calls the main function with no arguments
+#    elif len(sys.argv) == 2:
+#        # assumes that the first argument is the input filename/path
+#        main(ifname=sys.argv[1])
+#    elif len(sys.argv) == 3:
+#        # assumes that the second argument is the data delimiter
+#        main(ifname=sys.argv[1], delimiter=sys.argv[2])
+#    elif len(sys.argv) == 4:
+#        # assumes that the third argument is the list of columns to import
+#        columns = list(map(int, sys.argv[3].split(",")))
+#        main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)
+#
