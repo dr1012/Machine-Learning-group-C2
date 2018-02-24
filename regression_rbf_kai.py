@@ -213,10 +213,16 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
           "optimal lambda = %r" %reg_params[optimal_j])
 
 
+
+#    predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
+
+
         #plot train and test error vs sample fractions
     fig , ax = plot_train_test_errors("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
     
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
+    plt.axhline(y=0.7, color='cyan', linestyle='--')
+    plt.legend(["test", "2", "3!"])    
     plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
     ax.set_xlim([0,0.25])
 
@@ -242,6 +248,37 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
     
 
     return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j],optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors
+
+
+
+
+#TODO: REWRITE SO THAT IT CAN PLOT ALL FOUR LINES (NORMALISED AND NON-NORMALISED IN ONE GRAPH)
+def plot_train_test_errors(
+        control_var, experiment_sequence, train_errors, test_errors):
+    """
+    Plot the train and test errors for a sequence of experiments.
+
+    parameters
+    ----------
+    control_var - the name of the control variable, e.g. degree (for polynomial)
+        degree.
+    experiment_sequence - a list of values applied to the control variable.
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    train_line, = ax.plot(experiment_sequence, train_errors,'b-')
+    test_line, = ax.plot(experiment_sequence, test_errors, 'r-')
+    ax.set_xlabel(control_var)
+    ax.set_ylabel("$E_{RMS}$")
+    ax.legend([train_line, test_line], ["train", "test"])
+    return fig, ax
+
+
+
+
+
+
+
 
 
 def train_and_test(
