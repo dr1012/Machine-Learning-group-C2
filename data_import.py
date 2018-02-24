@@ -30,7 +30,7 @@ def main(ifname, delimiter=None, columns=None, has_header=True):
     test_data = np.array(test_data_list)
 
     # writing the validation data to CSV
-    with open('winequality-red.csv', 'w') as csvfile1:
+    with open('all_data.csv', 'w') as csvfile1:
         writer = csv.writer(csvfile1, delimiter=',')
         writer.writerow(headers)
         for num in range(0, len(data_list)):

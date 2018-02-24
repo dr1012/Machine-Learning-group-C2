@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 from matplotlib import cm as cm
 import pandas as pd
+from pandas.plotting import scatter_matrix
 
 #used only for visual representation of distribution 
 from scipy.stats import norm
@@ -20,7 +21,7 @@ Created on Fri Feb 16 14:29:04 2018
 
 
 #load data into matrix to be used
-with open('all_data.csv', 'r') as csvfile:
+with open('final_training_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
@@ -40,16 +41,19 @@ def main():
     """
 
     #determining the variables' mean
-    explore_var_means()
+#    explore_var_means()
+#      
+#    #determining the variables' dispersion
+#    explore_var_dispersion()    
+#
+#    #determining the variables' association
+#    explore_var_association()
+#    
+#    #explore possible outliers
+#    explore_data_outliers()
     
-    #determining the variables' dispersion
-    explore_var_dispersion()    
-
-    #determining the variables' association
-    explore_var_association()
-    
-    #explore possible outliers
-    explore_data_outliers()
+    #explore scatter plot
+    explore_scatter()
     
 
 def explore_var_means():
@@ -168,6 +172,32 @@ def explore_data_outliers():
     plt.title('outlier analysis - boxplots of all variables')
     plt.xticks(range(len(header)+1), (' ','fixed acidity', 'volatile acidity', 'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol', 'quality'), rotation=90)        
     fig.savefig('Boxplots.pdf', bbox_inches = 'tight')
+    plt.show()
+    
+    
+def explore_scatter():
+     """
+    Creates a scotter plot of all variables in the data set to explore potential
+    relationships between the variables
+    """
+    
+    
+    df = pd.DataFrame(data, columns=header)
+    sm = scatter_matrix(df, alpha=0.2, figsize=(10, 10), diagonal='kde')
+
+    [s.xaxis.label.set_rotation(45) for s in sm.reshape(-1)]
+    [s.yaxis.label.set_rotation(45) for s in sm.reshape(-1)]
+    
+    #May need to offset label when rotating to prevent overlap of figure
+    [s.get_yaxis().set_label_coords(-1,0.5) for s in sm.reshape(-1)]
+    
+    #Hide all ticks
+    [s.set_xticks(()) for s in sm.reshape(-1)]
+    [s.set_yticks(()) for s in sm.reshape(-1)]
+#    plt.tight_layout(w_pad=.01)
+    plt.title("Scatter plots - All variables",  y=10, x = 5)
+    plt.savefig("scatterplot.pdf")
+
     plt.show()
     
 
