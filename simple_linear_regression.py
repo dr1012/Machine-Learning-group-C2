@@ -39,11 +39,8 @@ def simple_linear_main():
     test_targets = internal_test_data_as_nparray[:][:,11:12]
 
 
-    train_ones = np.ones(train_inputs.shape)
-    test_ones =  np.ones(test_inputs.shape)
 
-    train_designmtx = np.concatenate((train_ones,train_inputs), axis = 1)
-    test_designmtx  = np.concatenate((test_ones,test_inputs), axis = 1)
+
 
 
 
@@ -60,11 +57,11 @@ def simple_linear_main():
     train_error = root_mean_squared_error(train_targets, train_predicts)
     test_error = root_mean_squared_error(test_targets, test_predicts)
 
-    print("non-regularised simple linear regression training error: " + train_error)
+    print("non-regularised simple linear regression training error: " + str(train_error))
 
-    print("non-regularised simple linear regression test error: " +  test_error)
+    print("non-regularised simple linear regression test error: " +  str(test_error))
 
-    return train_error, test_error
+    return train_error, test_error, weights
 
 def ml_weights(inputmtx, targets):
 

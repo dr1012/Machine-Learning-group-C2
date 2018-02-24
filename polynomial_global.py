@@ -96,14 +96,14 @@ def main_polynomial_function():
 
 
     if (subset_array[0][1])<=(sorted_final_array[0][1]):
-        print("best polynomial atrtibute combination, error, degree: " + str(subset_array[0]))
+        print("best polynomial attribute combination, error, degree: " + str(subset_array[0]))
         best_function = function_return(internal_training_data_as_nparray,internal_training_data_as_nparray[:][:,11:12],subset_array[0])
-        return best_function
+        return best_function, subset_array[0]
 
     else:
-        print("best polynomial  atrtibute combination, error, degree: " + str(sorted_final_array[0]))
+        print("best polynomial  attribute combination, error, degree: " + str(sorted_final_array[0]))
         best_function = function_return(internal_training_data_as_nparray,internal_training_data_as_nparray[:][:,11:12],sorted_final_array[0])
-        return best_function
+        return best_function, sorted_final_array[0]
 
 
 

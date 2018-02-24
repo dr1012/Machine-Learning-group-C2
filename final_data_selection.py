@@ -20,6 +20,12 @@ def data_selection(file_name):
     # data is  of type list
     data_as_array = np.array(data)
 
+    with open ('all_data.csv', 'w', newline = '') as csvfile4:
+        writer = csv.writer(csvfile4, delimiter =',')
+        writer.writerow(header)
+        for num in range (0,len(data)):
+            writer.writerow(data[num])
+
 
     training_data_list = []
     test_data_list = []
@@ -31,6 +37,7 @@ def data_selection(file_name):
         training_data_list.append(x)
         data.remove(x)
         count =  count + 1
+
     while(count>=0.9*1599 and count<1599):
         z = random.choice(data)
         test_data_list.append(z)
@@ -56,3 +63,6 @@ def data_selection(file_name):
         writer.writerow(header)
         for num in range (0,len(test_data)):
             writer.writerow(test_data[num])
+
+
+    #writing the validation data to CSV

@@ -20,7 +20,7 @@ def plot_train_test_errors(
     ax.legend([train_line, test_line], ["train", "test"])
     # errors won't strictly lie below 1 but very large errors can make the plot
     # difficult to read. So we restrict the limits of the y-axis.
-    ax.set_ylim((0,1))
+    ax.set_ylim((0.5,1))
     return fig, ax
 
 def plot_function(true_func):

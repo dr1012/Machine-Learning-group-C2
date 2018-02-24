@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 
 def multi_knn(subset,training_data, test_data, max_k):
 
+    subset  =  list(subset)
     subset.append(11)
 
     trainingSubset = training_data[:][:,subset]

@@ -187,7 +187,3 @@ def root_mean_squared_error(y_true, y_pred):
 
 
 
-if __name__ == '__main__':
-    # this bit only runs when this script is called from the command line
-    # but not when poly_fit_base.py is used as a library
-    main()

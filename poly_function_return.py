@@ -1,6 +1,19 @@
 import numpy as np
 import numpy.linalg as linalg
 
+
+
+from expand_to_monomials_methods import expand_to_monomials_2
+from expand_to_monomials_methods import expand_to_monomials_3
+from expand_to_monomials_methods import expand_to_monomials_4
+from expand_to_monomials_methods import expand_to_monomials_5
+from expand_to_monomials_methods import expand_to_monomials_6
+from expand_to_monomials_methods import expand_to_monomials_7
+from expand_to_monomials_methods import expand_to_monomials_8
+from expand_to_monomials_methods import expand_to_monomials_9
+from expand_to_monomials_methods import expand_to_monomials_10
+
+
 def ml_weights(inputmtx, targets):
    
     Phi = np.matrix(inputmtx)
@@ -20,7 +33,7 @@ def construct_polynomial_approx(length,degree,weights):
     return prediction_function 
 
 def function_return(training_data, train_targets, output_array ):
-    subset = output_array[0][0]
+    subset = output_array[0]
     length = len(subset)
     training_subset  = training_data[:][:,subset]
     degree = output_array[0][2]

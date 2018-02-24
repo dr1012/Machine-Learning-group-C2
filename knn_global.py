@@ -113,7 +113,7 @@ def main_knn_function():
             validationSubset  = internal_test_data_as_nparray[:][:,[a,11]]
             ValidationSubsetList =  validationSubset.tolist()
 
-            max_neighbours = 150
+            max_neighbours = 2
             accuracies = []
 
             
@@ -179,7 +179,7 @@ def main_knn_function():
                 print(subset)
                 subset_list_temp = list(subset)
                 subset_list =[int(i) for i in subset_list_temp]
-                subset_error_k.append(multi_knn(subset_list,internal_training_data_as_nparray,internal_test_data_as_nparray,150))
+                subset_error_k.append(multi_knn(subset_list,internal_training_data_as_nparray,internal_test_data_as_nparray,2))
 
     final_array = np.array(subset_error_k)
 
@@ -191,6 +191,8 @@ def main_knn_function():
 
     if (subset_array[0][1])<=(sorted_final_array[0][1]):
         print("best KNN regression subset, error, k: " + str(subset_array[0]))
+        single_subset =  subset_array[0][0]
+        subset_array[0][0] = [single_subset]
         return subset_array[0]
     else:
         print("best KNN regression subset, error, k: " + str(sorted_final_array[0]))

@@ -12,18 +12,15 @@ def ml_weights(inputmtx, targets):
     targets = np.matrix(targets).reshape((len(targets),1))
     weights = linalg.inv(Phi.transpose()*Phi)*Phi.transpose()*targets
     return np.array(weights).flatten()
+    
 
 def regularised_ml_weights(
-        inputmtx, targets, reg_param):
-    """
-    This method returns the weights that give the best linear fit between
-    the processed inputs and the targets penalised by some regularisation term
-    (reg_param)
-    """
+        inputmtx, targets):
+   
+
     Phi = np.matrix(inputmtx)
     targets = np.matrix(targets).reshape((len(targets),1))
-    I = np.identity(Phi.shape[1])
-    weights = linalg.inv(reg_param*I + Phi.transpose()*Phi)*Phi.transpose()*targets
+    weights = linalg.inv(Phi.transpose()*Phi)*Phi.transpose()*targets
     return np.array(weights).flatten()
 
 

@@ -36,7 +36,7 @@ def inidividual_poly_main_function(training_data_as_array, validation_data_as_ar
 
         test_degree_error_pairs = []
 
-        degree_sequence=range(1,50)
+        degree_sequence=range(1,30)
 
         train_inputs = training_data_as_array[:][:,x:x+1]
         train_targets = training_data_as_array[:][:,11:12]
