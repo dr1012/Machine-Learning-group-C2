@@ -134,7 +134,6 @@ def run_rbf_model():
             print("error in evaluating the RBF model")
         
     
-    
     #plot train and test error vs sample fractions
     fig , ax = plot_train_test_errors_kai("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j], 
                                           sample_fractions, n_train_errors[:,n_optimal_i,n_optimal_j], n_test_errors[:,n_optimal_i,n_optimal_j])
@@ -158,9 +157,6 @@ def run_rbf_model():
     ax.set_ylim([0,1.5])
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
     plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
-
-        
-#    plt.show()
 
 
 def parameter_search_rbf(inputs, targets, sample_fractions):
@@ -237,7 +233,6 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
           "optimal centres: %r" % sample_fractions[optimal_h],
           "optimal lambda = %r" %reg_params[optimal_j])
 
-
     return scales, sample_fractions,reg_params ,optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j
 
 
@@ -265,7 +260,7 @@ def plot_train_test_errors_kai(
     test_line, = ax.plot(experiment_sequence, test_errors, 'r-', label='non-normalised test')
     n_train_line, = ax.plot(n_experiment_sequence, n_train_errors,'c--', label='normalised train')
     n_test_line, = ax.plot(n_experiment_sequence, n_test_errors, 'm--', label='normalised test')
-    plt.axhline(y=0.65, color='black', linestyle='dashdot', label='baseline')
+    plt.axhline(y=0.6502, color='black', linestyle='dashdot', label='baseline')
     
     ax.fill_between(experiment_sequence, conf_low, conf_high, alpha=0.2, color='r')
     ax.fill_between(n_experiment_sequence, n_conf_low, n_conf_high, alpha=0.2, color='m')
