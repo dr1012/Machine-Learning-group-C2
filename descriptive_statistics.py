@@ -176,15 +176,15 @@ def explore_data_outliers():
     
     
 def explore_scatter():
-     """
+    """
     Creates a scotter plot of all variables in the data set to explore potential
-    relationships between the variables
+    relationships between the variablesgit
     """
     
-    
+
     df = pd.DataFrame(data, columns=header)
     sm = scatter_matrix(df, alpha=0.2, figsize=(10, 10), diagonal='kde')
-
+    
     [s.xaxis.label.set_rotation(45) for s in sm.reshape(-1)]
     [s.yaxis.label.set_rotation(45) for s in sm.reshape(-1)]
     
@@ -194,10 +194,10 @@ def explore_scatter():
     #Hide all ticks
     [s.set_xticks(()) for s in sm.reshape(-1)]
     [s.set_yticks(()) for s in sm.reshape(-1)]
-#    plt.tight_layout(w_pad=.01)
-    plt.title("Scatter plots - All variables",  y=10, x = 5)
-    plt.savefig("scatterplot.pdf")
+    #    plt.tight_layout(w_pad=.01)
 
+    plt.title("Scatter plots - All variables",  y=12.5, x = -5.5)
+    plt.savefig("scatterplot.pdf")
     plt.show()
     
 
