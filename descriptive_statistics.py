@@ -20,7 +20,7 @@ Created on Fri Feb 16 14:29:04 2018
 
 
 #load data into matrix to be used
-with open('winequality-red.csv', 'r') as csvfile:
+with open('all_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
