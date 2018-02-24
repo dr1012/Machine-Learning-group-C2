@@ -126,46 +126,13 @@ def run_rbf_model():
             for i in range(inputs.shape[1]):
                 test_inputs[:,i] = ((test_inputs[:,i] - np.mean(test_inputs[:,i]))/  np.std(test_inputs[:,i]))
             
-#            test_targets = ((test_targets - np.mean(test_targets))/  np.std(test_targets))
             normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
             print("normalised-data: final model testing prediction error: ")
             print(normalised_min_prediction)
                         
         else:
             print("error in evaluating the RBF model")
-                        
-            
-            #plot train and test error vs sample fractions
-    fig , ax = plot_train_test_errors("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
-    fig , ax = plot_train_test_errors("sample fractions", sample_fractions, n_train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
-    
-    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
-    plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
-    ax.set_xlim([0,0.25])
-
-
-
-
-    #plot train and test error vs scale    
-    fig , ax = plot_train_test_errors(
-        "scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j])
-    ax.set_xscale('log')
-    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing scales')
-    plt.savefig("RBF optimisation - scales.pdf", bbox_inches='tight')
-    
-    # ...and the error for  different regularisation choices given the best
-    # scale choice 
-    
-    #plot train and test error vs scale
-    fig , ax = plot_train_test_errors("$\lambda$", 
-          reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:])
-    ax.set_xscale('log')
-    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
-    plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
-    ax.set_ylim([0,7.5])
-    
-                        
-            
+        
             
             
 #    plt.show()
@@ -246,8 +213,35 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
           "optimal lambda = %r" %reg_params[optimal_j])
 
 
-    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j],
-         optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors
+        #plot train and test error vs sample fractions
+    fig , ax = plot_train_test_errors("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
+    
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
+    plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
+    ax.set_xlim([0,0.25])
+
+
+    #plot train and test error vs scale    
+    fig , ax = plot_train_test_errors(
+        "scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j])
+    ax.set_xscale('log')
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing scales')
+    plt.savefig("RBF optimisation - scales.pdf", bbox_inches='tight')
+    
+    # ...and the error for  different regularisation choices given the best
+    # scale choice 
+    
+    #plot train and test error vs scale
+    fig , ax = plot_train_test_errors("$\lambda$", 
+          reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:])
+    ax.set_xscale('log')
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
+    plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
+    ax.set_ylim([0,7.5])
+    
+    
+
+    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j],optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors
 
 
 def train_and_test(
