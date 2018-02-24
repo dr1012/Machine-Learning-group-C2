@@ -2,12 +2,11 @@ import numpy as np
 import csv
 import sys
 
-
+from simple_linear_regression  import simple_linear_main
 from final_data_selection import data_selection
 from polynomial_global import main_polynomial_function
-from knn_global import main_knn_function
 from knn_final_test import multi_knn
-
+from knn_global import main_knn_function
 
 
 def main():
@@ -40,7 +39,7 @@ def main():
         test_data_as_nparray = np.array(data)    
 
 
-
+    simple_linear_train_error, simple_linear_test_error =  simple_linear_main()
 
     best_polynomial_function = main_polynomial_function()        
 

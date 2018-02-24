@@ -18,7 +18,7 @@ from knn_regression_subsets import multi_knn
 
 
 
-    def main_knn_function():
+def main_knn_function():
     with open('final_training_data.csv', 'r') as csvfile:
             datareader = csv.reader(csvfile, delimiter=',')
             header = next(datareader)
