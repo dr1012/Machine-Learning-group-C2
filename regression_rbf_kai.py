@@ -88,8 +88,13 @@ def run_rbf_model():
     test_inputs = test_data_as_array[:,0:11]
     test_targets = test_data_as_array[:,-1]
 
-    test_fraction = .15
+    #selection of centre_proportions to be varied     
+    sample_fractions = np.array([0.05,0.1,0.15,0.2])    
+
+
     normalise_data_bool = 0
+    normalised_min_prediction = 0
+    non_normalised_min_prediction = 0
     
     #runs the training once on the non-normalised and then normalised feature data
     for j in range(2):
@@ -97,7 +102,7 @@ def run_rbf_model():
         #training the model with non-normalised data                            
         if(normalise_data_bool == 0):       
             #training the model and returning optimal 2nd order parameters - non-normalised data
-            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors = parameter_search_rbf(inputs, targets, test_fraction)    
+            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors = parameter_search_rbf(inputs, targets, sample_fractions)    
 
             #testing the model's performance
             predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
@@ -112,14 +117,12 @@ def run_rbf_model():
             #normalise the input data
             for i in range(inputs.shape[1]):
                 inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
-
-#            targets = ((targets - np.mean(targets)/  np.std(targets)))
             
-            #training the model and returning optimal 2nd order parameters - non-normalised data
-            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors = parameter_search_rbf(inputs, targets, test_fraction)    
+            #training the model and returning optimal 2nd order parameters - normalised data
+            n_scale, n_centers, n_reg_param, n_optimal_weights, n_optimal_feature_mapping, n_train_errors, n_test_errors = parameter_search_rbf(inputs, targets, sample_fractions)    
 
             #testing the model's performance
-            predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
+            predict_func = construct_feature_mapping_approx(n_optimal_feature_mapping, n_optimal_weights)
             for i in range(inputs.shape[1]):
                 test_inputs[:,i] = ((test_inputs[:,i] - np.mean(test_inputs[:,i]))/  np.std(test_inputs[:,i]))
             
@@ -134,9 +137,14 @@ def run_rbf_model():
             
             #plot train and test error vs sample fractions
     fig , ax = plot_train_test_errors("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
+    fig , ax = plot_train_test_errors("sample fractions", sample_fractions, n_train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
+    
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
     plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
     ax.set_xlim([0,0.25])
+
+
+
 
     #plot train and test error vs scale    
     fig , ax = plot_train_test_errors(
@@ -156,21 +164,14 @@ def run_rbf_model():
     plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
     ax.set_ylim([0,7.5])
     
-            
-            
-            
-            
-            
-            
-            
-            
+                        
             
             
             
 #    plt.show()
 
 
-def parameter_search_rbf(inputs, targets, test_fraction):
+def parameter_search_rbf(inputs, targets, sample_fractions):
     """
     """
     N = inputs.shape[0]
@@ -178,9 +179,6 @@ def parameter_search_rbf(inputs, targets, test_fraction):
     folds_num = 5
     center_nums = 5
     
-    
-    #selection of centre_proportions to be varied     
-    sample_fractions = np.array([0.05,0.1,0.15,0.2])    
 
     #parameters to be optimised
     scales = np.logspace(0,4, 20) # of the basis functions
