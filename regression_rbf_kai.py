@@ -102,12 +102,7 @@ def run_rbf_model():
         #training the model with non-normalised data                            
         if(normalise_data_bool == 0):       
             #training the model and returning optimal 2nd order parameters - non-normalised data
-
-            #old returned values
-#            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j = parameter_search_rbf(inputs, targets, sample_fractions)    
-            scales, centers, reg_params, optimal_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j = parameter_search_rbf(inputs, targets, sample_fractions)    
-            
-            
+            scales, centers, reg_params, optimal_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j = parameter_search_rbf(inputs, targets, sample_fractions)            
             
             #testing the model's performance
             predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
@@ -259,20 +254,47 @@ def plot_train_test_errors_kai(
         degree.
     experiment_sequence - a list of values applied to the control variable.
     """
+   
+    #calculate confidence interval for normalised and non-normalised features
+    conf_low, conf_high = conf_int(test_errors)
+    n_conf_low, n_conf_high = conf_int(n_test_errors)
+    
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
     train_line, = ax.plot(experiment_sequence, train_errors,'b-', label='non-normalised train')
     test_line, = ax.plot(experiment_sequence, test_errors, 'r-', label='non-normalised test')
     n_train_line, = ax.plot(n_experiment_sequence, n_train_errors,'c--', label='normalised train')
     n_test_line, = ax.plot(n_experiment_sequence, n_test_errors, 'm--', label='normalised test')
-
     plt.axhline(y=0.65, color='black', linestyle='dashdot', label='baseline')
+    
+    ax.fill_between(experiment_sequence, conf_low, conf_high, alpha=0.2, color='r')
+    ax.fill_between(n_experiment_sequence, n_conf_low, n_conf_high, alpha=0.2, color='m')
+    
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles, labels)
     ax.set_xlabel(control_var)
     ax.set_ylabel("$E_{RMS}$")
 
     return fig, ax
+
+
+def conf_int(error_array):
+
+   n = error_array.shape[0]
+
+   sigma = np.std(error_array)
+   ste = sigma/n**0.5
+
+   conf_low = error_array - ste
+   conf_high = error_array + ste
+
+   return conf_low, conf_high
+
+   # Use line below to add conf interval to your plot
+   # ax.fill_between(num_centres_sequence, conf_low, conf_high, alpha=0.2, color=‘b’) (edited)
+
+
+
 
 
 def train_and_test(
