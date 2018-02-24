@@ -65,21 +65,7 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
     columns -- a list of integers specifying which columns of the file to import
         (counting from 0)    
     """
-#    # if no file name is provided then use synthetic data
-#    data, field_names = import_data(
-#            ifname, delimiter=delimiter, has_header=has_header, columns=columns)
-#    exploratory_plots(data, field_names)
-#    
-#    print('data shape')
-#    N = data.shape[0]
-#
-#    inputs = data[:,0:11]
-#    targets = data[:,-1]
-
-
-
     
-
     #trains the rbf regression and identifies the optimal parameters
     run_rbf_model()
     
@@ -109,38 +95,79 @@ def run_rbf_model():
     for j in range(2):
 
         #training the model with non-normalised data                            
-        if(normalise_data_bool == 0):
-            
-            #training the model
-            parameter_search_rbf(inputs, targets, test_fraction)
+        if(normalise_data_bool == 0):       
+            #training the model and returning optimal 2nd order parameters - non-normalised data
+            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors = parameter_search_rbf(inputs, targets, test_fraction)    
 
             #testing the model's performance
-            scale, centers, reg_param, optimal_weights, optimal_feature_mapping = parameter_search_rbf(inputs, targets, test_fraction)    
             predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
-            min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+            non_normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
             print("non-normalised-data: final model testing prediction error: ")
-            print(min_prediction)
-
+            print(non_normalised_min_prediction)
 
             normalise_data_bool = 1            
 
         #training the model with normalised data
-        else:
+        elif(normalise_data_bool == 1):
             #normalise the input data
             for i in range(inputs.shape[1]):
                 inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
-                
-                #training the model
-#                parameter_search_rbf(inputs, targets, test_fraction)
-                
-                #testing the model's performance
-                scale, centers, reg_param, optimal_weights, optimal_feature_mapping = parameter_search_rbf(inputs, targets, test_fraction)    
-                predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
-                min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
-                print("normalised-data: final model testing prediction error: ")
-                print(min_prediction)
 
+#            targets = ((targets - np.mean(targets)/  np.std(targets)))
+            
+            #training the model and returning optimal 2nd order parameters - non-normalised data
+            scale, centers, reg_param, optimal_weights, optimal_feature_mapping, train_errors, test_errors = parameter_search_rbf(inputs, targets, test_fraction)    
 
+            #testing the model's performance
+            predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
+            for i in range(inputs.shape[1]):
+                test_inputs[:,i] = ((test_inputs[:,i] - np.mean(test_inputs[:,i]))/  np.std(test_inputs[:,i]))
+            
+#            test_targets = ((test_targets - np.mean(test_targets))/  np.std(test_targets))
+            normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+            print("normalised-data: final model testing prediction error: ")
+            print(normalised_min_prediction)
+                        
+        else:
+            print("error in evaluating the RBF model")
+                        
+            
+            #plot train and test error vs sample fractions
+    fig , ax = plot_train_test_errors("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
+    plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
+    ax.set_xlim([0,0.25])
+
+    #plot train and test error vs scale    
+    fig , ax = plot_train_test_errors(
+        "scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j])
+    ax.set_xscale('log')
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing scales')
+    plt.savefig("RBF optimisation - scales.pdf", bbox_inches='tight')
+    
+    # ...and the error for  different regularisation choices given the best
+    # scale choice 
+    
+    #plot train and test error vs scale
+    fig , ax = plot_train_test_errors("$\lambda$", 
+          reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:])
+    ax.set_xscale('log')
+    plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
+    plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
+    ax.set_ylim([0,7.5])
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+#    plt.show()
 
 
 def parameter_search_rbf(inputs, targets, test_fraction):
@@ -221,27 +248,8 @@ def parameter_search_rbf(inputs, targets, test_fraction):
           "optimal lambda = %r" %reg_params[optimal_j])
 
 
-    #plot train and test error vs sample fractions
-    fig , ax = plot_train_test_errors(
-        "sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j])
-    ax.set_xlim([0,0.25])
-
-    #plot train and test error vs scale    
-    fig , ax = plot_train_test_errors(
-        "scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j])
-    ax.set_xscale('log')
-    # ...and the error for  different regularisation choices given the best
-    # scale choice 
-    
-    #plot train and test error vs scale
-    fig , ax = plot_train_test_errors("$\lambda$", 
-          reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:])
-    ax.set_xscale('log')
-    ax.set_ylim([0,20])
-    
-    plt.show()
-
-    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j], optimised_ml_weights, optimal_feature_mapping
+    return scales[optimal_i], sample_fractions[optimal_h],reg_params[optimal_j],
+         optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors
 
 
 def train_and_test(
