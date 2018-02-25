@@ -3,7 +3,7 @@ import csv
 import matplotlib.pyplot as plt
 
 from regression_models import ml_weights
-from regression_models import regularised_ml_weights
+from regression_models import regularised_ml_weights_reg
 from regression_models import linear_model_predict
 from regression_models import construct_rbf_feature_mapping
 from regression_models import construct_feature_mapping_approx
@@ -129,6 +129,7 @@ def run_rbf_model():
             normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
             print("normalised-data: final model testing prediction error: ")
             print(normalised_min_prediction)
+            print(n_scales,n_centers,n_reg_params)
                         
         else:
             print("error in evaluating the RBF model")
@@ -158,7 +159,7 @@ def run_rbf_model():
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
     plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
 
-
+    # return normalised_min_prediction,n_scales, n_centers, n_reg_params
 def parameter_search_rbf(inputs, targets, sample_fractions):
     """
     """
@@ -319,7 +320,7 @@ def train_and_test(
             train_inputs, train_targets)
     else:
         # use regularised least squares approach
-        weights = regularised_ml_weights(
+        weights = regularised_ml_weights_reg(
           train_inputs, train_targets,  reg_param)
     # predictions are linear functions of the inputs, we evaluate those here
     train_predicts = linear_model_predict(train_inputs, weights)
