@@ -14,7 +14,7 @@ from create_table import drawTable
 from tabulate import tabulate
 
 import regression_rbf_kai
-# import descriptive_statistics
+import descriptive_statistics
 
 simple_linear_test_error = 0
 
@@ -47,7 +47,7 @@ def main():
 
         test_data_as_nparray = np.array(data)
 
-    # descriptive_statistics.mainStat()
+    descriptive_statistics.mainStat()
 
     #input from best simple liner regression
     print("Linear Regression Learning...")
@@ -79,7 +79,7 @@ def main():
     #testing RBF
     print("RBF Testing takes around 3 mins...")
     normalised_min_prediction, opt_reg, opt_scale, opt_centers = regression_rbf_kai.run_rbf_model()
-    print("RBF min RSE " + str(normalised_min_prediction))
+    print("RBF min RMSE " + str(normalised_min_prediction))
     print("RBF OK")
 
     #testing KNN
@@ -87,32 +87,38 @@ def main():
     knn_test_results = multi_knn(best_knn_subset,training_data_as_nparray,test_data_as_nparray,int(optimum_k+20))
     print("final knn test (subset, min_error, k):  " + str(knn_test_results))
 
-
-
     #testing linear
     print("Linear Regression Testing...")
     simple_linear_result = simple_linear_final_test(simple_linear_weights,test_data_as_nparray)
     print("final simple linear test (test error): " + str(simple_linear_result))
-
-
 
     #testing polynomial
     print("Polynomial Testing...")
     poly_final_min_error, poly_final_degree = final_poly_test_function(best_poly_subset,test_data_as_nparray,best_degree)
     print("final polynomial test error and degree: " + str(poly_final_min_error) + "   " + str(poly_final_degree))
 
-    table = [["RSE",float('%.3g'%simple_linear_result),float('%.3g'% poly_final_min_error),
-              float('%.3g'%normalised_min_prediction),float('%.3g'%knn_test_results[1])]]
-
+    # printing summary output
     headers = [" ","LR","Polynomial","RBF","kNN"]
 
-    # table2 = [["kNN",["parameters: " + str("best_knn_paramaters"),"subset: " + str("best_knn_subset"),"k = " + str("optimum_k")]]
-    #          ["Polynomial",["subset: " + str("best_poly_subset"),"degree: " + str("best_degree")]],
-    #           ["RBF",["reg param = " + str("opt_reg"),"scale" + str("opt_scale"), "centres" + str("opt_centers")]]]
-    #
-    # print(table2)
-    
+    table = [["RMSE", float('%.3g'%simple_linear_result), float('%.3g'% poly_final_min_error),
+              float('%.3g'%normalised_min_prediction), float('%.3g'%knn_test_results[1])]]
+
+    headers2 = ["Linear Regression", "Polynomial Regression", "Radial Basis Function"]
+
+    table2 = [["param-s: " + str(best_knn_paramaters),"subset: " + str(best_poly_subset),"reg param " + str(opt_reg)],
+              ["subset: " + str(best_knn_subset),"degree: " + str(best_degree), "scale " + str(opt_scale)],
+              ["k = " + str(optimum_k)," ","centres: " + str(opt_centers)]]
+
+    # table2 = [["subset: " + str("0, 9, 1, 2, 7, 6"),"reg param = " + str("3.9810717055349694e-10"),"param-s: " + str("[10.0], 0.696993777439047, 54.0")],
+    #           ["degree: " + str("2.0"), "scale " + str("206.913808111479"),"subset: " + str("10.0")],
+    #           [" ","centres: " + str("0.05"),"k = " + str("54.0")]]
+
+    print("Table1. Root Mean Square values for 4 models")
     drawTable(headers, table)
+    print("\n")
+    print("Table2. Parameter values for 4 models")
+    drawTable(headers2, table2)
+
 
 def export_simple_linear_regression_test_error():
     return simple_linear_test_error

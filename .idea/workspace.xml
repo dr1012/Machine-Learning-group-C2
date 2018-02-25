@@ -14,23 +14,30 @@
       <change beforePath="$PROJECT_DIR$/1-D_poly_sulphates.pdf" afterPath="$PROJECT_DIR$/1-D_poly_sulphates.pdf" />
       <change beforePath="$PROJECT_DIR$/1-D_poly_total sulfur dioxide.pdf" afterPath="$PROJECT_DIR$/1-D_poly_total sulfur dioxide.pdf" />
       <change beforePath="$PROJECT_DIR$/1-D_poly_volatile acidity.pdf" afterPath="$PROJECT_DIR$/1-D_poly_volatile acidity.pdf" />
-      <change beforePath="$PROJECT_DIR$/KNN regression [1, 2].pdf" afterPath="$PROJECT_DIR$/KNN regression [1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression FINAL TEST [10].pdf" afterPath="$PROJECT_DIR$/KNN regression FINAL TEST [10].pdf" />
       <change beforePath="$PROJECT_DIR$/KNN regression [10, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 1].pdf" />
-      <change beforePath="$PROJECT_DIR$/KNN regression [10, 2].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [10, 9, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [10, 9].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 9].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [9, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/RBF optimisation - number of centers.pdf" afterPath="$PROJECT_DIR$/RBF optimisation - number of centers.pdf" />
+      <change beforePath="$PROJECT_DIR$/RBF optimisation - scales.pdf" afterPath="$PROJECT_DIR$/RBF optimisation - scales.pdf" />
+      <change beforePath="$PROJECT_DIR$/create_table.py" afterPath="$PROJECT_DIR$/create_table.py" />
       <change beforePath="$PROJECT_DIR$/descriptive_statistics.py" afterPath="$PROJECT_DIR$/descriptive_statistics.py" />
       <change beforePath="$PROJECT_DIR$/final_test_data.csv" afterPath="$PROJECT_DIR$/final_test_data.csv" />
       <change beforePath="$PROJECT_DIR$/final_training_data.csv" afterPath="$PROJECT_DIR$/final_training_data.csv" />
       <change beforePath="$PROJECT_DIR$/group_project_evaluation.py" afterPath="$PROJECT_DIR$/group_project_evaluation.py" />
-      <change beforePath="$PROJECT_DIR$/knn_global.py" afterPath="$PROJECT_DIR$/knn_global.py" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 4].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 4].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 4].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2].pdf" />
@@ -38,6 +45,7 @@
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 4].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[2, 6].pdf" />
@@ -47,11 +55,8 @@
       <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 2, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 4].pdf" />
       <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 6].pdf" />
-      <change beforePath="$PROJECT_DIR$/poly_fit_plot.py" afterPath="$PROJECT_DIR$/poly_fit_plot.py" />
-      <change beforePath="$PROJECT_DIR$/polynomial_global.py" afterPath="$PROJECT_DIR$/polynomial_global.py" />
-      <change beforePath="$PROJECT_DIR$/polynomial_regression_individual.py" afterPath="$PROJECT_DIR$/polynomial_regression_individual.py" />
-      <change beforePath="$PROJECT_DIR$/regression_rbf_kai.py" afterPath="$PROJECT_DIR$/regression_rbf_kai.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -64,9 +69,9 @@
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$linear_final_test.coverage" NAME="linear_final_test Coverage Results" MODIFIED="1519557487660" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$knn_final_test.coverage" NAME="knn_final_test Coverage Results" MODIFIED="1519557614203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$print_table.coverage" NAME="print_table Coverage Results" MODIFIED="1519564692227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$create_table.coverage" NAME="create_table Coverage Results" MODIFIED="1519587743392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$create_table.coverage" NAME="create_table Coverage Results" MODIFIED="1519597522842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$simple_linear_regression.coverage" NAME="simple_linear_regression Coverage Results" MODIFIED="1519557523956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$descriptive_statistics.coverage" NAME="descriptive_statistics Coverage Results" MODIFIED="1519591608685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$descriptive_statistics.coverage" NAME="descriptive_statistics Coverage Results" MODIFIED="1519594190607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$final_data_selection.coverage" NAME="final_data_selection Coverage Results" MODIFIED="1519578435060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
@@ -74,8 +79,8 @@
       <file leaf-file-name="group_project_evaluation.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/group_project_evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="113" column="4" lean-forward="false" selection-start-line="113" selection-start-column="4" selection-end-line="113" selection-end-column="4" />
+            <state relative-caret-position="329">
+              <caret line="114" column="0" lean-forward="true" selection-start-line="113" selection-start-column="69" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -86,20 +91,8 @@
       <file leaf-file-name="create_table.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/create_table.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="descriptive_statistics.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="162" column="36" lean-forward="false" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="69" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -122,6 +115,7 @@
       <find>print</find>
       <find>data_arra</find>
       <find>best_knn_subset</find>
+      <find>show</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -139,13 +133,13 @@
         <option value="$PROJECT_DIR$/regression_models.py" />
         <option value="$PROJECT_DIR$/main_file.py" />
         <option value="$PROJECT_DIR$/final_data_selection.py" />
-        <option value="$PROJECT_DIR$/create_table.py" />
         <option value="$PROJECT_DIR$/regression_rbf_kai.py" />
         <option value="$PROJECT_DIR$/poly_fit_plot.py" />
         <option value="$PROJECT_DIR$/polynomial_global.py" />
         <option value="$PROJECT_DIR$/polynomial_regression_individual.py" />
-        <option value="$PROJECT_DIR$/descriptive_statistics.py" />
         <option value="$PROJECT_DIR$/knn_global.py" />
+        <option value="$PROJECT_DIR$/descriptive_statistics.py" />
+        <option value="$PROJECT_DIR$/create_table.py" />
         <option value="$PROJECT_DIR$/group_project_evaluation.py" />
       </list>
     </option>
@@ -212,7 +206,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.descriptive_statistics">
+  <component name="RunManager" selected="Python.create_table">
     <configuration name="create_table" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -317,8 +311,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.descriptive_statistics" />
-        <item index="1" class="java.lang.String" itemvalue="Python.create_table" />
+        <item index="0" class="java.lang.String" itemvalue="Python.create_table" />
+        <item index="1" class="java.lang.String" itemvalue="Python.descriptive_statistics" />
         <item index="2" class="java.lang.String" itemvalue="Python.final_data_selection" />
         <item index="3" class="java.lang.String" itemvalue="Python.print_table" />
         <item index="4" class="java.lang.String" itemvalue="Python.knn_final_test" />
@@ -349,8 +343,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2031439" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36033857" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18311875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -614,16 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="162" column="36" lean-forward="false" selection-start-line="162" selection-start-column="36" selection-end-line="162" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/knn_global.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1245">
@@ -632,10 +616,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-63">
+          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/create_table.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="18" selection-end-column="69" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -644,8 +638,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/group_project_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="113" column="4" lean-forward="false" selection-start-line="113" selection-start-column="4" selection-end-line="113" selection-end-column="4" />
+        <state relative-caret-position="329">
+          <caret line="114" column="0" lean-forward="true" selection-start-line="113" selection-start-column="69" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

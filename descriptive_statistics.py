@@ -41,13 +41,13 @@ def mainStat():
     """
 
     # determining the variables' mean
-    # explore_var_means()
+    explore_var_means()
 
     #determining the variables' dispersion
-    # explore_var_dispersion()
+    explore_var_dispersion()
 
     #determining the variables' association
-    # explore_var_association()
+    explore_var_association()
 
     #explore possible outliers
     explore_data_outliers()
@@ -97,7 +97,7 @@ def explore_var_means():
 
     plt.title('Measure of Central Tendency: variable means')
     fig.savefig('Measure of Central Tendency - variable means.pdf', bbox_inches = 'tight')
-    plt.show()
+    # plt.show()
 
 
 def explore_var_dispersion():
@@ -130,9 +130,7 @@ def explore_var_dispersion():
         plt.title(r'$\mathrm{Histogram\ of\ %s - }\ \mu=%.2f,\ \sigma=%.2f$' %(varname,mu, sigma))
 #        fig2.savefig('Measure of Dispersion Normalized - %s .pdf' %(varname), bbox_inches = 'tight')
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
-        plt.show()
-
-        pd.plotting.scatter_matrix(data_array, alpha = 0.3, figsize = (40,40), diagonal = 'kde')
+        # plt.show()
 
 def explore_var_association():
     """
@@ -196,7 +194,7 @@ def explore_scatter():
 
     plt.title("Scatter plots - All variables",  y=12.5, x = -5.5)
     plt.savefig("scatterplot.pdf")
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':
