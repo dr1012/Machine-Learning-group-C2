@@ -91,7 +91,6 @@ def run_rbf_model():
     #selection of centre_proportions to be varied     
     sample_fractions = np.array([0.05,0.1,0.15,0.2])    
 
-
     normalise_data_bool = 0
     normalised_min_prediction = 0
     non_normalised_min_prediction = 0
