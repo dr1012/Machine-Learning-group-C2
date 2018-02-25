@@ -11,7 +11,6 @@ from knn_global import main_knn_function
 from poly_final_test import final_poly_test_function
 
 from create_table import drawTable
-from tabulate import tabulate
 
 import regression_rbf_kai
 import descriptive_statistics

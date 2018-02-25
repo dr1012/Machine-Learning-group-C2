@@ -20,8 +20,13 @@ Created on Fri Feb 16 14:29:04 2018
 """
 
 
-#load data into matrix to be used
-with open('final_training_data.csv', 'r') as csvfile:
+def mainStat():
+    """
+    This file contains code that seeks to explore descriptive statistics about the data set at hand.
+    It investigates measures for central tendency, dispersion and association
+    """
+    # load data into matrix to be used
+    with open('final_training_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
@@ -33,30 +38,23 @@ with open('final_training_data.csv', 'r') as csvfile:
         # data is  of type list
         data_array = np.array(data)
 
-
-def mainStat():
-    """
-    This file contains code that seeks to explore descriptive statistics about the data set at hand.
-    It investigates measures for central tendency, dispersion and association
-    """
-
     # determining the variables' mean
-    explore_var_means()
+    explore_var_means(data_array, header)
 
     #determining the variables' dispersion
-    explore_var_dispersion()
+    explore_var_dispersion(data_array, header)
 
     #determining the variables' association
-    explore_var_association()
+    explore_var_association(data_array)
 
     #explore possible outliers
-    explore_data_outliers()
+    explore_data_outliers(data_array, header)
 
     #explore scatter plot
-    explore_scatter()
+    explore_scatter(data, header)
 
 
-def explore_var_means():
+def explore_var_means(data_array, header):
     """
     Explores the mean of the variables
     """
@@ -100,7 +98,7 @@ def explore_var_means():
     # plt.show()
 
 
-def explore_var_dispersion():
+def explore_var_dispersion(data_array, header):
     """
     Explores the dispersion of the variables
     """
@@ -132,7 +130,7 @@ def explore_var_dispersion():
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
         # plt.show()
 
-def explore_var_association():
+def explore_var_association(data_array):
     """
     Explores the association of the variables
     """
@@ -148,7 +146,7 @@ def explore_var_association():
     plt.savefig("Variable Correlation Matrix.pdf", bbox_inches='tight')
 
 
-def explore_data_outliers():
+def explore_data_outliers(data_array, header):
     """
     Explores if there are any outliers in the data
     """
@@ -171,7 +169,7 @@ def explore_data_outliers():
     # plt.show()
 
 
-def explore_scatter():
+def explore_scatter(data, header):
     """
     Creates a scotter plot of all variables in the data set to explore potential
     relationships between the variablesgit
