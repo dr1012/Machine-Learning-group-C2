@@ -159,7 +159,7 @@ def main_knn_function():
             ax.set_ylabel("$E_{RMS}$")
             ax.set_title("KNN for " + header[a] +" ,minimum error: " + str(min_error) + " at K = " + str(K_min_error)  ,fontsize = 8)
            # ax.fill_between(list(npAcurracies[:,0:1]), conf_low, conf_high, alpha=0.2, color='r')
-            fig.savefig("KNN_inidividual_"+header[a]+".pdf", fmt="pdf")
+            fig.savefig("KNN_individual_"+header[a]+".pdf", fmt="pdf")
             
 
     ################find the best 4 attributes and generating all possible subets####################
@@ -176,7 +176,7 @@ def main_knn_function():
 
 
     # taking the  best 4 attributes as a subset
-    subset_array = sorted_array[0:4]
+    subset_array = sorted_array[0:3]
 
     subset_attributes =  (subset_array[:][:,0:1]).flatten()
 

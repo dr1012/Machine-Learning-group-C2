@@ -11,46 +11,20 @@ from regression_models import construct_feature_mapping_approx
 from regression_train_test import root_mean_squared_error
 from regression_train_test import train_and_test_split
 from regression_train_test import train_and_test_partition
-#from regression_train_test import train_and_test
+# from regression_train_test import train_and_test
 from regression_train_test import simple_evaluation_linear_model
-#from regression_train_test import cv_evaluation_linear_model
+# from regression_train_test import cv_evaluation_linear_model
 from regression_train_test import create_cv_folds
 
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
+# ______________________________________________________________________________
 
-#______________________________________________________________________________
 
-with open('final_training_data.csv', 'r') as csvfile:
-        datareader = csv.reader(csvfile, delimiter=',')
-        header = next(datareader)
-        data = []
-       
-        for row in datareader:
-            row_of_floats = list(map(float, row))
-            data.append(row_of_floats)
 
-        # data is  of type list
-        data_as_array = np.array(data)
-        
-        
-with open('final_test_data.csv', 'r') as csvfile:
-        datareader = csv.reader(csvfile, delimiter=',')
-        header = next(datareader)
-        data = []
-       
-        for row in datareader:
-            row_of_floats = list(map(float, row))
-            data.append(row_of_floats)
-
-        # data is  of type list
-        test_data_as_array = np.array(data)
-        
-        
-        
 def main(ifname, delimiter=",", columns=None, has_header=True,
-        test_fraction=0.25):
+         test_fraction=0.25):
     """
     To be called when the script is run. This function creates, fits and plots
     synthetic data, and then fits and plots imported data (if a filename is
@@ -59,107 +33,135 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
 
     parameters
     ----------
-    ifname -- filename/path of data file. 
+    ifname -- filename/path of data file.
     delimiter -- delimiter of data values
     has_header -- does the data-file have a header line
     columns -- a list of integers specifying which columns of the file to import
-        (counting from 0)    
+        (counting from 0)
     """
-    
-    #trains the rbf regression and identifies the optimal parameters
+    # trains the rbf regression and identifies the optimal parameters
     run_rbf_model()
-    
-    
+
+
 def run_rbf_model():
     """
-    To be called when the script is run. This function trains and evaluates the 
+    To be called when the script is run. This function trains and evaluates the
     linear regression model with Radial Basis Functions.
     """
-    
-    
-    #ensures re-producability of our results
+
+    with open('final_training_data.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
+
+        # data is  of type list
+        data_as_array = np.array(data)
+
+    with open('final_test_data.csv', 'r') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',')
+        header = next(datareader)
+        data = []
+
+        for row in datareader:
+            row_of_floats = list(map(float, row))
+            data.append(row_of_floats)
+
+        # data is  of type list
+        test_data_as_array = np.array(data)
+
+    # ensures re-producability of our results
     np.random.seed(5)
-    
-    #training data
-    inputs = data_as_array[:,0:11]
-    targets = data_as_array[:,-1]
-    
-    #testing data
-    test_inputs = test_data_as_array[:,0:11]
-    test_targets = test_data_as_array[:,-1]
 
-    #selection of centre_proportions to be varied     
-    sample_fractions = np.array([0.05,0.1,0.15,0.2])    
+    # training data
+    inputs = data_as_array[:, 0:11]
+    targets = data_as_array[:, -1]
 
+    # testing data
+    test_inputs = test_data_as_array[:, 0:11]
+    test_targets = test_data_as_array[:, -1]
+
+    # selection of centre_proportions to be varied
+    sample_fractions = np.array([0.05, 0.1, 0.15, 0.2])
 
     normalise_data_bool = 0
     normalised_min_prediction = 0
     non_normalised_min_prediction = 0
-    
-    #runs the training once on the non-normalised and then normalised feature data
+
+    # runs the training once on the non-normalised and then normalised feature data
     for j in range(2):
 
-        #training the model with non-normalised data                            
-        if(normalise_data_bool == 0):       
-            #training the model and returning optimal 2nd order parameters - non-normalised data
-            scales, centers, reg_params, optimal_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j = parameter_search_rbf(inputs, targets, sample_fractions)            
-            
-            #testing the model's performance
+        # training the model with non-normalised data
+        if (normalise_data_bool == 0):
+            # training the model and returning optimal 2nd order parameters - non-normalised data
+            scales, centers, reg_params, optimal_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j = parameter_search_rbf(
+                inputs, targets, sample_fractions)
+
+            # testing the model's performance
             predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
-            non_normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+            non_normalised_min_prediction = root_mean_squared_error(test_targets, predict_func(test_inputs))
             print("non-normalised-data: final model testing prediction error: ")
             print(non_normalised_min_prediction)
 
-            normalise_data_bool = 1            
+            normalise_data_bool = 1
 
-        #training the model with normalised data
-        elif(normalise_data_bool == 1):
-            #normalise the input data
+            # training the model with normalised data
+        elif (normalise_data_bool == 1):
+            # normalise the input data
             for i in range(inputs.shape[1]):
-                inputs[:,i] = ((inputs[:,i] - np.mean(inputs[:,i]))/  np.std(inputs[:,i]))
-            
-            #training the model and returning optimal 2nd order parameters - normalised data
-            n_scales, n_centers, n_reg_params, n_optimal_weights, n_optimal_feature_mapping, n_train_errors, n_test_errors, n_optimal_h, n_optimal_i, n_optimal_j = parameter_search_rbf(inputs, targets, sample_fractions)    
+                inputs[:, i] = ((inputs[:, i] - np.mean(inputs[:, i])) / np.std(inputs[:, i]))
 
-            #testing the model's performance
+            # training the model and returning optimal 2nd order parameters - normalised data
+            n_scales, n_centers, n_reg_params, n_optimal_weights, n_optimal_feature_mapping, n_train_errors, n_test_errors, n_optimal_h, n_optimal_i, n_optimal_j = parameter_search_rbf(
+                inputs, targets, sample_fractions)
+
+            # testing the model's performance
             predict_func = construct_feature_mapping_approx(n_optimal_feature_mapping, n_optimal_weights)
             for i in range(inputs.shape[1]):
-                test_inputs[:,i] = ((test_inputs[:,i] - np.mean(test_inputs[:,i]))/  np.std(test_inputs[:,i]))
-            
-            normalised_min_prediction = root_mean_squared_error(test_targets , predict_func(test_inputs))
+                test_inputs[:, i] = ((test_inputs[:, i] - np.mean(test_inputs[:, i])) / np.std(test_inputs[:, i]))
+
+            normalised_min_prediction = root_mean_squared_error(test_targets, predict_func(test_inputs))
             print("normalised-data: final model testing prediction error: ")
             print(normalised_min_prediction)
-            print(n_scales,n_centers,n_reg_params)
-                        
+
         else:
             print("error in evaluating the RBF model")
-        
-    
-    #plot train and test error vs sample fractions
-    fig , ax = plot_train_test_errors_kai("sample fractions", sample_fractions, train_errors[:,optimal_i,optimal_j], test_errors[:,optimal_i,optimal_j], 
-                                          sample_fractions, n_train_errors[:,n_optimal_i,n_optimal_j], n_test_errors[:,n_optimal_i,n_optimal_j])
-    
+
+    # plot train and test error vs sample fractions
+    fig, ax = plot_train_test_errors_kai("sample fractions", sample_fractions, train_errors[:, optimal_i, optimal_j],
+                                         test_errors[:, optimal_i, optimal_j],
+                                         sample_fractions, n_train_errors[:, n_optimal_i, n_optimal_j],
+                                         n_test_errors[:, n_optimal_i, n_optimal_j])
+
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for sample fractions')
     plt.savefig("RBF optimisation - number of centers.pdf", bbox_inches='tight')
-    ax.set_xlim([0,0.25])        
-        
-    #plot train and test error vs scale   
-    fig , ax = plot_train_test_errors_kai("scale", scales, train_errors[optimal_h,:,optimal_j], test_errors[optimal_h,:,optimal_j],
-                                          n_scales,n_train_errors[n_optimal_h,:,n_optimal_j], test_errors[n_optimal_h,:,n_optimal_j] )
+    ax.set_xlim([0, 0.25])
+
+    # plot train and test error vs scale
+    fig, ax = plot_train_test_errors_kai("scale", scales, train_errors[optimal_h, :, optimal_j],
+                                         test_errors[optimal_h, :, optimal_j],
+                                         n_scales, n_train_errors[n_optimal_h, :, n_optimal_j],
+                                         test_errors[n_optimal_h, :, n_optimal_j])
     ax.set_xscale('log')
-    ax.set_ylim([0,1.5])
+    ax.set_ylim([0, 1.5])
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing scales')
     plt.savefig("RBF optimisation - scales.pdf", bbox_inches='tight')
 
-    #plot train and test error vs lambda
-    fig , ax = plot_train_test_errors_kai("$\lambda$", reg_params, train_errors[optimal_h,optimal_i,:], test_errors[optimal_h,optimal_i,:],
-                                      n_reg_params, n_train_errors[n_optimal_h,n_optimal_i,:], n_test_errors[n_optimal_h,n_optimal_i,:])
+    # plot train and test error vs lambda
+    fig, ax = plot_train_test_errors_kai("$\lambda$", reg_params, train_errors[optimal_h, optimal_i, :],
+                                         test_errors[optimal_h, optimal_i, :],
+                                         n_reg_params, n_train_errors[n_optimal_h, n_optimal_i, :],
+                                         n_test_errors[n_optimal_h, n_optimal_i, :])
     ax.set_xscale('log')
-    ax.set_ylim([0,1.5])
+    ax.set_ylim([0, 1.5])
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
     plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
 
-    # return normalised_min_prediction,n_scales, n_centers, n_reg_params
+    return normalised_min_prediction, n_reg_params[optimal_j], n_scales[optimal_i], n_centers[optimal_h]
+
 def parameter_search_rbf(inputs, targets, sample_fractions):
     """
     """
@@ -167,80 +169,79 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
     print(N)
     folds_num = 5
     center_nums = 5
-    
 
-    #parameters to be optimised
-    scales = np.logspace(0,4, 20) # of the basis functions
-    reg_params = np.logspace(-15,-1, 11) # choices of regularisation strength
-    
+    # parameters to be optimised
+    scales = np.logspace(0, 4, 20)  # of the basis functions
+    reg_params = np.logspace(-15, -1, 11)  # choices of regularisation strength
+
     print('fitting the rbf model...')
-    
-    #create folds to run cross-validation on the parameters to be optimised
-    folds = create_cv_folds(N,folds_num)
- 
-    # create empty 3d arrays to store the train and test errors
-    train_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
-    test_errors = np.empty((sample_fractions.size, scales.size,reg_params.size))
 
-    #create container variables to store the optimal solution from the loops
+    # create folds to run cross-validation on the parameters to be optimised
+    folds = create_cv_folds(N, folds_num)
+
+    # create empty 3d arrays to store the train and test errors
+    train_errors = np.empty((sample_fractions.size, scales.size, reg_params.size))
+    test_errors = np.empty((sample_fractions.size, scales.size, reg_params.size))
+
+    # create container variables to store the optimal solution from the loops
     optimised_ml_weights = np.empty(inputs[0].shape)
     optimal_feature_mapping = 0
-    #store the location of the optimal error value in the error matrix
-    optimal_h = 0    
+    # store the location of the optimal error value in the error matrix
+    optimal_h = 0
     optimal_i = 0
     optimal_j = 0
-    
-    min_test_error = 10*10
-    
-    #tripple for loop iterates over the number of centers, scales and regularization
-    #parameter, re-trains the model for every instance in the loop, cross-validates the error
-    #and returns the 'optimal' error of each iteration
-    
-    #iterate over different number of centres
+
+    min_test_error = 10 * 10
+
+    # tripple for loop iterates over the number of centers, scales and regularization
+    # parameter, re-trains the model for every instance in the loop, cross-validates the error
+    # and returns the 'optimal' error of each iteration
+
+    # iterate over different number of centres
     for h, sample_fraction in enumerate(sample_fractions):
         # h is the index, sample_fraction is gives the number of centers to be chosen
-        #determine a different number of centres and thereby their locations
-        p = (1-sample_fraction,sample_fraction)
-        centres = inputs[np.random.choice([False,True], size=N, p=p),:]
-    
+        # determine a different number of centres and thereby their locations
+        p = (1 - sample_fraction, sample_fraction)
+        centres = inputs[np.random.choice([False, True], size=N, p=p), :]
+
         # iterate over the scales
-        for i,scale in enumerate(scales):
+        for i, scale in enumerate(scales):
             # i is the index, scale is the corresponding scale
             # we must recreate the feature mapping each time for different scales
-            feature_mapping = construct_rbf_feature_mapping(centres,scale)
+            feature_mapping = construct_rbf_feature_mapping(centres, scale)
             designmtx = feature_mapping(inputs)
 
             # iteratre over the regularisation parameters
             for j, reg_param in enumerate(reg_params):
                 # j is the index, reg_param is the corresponding regularisation
-            
-                #array of k-error values 
-                train_error, test_error, weight = cv_evaluation_linear_model(designmtx, targets, folds,reg_param = reg_param )
-                
+
+                # array of k-error values
+                train_error, test_error, weight = cv_evaluation_linear_model(designmtx, targets, folds,
+                                                                             reg_param=reg_param)
+
                 # store the train and test errors in our 3d arrays
-                train_errors[h,i,j] = np.mean(train_error)
-                test_errors[h,i,j] = np.mean(test_error)
-                
-                if(np.mean(test_error) < min_test_error):
+                train_errors[h, i, j] = np.mean(train_error)
+                test_errors[h, i, j] = np.mean(test_error)
+
+                if (np.mean(test_error) < min_test_error):
                     min_test_error = np.mean(test_error)
                     optimal_h = h
                     optimal_i = i
                     optimal_j = j
                     optimised_ml_weights = weight
                     optimal_feature_mapping = feature_mapping
-                    
 
-    print("crossvalidation optimal test_error = %r" %min_test_error,"optimal scale = %r" %scales[optimal_i], 
+    print("crossvalidation optimal test_error = %r" % min_test_error, "optimal scale = %r" % scales[optimal_i],
           "optimal centres: %r" % sample_fractions[optimal_h],
-          "optimal lambda = %r" %reg_params[optimal_j])
+          "optimal lambda = %r" % reg_params[optimal_j])
 
-    return scales, sample_fractions,reg_params ,optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j
+    return scales, sample_fractions, reg_params, optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j
 
 
-
-#TODO: REWRITE SO THAT IT CAN PLOT ALL FOUR LINES (NORMALISED AND NON-NORMALISED IN ONE GRAPH)
+# TODO: REWRITE SO THAT IT CAN PLOT ALL FOUR LINES (NORMALISED AND NON-NORMALISED IN ONE GRAPH)
 def plot_train_test_errors_kai(
-        control_var, experiment_sequence, train_errors, test_errors, n_experiment_sequence, n_train_errors, n_test_errors):
+        control_var, experiment_sequence, train_errors, test_errors, n_experiment_sequence, n_train_errors,
+        n_test_errors):
     """
     Plot the train and test errors for a sequence of experiments.
 
@@ -250,22 +251,22 @@ def plot_train_test_errors_kai(
         degree.
     experiment_sequence - a list of values applied to the control variable.
     """
-   
-    #calculate confidence interval for normalised and non-normalised features
+
+    # calculate confidence interval for normalised and non-normalised features
     conf_low, conf_high = conf_int(test_errors)
     n_conf_low, n_conf_high = conf_int(n_test_errors)
-    
+
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
-    train_line, = ax.plot(experiment_sequence, train_errors,'b-', label='non-normalised train')
+    ax = fig.add_subplot(1, 1, 1)
+    train_line, = ax.plot(experiment_sequence, train_errors, 'b-', label='non-normalised train')
     test_line, = ax.plot(experiment_sequence, test_errors, 'r-', label='non-normalised test')
-    n_train_line, = ax.plot(n_experiment_sequence, n_train_errors,'c--', label='normalised train')
+    n_train_line, = ax.plot(n_experiment_sequence, n_train_errors, 'c--', label='normalised train')
     n_test_line, = ax.plot(n_experiment_sequence, n_test_errors, 'm--', label='normalised test')
     plt.axhline(y=0.6502, color='black', linestyle='dashdot', label='baseline')
-    
+
     ax.fill_between(experiment_sequence, conf_low, conf_high, alpha=0.2, color='r')
     ax.fill_between(n_experiment_sequence, n_conf_low, n_conf_high, alpha=0.2, color='m')
-    
+
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles, labels)
     ax.set_xlabel(control_var)
@@ -275,26 +276,23 @@ def plot_train_test_errors_kai(
 
 
 def conf_int(error_array):
+    n = error_array.shape[0]
 
-   n = error_array.shape[0]
+    sigma = np.std(error_array)
+    ste = sigma / n ** 0.5
 
-   sigma = np.std(error_array)
-   ste = sigma/n**0.5
+    conf_low = error_array - ste
+    conf_high = error_array + ste
 
-   conf_low = error_array - ste
-   conf_high = error_array + ste
+    return conf_low, conf_high
 
-   return conf_low, conf_high
-
-   # Use line below to add conf interval to your plot
-
-
+    # Use line below to add conf interval to your plot
 
 
 def train_and_test(
         train_inputs, train_targets, test_inputs, test_targets, reg_param=None):
     """
-    Will fit a linear model with either least squares, or regularised least 
+    Will fit a linear model with either least squares, or regularised least
     squares to the training data, then evaluate on both test and training data
 
     parameters
@@ -321,7 +319,7 @@ def train_and_test(
     else:
         # use regularised least squares approach
         weights = regularised_ml_weights_reg(
-          train_inputs, train_targets,  reg_param)
+            train_inputs, train_targets, reg_param)
     # predictions are linear functions of the inputs, we evaluate those here
     train_predicts = linear_model_predict(train_inputs, weights)
     test_predicts = linear_model_predict(test_inputs, weights)
@@ -331,7 +329,6 @@ def train_and_test(
     if np.isnan(test_error):
         print("test_predicts = %r" % (test_predicts,))
     return train_error, test_error, weights
-    
 
 
 def cv_evaluation_linear_model(
@@ -365,8 +362,8 @@ def cv_evaluation_linear_model(
     train_errors = np.empty(num_folds)
     test_errors = np.empty(num_folds)
     weights = []
-    
-    for f,fold in enumerate(folds):
+
+    for f, fold in enumerate(folds):
         # f is the fold id, fold is the train-test split
         train_part, test_part = fold
         # break the data into train and test sets
@@ -376,14 +373,13 @@ def cv_evaluation_linear_model(
         train_error, test_error, weight = train_and_test(
             train_inputs, train_targets, test_inputs, test_targets,
             reg_param=reg_param)
-        #print("train_error = %r" % (train_error,))
-        #print("test_error = %r" % (test_error,))
+        # print("train_error = %r" % (train_error,))
+        # print("test_error = %r" % (test_error,))
         train_errors[f] = train_error
         test_errors[f] = test_error
-        weights = weight 
+        weights = weight
     return train_errors, test_errors, weights
-    
-    
+
 
 def import_data(ifname, delimiter=None, has_header=False, columns=None):
     """
@@ -420,7 +416,7 @@ def import_data(ifname, delimiter=None, has_header=False, columns=None):
         # create an empty list to store each row of data
         data = []
         for row in datareader:
-#            print("row = %r" % (row,))
+            #            print("row = %r" % (row,))
             # for each row of data only take the columns we are interested in
             if not columns is None:
                 row = [row[c] for c in columns]
@@ -465,8 +461,9 @@ if __name__ == '__main__':
     For the wine quality data you will need to specify which columns to pass.
     """
     import sys
+
     if len(sys.argv) == 1:
-        main() # calls the main function with no arguments
+        main()  # calls the main function with no arguments
     elif len(sys.argv) == 2:
         # assumes that the first argument is the input filename/path
         main(ifname=sys.argv[1])
@@ -475,5 +472,5 @@ if __name__ == '__main__':
         main(ifname=sys.argv[1], delimiter=sys.argv[2])
     elif len(sys.argv) == 4:
         # assumes that the third argument is the list of columns to import
-        columns = list(map(int, sys.argv[3].split(","))) 
+        columns = list(map(int, sys.argv[3].split(",")))
         main(ifname=sys.argv[1], delimiter=sys.argv[2], columns=columns)

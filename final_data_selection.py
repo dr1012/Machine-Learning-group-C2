@@ -31,6 +31,7 @@ def data_selection(file_name):
     test_data_list = []
     count = 0
 
+    np.random.seed(5)
 
     while(count<(0.9*1599)):
         x = random.choice(data)

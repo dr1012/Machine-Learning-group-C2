@@ -25,36 +25,36 @@ with open('final_training_data.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',')
         header = next(datareader)
         data = []
-       
+
         for row in datareader:
             row_of_floats = list(map(float, row))
             data.append(row_of_floats)
-        
+
         # data is  of type list
-        data_array = np.array(data)   
+        data_array = np.array(data)
+
         
-        
-def main():
+def mainStat():
     """
     This file contains code that seeks to explore descriptive statistics about the data set at hand. 
     It investigates measures for central tendency, dispersion and association
     """
 
-    #determining the variables' mean
-#    explore_var_means()
-#      
-#    #determining the variables' dispersion
-#    explore_var_dispersion()    
-#
-#    #determining the variables' association
-#    explore_var_association()
-#    
-#    #explore possible outliers
-#    explore_data_outliers()
-    
+    # determining the variables' mean
+    explore_var_means()
+
+    #determining the variables' dispersion
+    explore_var_dispersion()
+
+    #determining the variables' association
+    explore_var_association()
+
+    #explore possible outliers
+    explore_data_outliers()
+
     #explore scatter plot
     explore_scatter()
-    
+
 
 def explore_var_means():
     """
@@ -131,8 +131,7 @@ def explore_var_dispersion():
 #        fig2.savefig('Measure of Dispersion Normalized - %s .pdf' %(varname), bbox_inches = 'tight')
         fig2.savefig('Measure of Dispersion - %s .pdf' %(varname), bbox_inches = 'tight')
         plt.show()   
-        
-        
+
         pd.plotting.scatter_matrix(data_array, alpha = 0.3, figsize = (40,40), diagonal = 'kde')
         
 
@@ -199,9 +198,9 @@ def explore_scatter():
     plt.title("Scatter plots - All variables",  y=12.5, x = -5.5)
     plt.savefig("scatterplot.pdf")
     plt.show()
-    
+
 
 if __name__ == '__main__':
     # this bit only runs when this script is called from the command line
-    main()
+    mainStat()
  

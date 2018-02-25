@@ -2,10 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ce33faa-0ec3-422e-814d-1d11707853ac" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/main_file.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/create_table.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_alcohol.pdf" afterPath="$PROJECT_DIR$/1-D_poly_alcohol.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_chlorides.pdf" afterPath="$PROJECT_DIR$/1-D_poly_chlorides.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_citric acid.pdf" afterPath="$PROJECT_DIR$/1-D_poly_citric acid.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_density.pdf" afterPath="$PROJECT_DIR$/1-D_poly_density.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_fixed acidity.pdf" afterPath="$PROJECT_DIR$/1-D_poly_fixed acidity.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_free sulfur dioxide.pdf" afterPath="$PROJECT_DIR$/1-D_poly_free sulfur dioxide.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_pH.pdf" afterPath="$PROJECT_DIR$/1-D_poly_pH.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_residual sugar.pdf" afterPath="$PROJECT_DIR$/1-D_poly_residual sugar.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_sulphates.pdf" afterPath="$PROJECT_DIR$/1-D_poly_sulphates.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_total sulfur dioxide.pdf" afterPath="$PROJECT_DIR$/1-D_poly_total sulfur dioxide.pdf" />
+      <change beforePath="$PROJECT_DIR$/1-D_poly_volatile acidity.pdf" afterPath="$PROJECT_DIR$/1-D_poly_volatile acidity.pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression FINAL TEST [10].pdf" afterPath="$PROJECT_DIR$/KNN regression FINAL TEST [10].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [10, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [10, 9, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [10, 9].pdf" afterPath="$PROJECT_DIR$/KNN regression [10, 9].pdf" />
+      <change beforePath="$PROJECT_DIR$/KNN regression [9, 1].pdf" afterPath="$PROJECT_DIR$/KNN regression [9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/RBF optimisation - $\lambda$.pdf" afterPath="$PROJECT_DIR$/RBF optimisation - $\lambda$.pdf" />
+      <change beforePath="$PROJECT_DIR$/RBF optimisation - number of centers.pdf" afterPath="$PROJECT_DIR$/RBF optimisation - number of centers.pdf" />
+      <change beforePath="$PROJECT_DIR$/RBF optimisation - scales.pdf" afterPath="$PROJECT_DIR$/RBF optimisation - scales.pdf" />
+      <change beforePath="$PROJECT_DIR$/all_data.csv" afterPath="$PROJECT_DIR$/all_data.csv" />
+      <change beforePath="$PROJECT_DIR$/descriptive_statistics.py" afterPath="$PROJECT_DIR$/descriptive_statistics.py" />
+      <change beforePath="$PROJECT_DIR$/final_data_selection.py" afterPath="$PROJECT_DIR$/final_data_selection.py" />
       <change beforePath="$PROJECT_DIR$/final_test_data.csv" afterPath="$PROJECT_DIR$/final_test_data.csv" />
       <change beforePath="$PROJECT_DIR$/final_training_data.csv" afterPath="$PROJECT_DIR$/final_training_data.csv" />
+      <change beforePath="$PROJECT_DIR$/group_project_evaluation.py" afterPath="$PROJECT_DIR$/group_project_evaluation.py" />
+      <change beforePath="$PROJECT_DIR$/knn_global.py" afterPath="$PROJECT_DIR$/knn_global.py" />
+      <change beforePath="$PROJECT_DIR$/main_file.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 2, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[1, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 2, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[10, 9].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[10, 9].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[2, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 1].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 1].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 2, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 2, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 2].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 2].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 4, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 4, 6].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 4].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 4].pdf" />
+      <change beforePath="$PROJECT_DIR$/n-D_poly_[9, 6].pdf" afterPath="$PROJECT_DIR$/n-D_poly_[9, 6].pdf" />
       <change beforePath="$PROJECT_DIR$/regression_rbf_kai.py" afterPath="$PROJECT_DIR$/regression_rbf_kai.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,15 +81,17 @@
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$linear_final_test.coverage" NAME="linear_final_test Coverage Results" MODIFIED="1519557487660" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$knn_final_test.coverage" NAME="knn_final_test Coverage Results" MODIFIED="1519557614203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$print_table.coverage" NAME="print_table Coverage Results" MODIFIED="1519564692227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$create_table.coverage" NAME="create_table Coverage Results" MODIFIED="1519586542319" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$simple_linear_regression.coverage" NAME="simple_linear_regression Coverage Results" MODIFIED="1519557523956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Machine_Learning_group_C2$final_data_selection.coverage" NAME="final_data_selection Coverage Results" MODIFIED="1519578435060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="group_project_evaluation.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="group_project_evaluation.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/group_project_evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="93" column="64" lean-forward="false" selection-start-line="93" selection-start-column="64" selection-end-line="93" selection-end-column="64" />
+            <state relative-caret-position="255">
+              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -35,14 +99,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="regression_rbf_kai.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/regression_rbf_kai.py">
+      <file leaf-file-name="knn_global.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/knn_global.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="128" column="83" lean-forward="false" selection-start-line="128" selection-start-column="83" selection-end-line="128" selection-end-column="83" />
+            <state relative-caret-position="139">
+              <caret line="178" column="35" lean-forward="false" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="regression_rbf_kai.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/regression_rbf_kai.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="282" column="0" lean-forward="false" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create_table.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/create_table.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="descriptive_statistics.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -54,6 +152,12 @@
       <find>150</find>
       <find>run_rbf_model</find>
       <find>regularised_ml_weights</find>
+      <find>seed</find>
+      <find>optimal scale =</find>
+      <find>ste</find>
+      <find>conf_int</find>
+      <find>plot_train_test_errors_kai</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -63,15 +167,19 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/print_table.py" />
-        <option value="$PROJECT_DIR$/main_file.py" />
         <option value="$PROJECT_DIR$/full_code/knn_global.py" />
         <option value="$PROJECT_DIR$/full_code/polynomial_global.py" />
         <option value="$PROJECT_DIR$/full_code/poly_fit_multi_combinations.py" />
         <option value="$PROJECT_DIR$/full_code/poly_final_test.py" />
         <option value="$PROJECT_DIR$/full_code/final_data_selection.py" />
         <option value="$PROJECT_DIR$/regression_models.py" />
-        <option value="$PROJECT_DIR$/group_project_evaluation.py" />
+        <option value="$PROJECT_DIR$/main_file.py" />
+        <option value="$PROJECT_DIR$/final_data_selection.py" />
         <option value="$PROJECT_DIR$/regression_rbf_kai.py" />
+        <option value="$PROJECT_DIR$/knn_global.py" />
+        <option value="$PROJECT_DIR$/create_table.py" />
+        <option value="$PROJECT_DIR$/descriptive_statistics.py" />
+        <option value="$PROJECT_DIR$/group_project_evaluation.py" />
       </list>
     </option>
   </component>
@@ -101,7 +209,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -113,7 +221,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -138,7 +246,45 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.print_table">
+  <component name="RunManager" selected="Python.create_table">
+    <configuration name="create_table" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Machine-Learning-group-C2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_table.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="final_data_selection" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Machine-Learning-group-C2" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/final_data_selection.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="knn_final_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -153,25 +299,6 @@
       <module name="Machine-Learning-group-C2" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/knn_final_test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="linear_final_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Machine-Learning-group-C2" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/linear_final_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -215,18 +342,20 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Python.linear_final_test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.simple_linear_regression" />
-      <item index="2" class="java.lang.String" itemvalue="Python.knn_final_test" />
-      <item index="3" class="java.lang.String" itemvalue="Python.print_table" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.simple_linear_regression" />
+      <item index="1" class="java.lang.String" itemvalue="Python.knn_final_test" />
+      <item index="2" class="java.lang.String" itemvalue="Python.print_table" />
+      <item index="3" class="java.lang.String" itemvalue="Python.final_data_selection" />
+      <item index="4" class="java.lang.String" itemvalue="Python.create_table" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.print_table" />
-        <item index="1" class="java.lang.String" itemvalue="Python.knn_final_test" />
-        <item index="2" class="java.lang.String" itemvalue="Python.simple_linear_regression" />
-        <item index="3" class="java.lang.String" itemvalue="Python.linear_final_test" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.create_table" />
+        <item index="1" class="java.lang.String" itemvalue="Python.final_data_selection" />
+        <item index="2" class="java.lang.String" itemvalue="Python.print_table" />
+        <item index="3" class="java.lang.String" itemvalue="Python.knn_final_test" />
+        <item index="4" class="java.lang.String" itemvalue="Python.simple_linear_regression" />
       </list>
     </recent_temporary>
   </component>
@@ -255,21 +384,34 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18097281" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24425635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21387696" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.094420604" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18097281" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -282,7 +424,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19313304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18097281" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -305,19 +447,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/final_data_selection.py" />
-    <entry file="file://$PROJECT_DIR$/linear_final_test.py" />
-    <entry file="file://$PROJECT_DIR$/test2.py" />
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/knn_final_test.py" />
     <entry file="file://$PROJECT_DIR$/simple_linear_regression.py" />
@@ -326,102 +455,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/poly_final_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/linear_final_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/expand_to_monomials_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/poly_fit_multi_combinations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/polynomial_global.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/knn_global.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2736">
-          <caret line="198" column="64" lean-forward="true" selection-start-line="198" selection-start-column="64" selection-end-line="198" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/full_code/poly_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/linear_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/expand_to_monomials_methods.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/poly_fit_multi_combinations.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/polynomial_global.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/knn_global.py" />
     <entry file="file://$PROJECT_DIR$/main_file.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="30" lean-forward="false" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/group_project_evaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/final_data_selection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="60" column="41" lean-forward="false" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/regression_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="25" lean-forward="false" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/full_code/regression_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1582">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/full_code/group_project_evaluation.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/final_data_selection.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/regression_models.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/regression_plot.py" />
     <entry file="file://$PROJECT_DIR$/regression_plot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1566">
@@ -452,7 +507,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/group_project_evaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
+        <state relative-caret-position="1230">
           <caret line="93" column="64" lean-forward="false" selection-start-line="93" selection-start-column="64" selection-end-line="93" selection-end-column="64" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -462,7 +517,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/regression_train_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
+        <state relative-caret-position="144">
           <caret line="141" column="4" lean-forward="false" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
           <folding />
         </state>
@@ -470,8 +525,140 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/regression_rbf_kai.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="128" column="83" lean-forward="false" selection-start-line="128" selection-start-column="83" selection-end-line="128" selection-end-column="83" />
+        <state relative-caret-position="230">
+          <caret line="166" column="23" lean-forward="true" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linear_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/test2.py" />
+    <entry file="file://$PROJECT_DIR$/test.py" />
+    <entry file="file://$PROJECT_DIR$/knn_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/simple_linear_regression.py" />
+    <entry file="file://$PROJECT_DIR$/print_table.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/poly_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/linear_final_test.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/expand_to_monomials_methods.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/poly_fit_multi_combinations.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/polynomial_global.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/knn_global.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/group_project_evaluation.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/final_data_selection.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/regression_models.py" />
+    <entry file="file://$PROJECT_DIR$/full_code/regression_plot.py" />
+    <entry file="file://$PROJECT_DIR$/regression_plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1566">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/poly_final_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/regression_train_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="141" column="4" lean-forward="false" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_file.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/regression_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="90" column="34" lean-forward="false" selection-start-line="90" selection-start-column="34" selection-end-line="90" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/final_data_selection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-264">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/knn_global.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="178" column="35" lean-forward="false" selection-start-line="178" selection-start-column="35" selection-end-line="178" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/expand_to_monomials_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/regression_rbf_kai.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="282" column="0" lean-forward="false" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/descriptive_statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_table.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/group_project_evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
