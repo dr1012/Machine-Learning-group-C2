@@ -81,7 +81,7 @@ def main_polynomial_function():
         for subset in itertools.combinations(subset_attributes, L):
     #every subset here is a tuple containing the indexes of the attributes in the subset
             if(len(subset)>1):
-                print(subset)
+                # print(subset)
                 subset_list_temp = list(subset)
                 subset_list =[int(i) for i in subset_list_temp]
                 subset_error_degree.append(multi_poly_combinations(subset_list,internal_training_data_as_nparray,internal_test_data_as_nparray,10))

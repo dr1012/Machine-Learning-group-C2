@@ -18,6 +18,7 @@ from regression_train_test import create_cv_folds
 
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
+from descriptive_statistics import mainStat
 
 # ______________________________________________________________________________
 
@@ -40,6 +41,7 @@ def main(ifname, delimiter=",", columns=None, has_header=True,
         (counting from 0)
     """
     # trains the rbf regression and identifies the optimal parameters
+    mainStat()
     run_rbf_model()
 
 

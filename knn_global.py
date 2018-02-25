@@ -168,7 +168,7 @@ def main_knn_function():
     #array contains [attribute number, minimum error, k for minimum error]
 
     np_individual_errors_array =  np.array(total_minErrors_and_optimmal_k)
-    print(np_individual_errors_array)
+    # print(np_individual_errors_array)
 
 
     #sorted array by which attribute has the smallest error
@@ -187,18 +187,18 @@ def main_knn_function():
         for subset in itertools.combinations(subset_attributes, L):
     #every subset here is a tuple containing the indexes of the attributes in the subset
             if(len(subset)>1):
-                print(subset)
+                # print(subset)
                 subset_list_temp = list(subset)
                 subset_list =[int(i) for i in subset_list_temp]
                 subset_error_k.append(multi_knn(subset_list,internal_training_data_as_nparray,internal_test_data_as_nparray,80))
 
     final_array = np.array(subset_error_k)
 
-    print(final_array)
+    # print(final_array)
 
     sorted_final_array = final_array[final_array[:,1].argsort()]
 
-    print(sorted_final_array)
+    # print(sorted_final_array)
 
     if (subset_array[0][1])<=(sorted_final_array[0][1]):
         print("best KNN regression subset, error, k: " + str(subset_array[0]))

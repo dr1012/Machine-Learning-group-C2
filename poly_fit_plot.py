@@ -24,7 +24,7 @@ def plot_train_test_errors(
     ax.set_ylabel("$E_{RMS}$")
     ax.set_title(title, fontsize = 5)
     ax.legend([train_line, test_line], ["train", "test"])
-    ax.fill_between(experiment_sequence, conf_low, conf_high, alpha=0.2, color='r')
+    # ax.fill_between(experiment_sequence, conf_low, conf_high, alpha=0.2, color='r')
     # errors won't strictly lie below 1 but very large errors can make the plot
     # difficult to read. So we restrict the limits of the y-axis.
     ax.set_ylim((0.5,1))

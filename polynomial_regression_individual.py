@@ -11,7 +11,8 @@ from regression_plot import plot_function_data_and_approximation
 
 from poly_fit_plot import plot_train_test_errors
 
-
+# Hiding warning about too many figures
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 with open('winequality-red.csv', 'r') as csvfile:
         datareader = csv.reader(csvfile, delimiter=';')
@@ -76,6 +77,7 @@ def inidividual_poly_main_function(training_data_as_array, validation_data_as_ar
         title =  "poly fit of " + str(header[x]) + " min rms error: " + str(min_error) + " at degree = " + str(degree_min_error)
         plot_train_test_errors("degree", degree_sequence, train_errors, test_errors, title)
         plt.savefig("1-D_poly_"+header[x]+".pdf", fmt="pdf")
+        plt.close()
         
 
     return total_minErrors_and_optimal_degrees
