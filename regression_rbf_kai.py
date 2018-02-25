@@ -286,8 +286,6 @@ def conf_int(error_array):
    return conf_low, conf_high
 
    # Use line below to add conf interval to your plot
-   # ax.fill_between(num_centres_sequence, conf_low, conf_high, alpha=0.2, color=‘b’) (edited)
-
 
 
 
