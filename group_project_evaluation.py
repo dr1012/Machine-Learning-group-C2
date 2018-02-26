@@ -102,7 +102,7 @@ def main():
     table = [["RMSE", float('%.3g'%simple_linear_result), float('%.3g'% poly_final_min_error),
               float('%.3g'%normalised_min_prediction), float('%.3g'%knn_test_results[1])]]
 
-    headers2 = ["Linear Regression", "Polynomial Regression", "Radial Basis Function"]
+    headers2 = ["kNN", "Polynomial Regression", "Radial Basis Function"]
 
     table2 = [["param-s: " + str(best_knn_paramaters),"subset: " + str(best_poly_subset),"reg param " + str(opt_reg)],
               ["subset: " + str(best_knn_subset),"degree: " + str(best_degree), "scale " + str(opt_scale)],
