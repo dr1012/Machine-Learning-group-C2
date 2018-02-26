@@ -77,14 +77,14 @@ def main_polynomial_function():
 ############testing all combinations of the subset of the best attributes ###################################
 
 
-###################################################################################################################################
+#######################################################################################################################
 #This code has been based on:
-#Title:How to get all possible combinations of a list’s elements?
+#Title:How to get all possible combinations of a lists elements?
 #Author:Dan H
 #Date:May 5, 2011
 #Link:https://stackoverflow.com/questions/464864/how-to-get-all-possible-combinations-of-a-list-s-elements
 
-###################################################################################################################################
+#######################################################################################################################
 
     subset_error_degree = []
     for L in range(0, len(subset_attributes)+1):

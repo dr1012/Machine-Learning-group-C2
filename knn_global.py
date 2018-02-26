@@ -17,7 +17,7 @@ from knn_regression_subsets import multi_knn
 #and on:
 
 #This code has been based on:
-#Title:How to get all possible combinations of a list’s elements?
+#Title:How to get all possible combinations of a lists elements?
 #Author:Dan H
 #Date:May 5, 2011
 #Link:https://stackoverflow.com/questions/464864/how-to-get-all-possible-combinations-of-a-list-s-elements

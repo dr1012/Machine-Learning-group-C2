@@ -3,6 +3,7 @@ import csv
 import math
 import operator
 import matplotlib.pyplot as plt
+from regression_rbf_kai import conf_int
 
 ###################################################################################################################################
 #This code has been based on:
@@ -103,7 +104,14 @@ def multi_knn(subset,training_data, test_data, max_k):
 
         accuracies.append([y,accuracy])
 
+
     npAcurracies = np.array(accuracies)
+
+
+    conf_low, conf_high, ste = conf_int(npAcurracies)
+
+    print("kNN Confidence Interval: +-" + str(ste))
+
 
     del subset[-1]
 
@@ -119,7 +127,7 @@ def multi_knn(subset,training_data, test_data, max_k):
     ax.set_title("KNN regression best model test on unseen data, subset: "+ str(subset) + " ,minimum error: " + str(min_error) + " at K = " + str(k_min_error),fontsize = 8)
     fig.savefig("KNN regression FINAL TEST " + str(subset) +".pdf", fmt="pdf")
 
-    return [subset, min_error, k_min_error]	
+    return [subset, min_error, k_min_error], ste
 
 
 

@@ -1,8 +1,8 @@
 import csv
 import numpy as np
+from math import sqrt
 import matplotlib.pyplot as plt
 import numpy.linalg as linalg
-
 
 def simple_linear_final_test(weights, test_data):
 
@@ -15,10 +15,22 @@ def simple_linear_final_test(weights, test_data):
 
     test_error = root_mean_squared_error(test_targets, test_predicts)
 
-    return test_error
+    conf_low, conf_high, ste = conf_int(test_error)
+
+    print("Linear Regression Confidence Interval: +-" + str(ste))
+
+    return test_error, ste
 
 
+def conf_int(error_array):
 
+
+    ste = error_array/sqrt(1)
+
+    conf_low = error_array - ste
+    conf_high = error_array + ste
+
+    return conf_low, conf_high, ste
 
 def linear_model_predict(designmtx, weights):
     ys = np.matrix(designmtx)*np.matrix(weights).reshape((len(weights),1))

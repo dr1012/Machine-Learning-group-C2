@@ -61,8 +61,6 @@ def explore_var_means(data_array, header):
 
     fig, ax = plt.subplots()
 
-    print(data_array)
-
     #create a  list with the variables' mean values
     mean_array = []
     for i in range(12):

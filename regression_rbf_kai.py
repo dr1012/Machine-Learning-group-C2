@@ -16,6 +16,9 @@ from regression_train_test import simple_evaluation_linear_model
 # from regression_train_test import cv_evaluation_linear_model
 from regression_train_test import create_cv_folds
 
+import scipy as sp
+import scipy.stats
+
 from regression_plot import exploratory_plots
 from regression_plot import plot_train_test_errors
 
@@ -103,8 +106,7 @@ def run_rbf_model():
             # testing the model's performance
             predict_func = construct_feature_mapping_approx(optimal_feature_mapping, optimal_weights)
             non_normalised_min_prediction = root_mean_squared_error(test_targets, predict_func(test_inputs))
-            print("non-normalised-data: final model testing prediction error: ")
-            print(non_normalised_min_prediction)
+            print("non-normalised-data: final model testing prediction error: " + str(non_normalised_min_prediction))
 
             normalise_data_bool = 1
 
@@ -124,7 +126,7 @@ def run_rbf_model():
                 test_inputs[:, i] = ((test_inputs[:, i] - np.mean(test_inputs[:, i])) / np.std(test_inputs[:, i]))
 
             normalised_min_prediction = root_mean_squared_error(test_targets, predict_func(test_inputs))
-            print("normalised-data: final model testing prediction error: ")
+            print("normalised-data: final model testing prediction error: " + str(normalised_min_prediction))
             print(normalised_min_prediction)
 
         else:
@@ -160,13 +162,19 @@ def run_rbf_model():
     plt.title('Parameter optimisation - the behaviour of $E_{RMS}$ for changing $\lambda$')
     plt.savefig("RBF optimisation - $\lambda$.pdf", bbox_inches='tight')
 
-    return normalised_min_prediction, n_reg_params[optimal_j], n_scales[optimal_i], n_centers[optimal_h]
+    conf_low, conf_high, ste = conf_int(test_errors[:, optimal_i, optimal_j])
+    n_conf_low, n_conf_high, n_ste = conf_int(n_test_errors[:, n_optimal_i, n_optimal_j])
+
+    print("Non-normalised RBF Confidence Interval: +-" + str(ste))
+    print("Normalised RBF Confidence Interval: +-" + str(n_ste))
+
+    return normalised_min_prediction, n_reg_params[optimal_j], n_scales[optimal_i], n_centers[optimal_h], n_ste
 
 def parameter_search_rbf(inputs, targets, sample_fractions):
     """
     """
     N = inputs.shape[0]
-    print(N)
+    # print(N)
     folds_num = 5
     center_nums = 5
 
@@ -238,7 +246,6 @@ def parameter_search_rbf(inputs, targets, sample_fractions):
     return scales, sample_fractions, reg_params, optimised_ml_weights, optimal_feature_mapping, train_errors, test_errors, optimal_h, optimal_i, optimal_j
 
 
-# TODO: REWRITE SO THAT IT CAN PLOT ALL FOUR LINES (NORMALISED AND NON-NORMALISED IN ONE GRAPH)
 def plot_train_test_errors_kai(
         control_var, experiment_sequence, train_errors, test_errors, n_experiment_sequence, n_train_errors,
         n_test_errors):
@@ -253,8 +260,11 @@ def plot_train_test_errors_kai(
     """
 
     # calculate confidence interval for normalised and non-normalised features
-    conf_low, conf_high = conf_int(test_errors)
-    n_conf_low, n_conf_high = conf_int(n_test_errors)
+    conf_low, conf_high, ste = conf_int(test_errors)
+    n_conf_low, n_conf_high, n_ste = conf_int(n_test_errors)
+    #
+    # print("Non-normalised Confidence Interval: +-" + str(ste))
+    # print("Normalised RBF Confidence Interval: +-" + str(n_ste))
 
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
@@ -276,7 +286,8 @@ def plot_train_test_errors_kai(
 
 
 def conf_int(error_array):
-    n = error_array.shape[0]
+
+    n = len(error_array)
 
     sigma = np.std(error_array)
     ste = sigma / n ** 0.5
@@ -284,7 +295,7 @@ def conf_int(error_array):
     conf_low = error_array - ste
     conf_high = error_array + ste
 
-    return conf_low, conf_high
+    return conf_low, conf_high, ste
 
     # Use line below to add conf interval to your plot
 

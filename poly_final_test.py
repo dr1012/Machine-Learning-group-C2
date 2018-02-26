@@ -11,7 +11,7 @@ from regression_plot import plot_function_data_and_approximation
 
 from poly_fit_plot import plot_train_test_errors
 
-
+from regression_rbf_kai import conf_int
 
 from expand_to_monomials_methods import expand_to_monomials_2
 from expand_to_monomials_methods import expand_to_monomials_3
@@ -109,7 +109,9 @@ def final_poly_test_function(subset, test_data, max_degree):
         test_errors.append(test_error)
         test_degree_error_pairs.append([degree, test_error])
 
-    
+    conf_low, conf_high, ste = conf_int(test_errors)
+
+    print("Polynomial Confidence Interval: +-" + str(ste))
     npTestErrors  = np.array(test_degree_error_pairs)
     min_error = np.min(npTestErrors[:,1:2])
     min_index = np.argmin(npTestErrors[:,1:2])
@@ -122,7 +124,7 @@ def final_poly_test_function(subset, test_data, max_degree):
     plt.savefig("n-D_poly_"+str(subset)+".pdf", fmt="pdf")
 
     
-    return  min_error, degree_min_error
+    return  min_error, degree_min_error, ste
     
     
 
